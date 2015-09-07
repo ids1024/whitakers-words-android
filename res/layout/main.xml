@@ -12,12 +12,6 @@
     android:inputType="text"
     android:imeOptions="actionSearch"
     />
-<Button
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:text="@string/search_button_text"
-    android:onClick="searchWord"
-    />
 <TextView
     android:id="@+id/result_text"
     android:layout_width="fill_parent"
