@@ -1,17 +1,21 @@
 package com.ids1024.whitakerswords;
 
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.lang.RuntimeException;
+import java.lang.InterruptedException;
 import android.app.Activity;
+import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuInflater;
+import android.widget.TextView;
+import android.widget.EditText;
 import android.os.Bundle;
-
-import android.util.Log;
 
 public class WhitakersWords extends Activity
 {
@@ -40,6 +44,46 @@ public class WhitakersWords extends Activity
         }
         File wordsbin = getFileStreamPath("words");
         wordsbin.setExecutable(true);
+    }
+
+    public String executeWords(String text, boolean fromenglish) {
+        String wordspath = getFilesDir().getPath() + "/words";
+        Process process;
+        try {
+            if (fromenglish) {
+                String[] command = {wordspath, "~E", text};
+                process = Runtime.getRuntime().exec(command, null, getFilesDir());
+            } else {
+                String[] command = {wordspath, text};
+                process = Runtime.getRuntime().exec(command, null, getFilesDir());
+            }
+
+            BufferedReader reader = new BufferedReader(
+                new InputStreamReader(process.getInputStream()));
+            int read;
+            char[] buffer = new char[4096];
+            StringBuffer output = new StringBuffer();
+            while ((read = reader.read(buffer)) > 0) {
+                output.append(buffer, 0, read);
+            }
+            
+            reader.close();
+            process.waitFor();
+
+            return output.toString();
+
+        } catch(IOException e) {
+            throw new RuntimeException(e.getMessage());
+        } catch(InterruptedException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public void searchWord(View view) {
+        TextView result_text = (TextView)findViewById(R.id.result_text);
+        EditText search_term = (EditText)findViewById(R.id.search_term);
+        String term = search_term.getText().toString();
+        result_text.setText((CharSequence)executeWords(term, false));
     }
 
     @Override
@@ -73,6 +117,6 @@ public class WhitakersWords extends Activity
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
     }
-}
 }
