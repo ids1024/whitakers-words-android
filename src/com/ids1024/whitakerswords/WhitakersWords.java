@@ -48,7 +48,7 @@ public class WhitakersWords extends Activity
         try {
             copyFiles();
         } catch(IOException e) {
-                throw new RuntimeException("Copying data files failed.");
+                throw new RuntimeException(e.getMessage());
         }
         setContentView(R.layout.main);
     }
