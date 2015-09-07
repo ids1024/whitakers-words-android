@@ -13,7 +13,10 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuInflater;
+import android.view.inputmethod.EditorInfo;
+import android.view.KeyEvent;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 import android.widget.EditText;
 import android.os.Bundle;
 
@@ -94,7 +97,21 @@ public class WhitakersWords extends Activity
         } catch(IOException e) {
                 throw new RuntimeException(e.getMessage());
         }
+
         setContentView(R.layout.main);
+
+        EditText search_term = (EditText)findViewById(R.id.search_term);
+        search_term.setOnEditorActionListener(new OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    searchWord((View)v);
+                    handled = true;
+                }
+                return handled;
+            }
+        });
     }
 
     @Override
