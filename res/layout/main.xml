@@ -4,7 +4,13 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-
+<ToggleButton
+    android:id="@+id/english_to_latin"
+    android:textOff="Latin-English"
+    android:textOn="English-Latin"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    />
 <EditText
     android:id="@+id/search_term"
     android:layout_width="fill_parent"

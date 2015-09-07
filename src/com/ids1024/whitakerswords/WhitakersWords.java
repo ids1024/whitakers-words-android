@@ -18,6 +18,7 @@ import android.view.KeyEvent;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.EditText;
+import android.widget.ToggleButton;
 import android.os.Bundle;
 
 public class WhitakersWords extends Activity
@@ -85,8 +86,9 @@ public class WhitakersWords extends Activity
     public void searchWord(View view) {
         TextView result_text = (TextView)findViewById(R.id.result_text);
         EditText search_term = (EditText)findViewById(R.id.search_term);
+        ToggleButton english_to_latin = (ToggleButton)findViewById(R.id.english_to_latin);
         String term = search_term.getText().toString();
-        result_text.setText((CharSequence)executeWords(term, false));
+        result_text.setText((CharSequence)executeWords(term, english_to_latin.isChecked()));
     }
 
     @Override
