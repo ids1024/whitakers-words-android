@@ -20,9 +20,9 @@ import android.widget.TextView.OnEditorActionListener;
 import android.widget.EditText;
 import android.widget.ToggleButton;
 import android.os.Bundle;
+import android.content.Intent;
 
-public class WhitakersWords extends Activity
-{
+public class WhitakersWords extends Activity {
     /** Called when the activity is first created. */
 
     public void copyFiles() throws IOException {
@@ -129,7 +129,8 @@ public class WhitakersWords extends Activity
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.action_settings:
-		// TODO
+                Intent intent = new Intent(this, WhitakersSettings.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

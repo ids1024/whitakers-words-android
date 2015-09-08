@@ -11,6 +11,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="WhitakersSettings"
+                  android:label="@string/settings">
+        </activity>
+
     </application>
     <uses-sdk android:minSdkVersion="11" />
 </manifest>
