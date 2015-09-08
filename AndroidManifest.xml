@@ -12,7 +12,8 @@
             </intent-filter>
         </activity>
         <activity android:name="WhitakersSettings"
-                  android:label="@string/settings">
+                  android:label="@string/settings"
+                  android:parentActivityName="WhitakersWords">
         </activity>
 
     </application>
