@@ -25,10 +25,9 @@ public class WhitakersWords extends Activity
     /** Called when the activity is first created. */
 
     public void copyFiles() throws IOException {
-        String[] filenames = {"ADDONS.LAT", "DICTFILE.GEN", "EWDSFILE.GEN",
-                "INDXFILE.GEN", "INFLECTS.SEC", "STEMFILE.GEN",
-                "UNIQUES.LAT", "words"};
-        for (String filename: filenames) {
+        for (String filename: new String[] {"ADDONS.LAT", "DICTFILE.GEN",
+                "EWDSFILE.GEN", "INDXFILE.GEN", "INFLECTS.SEC", "STEMFILE.GEN",
+                "UNIQUES.LAT", "words"}) {
             // Note: Android does not accept upper case in resource names, so it is converted
             // And file extensions are stripped, so remove that
             String resourcename = filename.toLowerCase();

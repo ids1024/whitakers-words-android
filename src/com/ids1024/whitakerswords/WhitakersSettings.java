@@ -22,15 +22,14 @@ public class WhitakersSettings extends PreferenceActivity
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
     String changed_key) {
-        String[] settings = {"trim_output", "do_unknowns_only",
-                             "ignore_unknown_names", "ignore_unknown_caps",
-                             "do_compounds", "do_fixes",
-                             "do_dictionary_forms", "show_age",
-                             "show_frequency", "do_examples",
-                             "do_only_meanings", "do_stems_for_unknown"};
         try {
             FileOutputStream fos = openFileOutput("WORD.MOD", MODE_PRIVATE);
-            for (String setting: settings) {
+            for (String setting: new String[] {"trim_output",
+		    "do_unknowns_only", "ignore_unknown_names",
+		    "ignore_unknown_caps", "do_compounds", "do_fixes",
+                    "do_dictionary_forms", "show_age", "show_frequency",
+		    "do_examples", "do_only_meanings",
+		    "do_stems_for_unknown"}) {
 		if (sharedPreferences.contains(setting)) {
                     String value = sharedPreferences.getBoolean(setting, false) ? "Y" : "N";
                     String line = setting.toUpperCase() + " " + value + "\n";
