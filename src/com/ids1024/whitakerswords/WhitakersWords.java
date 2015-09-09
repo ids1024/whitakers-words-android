@@ -53,13 +53,13 @@ public class WhitakersWords extends Activity
         String wordspath = getFilesDir().getPath() + "/words";
         Process process;
         try {
+            String[] command;
             if (fromenglish) {
-                String[] command = {wordspath, "~E", text};
-                process = Runtime.getRuntime().exec(command, null, getFilesDir());
+                command = new String[] {wordspath, "~E", text};
             } else {
-                String[] command = {wordspath, text};
-                process = Runtime.getRuntime().exec(command, null, getFilesDir());
+                command = new String[] {wordspath, text};
             }
+            process = Runtime.getRuntime().exec(command, null, getFilesDir());
 
             BufferedReader reader = new BufferedReader(
                 new InputStreamReader(process.getInputStream()));
