@@ -6,8 +6,6 @@ import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.lang.RuntimeException;
-import java.lang.InterruptedException;
 import android.app.Activity;
 import android.view.View;
 import android.view.Menu;
