@@ -20,7 +20,8 @@ import android.widget.ToggleButton;
 import android.os.Bundle;
 import android.content.Intent;
 
-public class WhitakersWords extends Activity {
+public class WhitakersWords extends Activity
+                            implements OnEditorActionListener {
     /** Called when the activity is first created. */
 
     public void copyFiles() throws IOException {
@@ -89,6 +90,15 @@ public class WhitakersWords extends Activity {
         result_text.setText((CharSequence)executeWords(term, english_to_latin.isChecked()));
     }
 
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        boolean handled = false;
+        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+            searchWord((View)v);
+            handled = true;
+        }
+        return handled;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,17 +111,7 @@ public class WhitakersWords extends Activity {
         setContentView(R.layout.main);
 
         EditText search_term = (EditText)findViewById(R.id.search_term);
-        search_term.setOnEditorActionListener(new OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                boolean handled = false;
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    searchWord((View)v);
-                    handled = true;
-                }
-                return handled;
-            }
-        });
+        search_term.setOnEditorActionListener(this);
     }
 
     @Override
