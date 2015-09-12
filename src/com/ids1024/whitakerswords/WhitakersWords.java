@@ -19,24 +19,15 @@ import android.widget.EditText;
 import android.widget.ToggleButton;
 import android.os.Bundle;
 import android.content.Intent;
+import android.content.res.AssetManager;
 
 public class WhitakersWords extends Activity
                             implements OnEditorActionListener {
     /** Called when the activity is first created. */
 
     public void copyFiles() throws IOException {
-        for (String filename: new String[] {"ADDONS.LAT", "DICTFILE.GEN",
-                "EWDSFILE.GEN", "INDXFILE.GEN", "INFLECTS.SEC", "STEMFILE.GEN",
-                "UNIQUES.LAT", "WORD.MDV", "words"}) {
-            // Note: Android does not accept upper case in resource names, so it is converted
-            // And file extensions are stripped, so remove that
-            String resourcename = filename.toLowerCase();
-            if (resourcename.contains(".")) { 
-                resourcename = resourcename.substring(0, filename.lastIndexOf('.'));
-            }
-
-            int identifier = getResources().getIdentifier(resourcename, "raw", getPackageName());
-            InputStream ins = getResources().openRawResource(identifier);
+        for (String filename: getAssets().list("words")) {
+            InputStream ins = getAssets().open("words/" + filename);
             byte[] buffer = new byte[ins.available()];
             ins.read(buffer);
             ins.close();
