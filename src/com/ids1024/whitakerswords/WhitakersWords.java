@@ -77,7 +77,10 @@ public class WhitakersWords extends Activity
         EditText search_term = (EditText)findViewById(R.id.search_term);
         ToggleButton english_to_latin = (ToggleButton)findViewById(R.id.english_to_latin);
         String term = search_term.getText().toString();
-        result_text.setText((CharSequence)executeWords(term, english_to_latin.isChecked()));
+	
+        String result = executeWords(term, english_to_latin.isChecked());
+        result = result.replaceAll(" +", " ");
+        result_text.setText((CharSequence)result);
     }
 
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
