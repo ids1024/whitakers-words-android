@@ -20,6 +20,10 @@ import android.widget.ToggleButton;
 import android.os.Bundle;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
+import android.text.style.StyleSpan;
+import android.graphics.Typeface;
 
 public class WhitakersWords extends Activity
                             implements OnEditorActionListener {
@@ -79,8 +83,37 @@ public class WhitakersWords extends Activity
         String term = search_term.getText().toString();
 	
         String result = executeWords(term, english_to_latin.isChecked());
-        result = result.replaceAll(" +", " ");
-        result_text.setText((CharSequence)result);
+        SpannableStringBuilder processed_result = new SpannableStringBuilder();
+        for (String line: result.split("\n")) {
+            String[] words = line.split(" +");
+            String handled_line = TextUtils.join(" ", words);
+            if (words[0].equals("01") || words[0].equals("02")
+                            || words[0].equals("03")) {
+                handled_line = handled_line.substring(3);
+                            }
+            int startindex = processed_result.length();
+            processed_result.append(handled_line + "\n");
+            // Forms
+            if (words[0].equals("01")) {
+                processed_result.setSpan(
+                                new StyleSpan(Typeface.BOLD),
+                                startindex,
+                                startindex + words[1].length(),
+                                0);
+            }
+            // Dictionary forms
+            else if (words[0].equals("02")) {
+            }
+            // Meaning
+            else if (words[0].equals("03")) {
+                processed_result.setSpan(
+                                new StyleSpan(Typeface.ITALIC),
+                                startindex,
+                                processed_result.length(),
+                                0);
+            }
+        }
+        result_text.setText((CharSequence)processed_result);
     }
 
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {

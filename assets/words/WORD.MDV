@@ -3,7 +3,7 @@ WRITE_STATISTICS_FILE             N
 SHOW_DICTIONARY                   N
 SHOW_DICTIONARY_LINE              N
 SHOW_DICTIONARY_CODES             Y
-DO_PEARSE_CODES                   N
+DO_PEARSE_CODES                   Y
 DO_ONLY_INITIAL_WORD              N
 FOR_WORD_LIST_CHECK               N
 DO_ONLY_FIXES                     N
