@@ -103,6 +103,18 @@ public class WhitakersWords extends Activity
             }
             // Dictionary forms
             else if (words[0].equals("02")) {
+                int index = 1;
+                int endindex = startindex;
+                do {
+                    endindex += words[index].length() + 1;
+                    index += 1;
+                } while (words[index-1].endsWith(","));
+
+                processed_result.setSpan(
+                                new StyleSpan(Typeface.BOLD),
+                                startindex,
+                                endindex,
+                                0);
             }
             // Meaning
             else if (words[0].equals("03")) {
