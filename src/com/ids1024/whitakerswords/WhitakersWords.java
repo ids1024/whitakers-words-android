@@ -102,7 +102,9 @@ public class WhitakersWords extends Activity
                                 0);
             }
             // Dictionary forms
-            else if (words[0].equals("02")) {
+            // The [ thing is a HACK(?) for parsing output of searches like
+            // "quod", which show shorter output for dictionary forms
+            else if (words[0].equals("02") && !words[1].startsWith("[")) {
                 int index = 1;
                 int endindex = startindex;
                 do {
