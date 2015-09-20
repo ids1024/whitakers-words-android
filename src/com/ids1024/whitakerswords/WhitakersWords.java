@@ -23,7 +23,9 @@ import android.content.res.AssetManager;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.StyleSpan;
+import android.text.style.ForegroundColorSpan;
 import android.graphics.Typeface;
+import android.graphics.Color;
 
 public class WhitakersWords extends Activity
                             implements OnEditorActionListener {
@@ -88,7 +90,7 @@ public class WhitakersWords extends Activity
             String[] words = line.split(" +");
             String handled_line = TextUtils.join(" ", words);
             if (words[0].equals("01") || words[0].equals("02")
-                            || words[0].equals("03")) {
+                            || words[0].equals("03") || words[0].equals("04")) {
                 handled_line = handled_line.substring(3);
                             }
                 // Indent meanings
@@ -130,6 +132,15 @@ public class WhitakersWords extends Activity
                                 processed_result.length(),
                                 0);
             }
+            // Not found
+            else if (words[0].equals("04")) {
+                processed_result.setSpan(
+                                new ForegroundColorSpan(Color.RED),
+                                startindex,
+                                processed_result.length(),
+                                0);
+            }
+
         }
         result_text.setText((CharSequence)processed_result);
     }
