@@ -34,11 +34,13 @@ public class WhitakersWords extends Activity
     public void copyFiles() throws IOException {
         for (String filename: getAssets().list("words")) {
             InputStream ins = getAssets().open("words/" + filename);
-            byte[] buffer = new byte[ins.available()];
-            ins.read(buffer);
-            ins.close();
+            byte[] buffer = new byte[4096];
             FileOutputStream fos = openFileOutput(filename, MODE_PRIVATE);
-            fos.write(buffer);
+	    int read;
+            while ((read = ins.read(buffer)) > 0) {
+                fos.write(buffer, 0, read);
+            }
+            ins.close();
             fos.close();
         }
         File wordsbin = getFileStreamPath("words");
