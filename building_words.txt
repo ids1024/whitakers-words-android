@@ -4,7 +4,7 @@ Compilation procedure:
 - Download and extract the source code (http://archives.nd.edu/whitaker/wordsall.zip)
 - Set up an environment that allows compilation of ada code for arm processors. I used a raspian chroot in qemu, with the "gnat" package installed. You can also cross-compile, if you can figure out how to set that up.
 - Run the following command:
-    > gnatmake -O3 words -bargs -static
+    > gnatmake -O3 words -bargs -static -largs -static
     > gnatmake makedict
     > gnatmake makestem
     > gnatmake makeefil
