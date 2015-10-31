@@ -149,7 +149,9 @@ public class WhitakersWords extends Activity
 
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         boolean handled = false;
-        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+        if ((actionId == EditorInfo.IME_ACTION_SEARCH) ||
+			(actionId==EditorInfo.IME_NULL &&
+			 event.getAction()==KeyEvent.ACTION_DOWN)) {
             searchWord((View)v);
             v.setText("");
             handled = true;
