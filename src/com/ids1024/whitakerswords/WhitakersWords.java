@@ -149,6 +149,7 @@ public class WhitakersWords extends Activity
         boolean handled = false;
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
             searchWord((View)v);
+            v.setText("");
             handled = true;
         }
         return handled;
