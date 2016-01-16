@@ -43,8 +43,7 @@ public class WhitakersWords extends Activity
             ins.close();
             fos.close();
         }
-        File wordsbin = getFileStreamPath("words");
-        wordsbin.setExecutable(true);
+        getFileStreamPath("words").setExecutable(true);
     }
 
     public String executeWords(String text, boolean fromenglish) {
