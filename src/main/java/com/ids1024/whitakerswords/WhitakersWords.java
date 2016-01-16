@@ -92,11 +92,11 @@ public class WhitakersWords extends Activity {
             if (words[0].equals("01") || words[0].equals("02")
                             || words[0].equals("03") || words[0].equals("04")) {
                 handled_line = handled_line.substring(3);
-                            }
                 // Indent meanings
                 if (words[0].equals("03")) {
                     handled_line = "  " + handled_line;
                 }
+            }
             int startindex = processed_result.length();
             processed_result.append(handled_line + "\n");
             // Forms
