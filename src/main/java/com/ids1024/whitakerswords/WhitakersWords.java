@@ -27,8 +27,7 @@ import android.text.style.ForegroundColorSpan;
 import android.graphics.Typeface;
 import android.graphics.Color;
 
-public class WhitakersWords extends Activity
-                            implements OnEditorActionListener {
+public class WhitakersWords extends Activity {
     /** Called when the activity is first created. */
 
     public void copyFiles() throws IOException {
@@ -146,18 +145,6 @@ public class WhitakersWords extends Activity
         result_text.setText((CharSequence)processed_result);
     }
 
-    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-        boolean handled = false;
-        if ((actionId == EditorInfo.IME_ACTION_SEARCH) ||
-			(actionId==EditorInfo.IME_NULL &&
-			 event.getAction()==KeyEvent.ACTION_DOWN)) {
-            searchWord((View)v);
-            v.setText("");
-            handled = true;
-        }
-        return handled;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -170,7 +157,20 @@ public class WhitakersWords extends Activity
         setContentView(R.layout.main);
 
         EditText search_term = (EditText)findViewById(R.id.search_term);
-        search_term.setOnEditorActionListener(this);
+        search_term.setOnEditorActionListener(new OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if ((actionId == EditorInfo.IME_ACTION_SEARCH) ||
+                                (actionId==EditorInfo.IME_NULL &&
+                                 event.getAction()==KeyEvent.ACTION_DOWN)) {
+                    searchWord((View)v);
+                    v.setText("");
+                    handled = true;
+                }
+                return handled;
+            }
+        });
     }
 
     @Override
