@@ -35,8 +35,7 @@ public class WhitakersWords extends Activity {
             InputStream ins = getAssets().open("words/" + filename);
             byte[] buffer = new byte[4096];
             FileOutputStream fos = openFileOutput(filename, MODE_PRIVATE);
-	    int read;
-            while ((read = ins.read(buffer)) > 0) {
+            for (int read = 0; read >= 0; read = ins.read(buffer)) {
                 fos.write(buffer, 0, read);
             }
             ins.close();
@@ -59,10 +58,9 @@ public class WhitakersWords extends Activity {
 
             BufferedReader reader = new BufferedReader(
                 new InputStreamReader(process.getInputStream()));
-            int read;
             char[] buffer = new char[4096];
             StringBuffer output = new StringBuffer();
-            while ((read = reader.read(buffer)) > 0) {
+            for (int read = 0; read >= 0; read = reader.read(buffer)) {
                 output.append(buffer, 0, read);
             }
             
