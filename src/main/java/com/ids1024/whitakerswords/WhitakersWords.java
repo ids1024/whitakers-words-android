@@ -6,7 +6,9 @@ import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.File;
 import java.io.IOException;
-import android.app.Activity;
+import java.util.List;
+import java.util.ArrayList;
+import android.app.ListActivity;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,8 +28,10 @@ import android.text.style.StyleSpan;
 import android.text.style.ForegroundColorSpan;
 import android.graphics.Typeface;
 import android.graphics.Color;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
-public class WhitakersWords extends Activity {
+public class WhitakersWords extends ListActivity {
     /** Called when the activity is first created. */
 
     public void copyFiles() throws IOException {
@@ -77,13 +81,16 @@ public class WhitakersWords extends Activity {
     }
 
     public void searchWord(View view) {
-        TextView result_text = (TextView)findViewById(R.id.result_text);
+        ListView result_list = (ListView)findViewById(android.R.id.list);
         EditText search_term = (EditText)findViewById(R.id.search_term);
         ToggleButton english_to_latin = (ToggleButton)findViewById(R.id.english_to_latin);
         String term = search_term.getText().toString();
-	
+
+        List<String> results = new ArrayList<String>();
+
         String result = executeWords(term, english_to_latin.isChecked());
         SpannableStringBuilder processed_result = new SpannableStringBuilder();
+	String prev_code = null;
         for (String line: result.split("\n")) {
             String[] words = line.split(" +");
             String handled_line = TextUtils.join(" ", words);
@@ -95,6 +102,12 @@ public class WhitakersWords extends Activity {
                     handled_line = "  " + handled_line;
                 }
             }
+
+            if (words[0].equals("01") && prev_code != null && !prev_code.equals("01")) {
+                results.add(processed_result.toString());
+                processed_result = new SpannableStringBuilder();
+	    }
+
             int startindex = processed_result.length();
             processed_result.append(handled_line + "\n");
             // Forms
@@ -139,8 +152,14 @@ public class WhitakersWords extends Activity {
                                 0);
             }
 
+	    prev_code = words[0];
+
         }
-        result_text.setText((CharSequence)processed_result);
+        results.add(processed_result.toString());
+
+        ArrayAdapter<String> itemsAdapter =
+            new ArrayAdapter<String>(getApplicationContext(), R.layout.result, results);
+        result_list.setAdapter(itemsAdapter);
     }
 
     @Override
@@ -149,7 +168,7 @@ public class WhitakersWords extends Activity {
         try {
             copyFiles();
         } catch(IOException e) {
-                throw new RuntimeException(e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
 
         setContentView(R.layout.main);
