@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.File;
+import java.io.Serializable;
 import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class WhitakersWords extends ListActivity {
-    /** Called when the activity is first created. */
+    List<String> results;
 
     public void copyFiles() throws IOException {
         for (String filename: getAssets().list("words")) {
@@ -81,12 +82,11 @@ public class WhitakersWords extends ListActivity {
     }
 
     public void searchWord(View view) {
-        ListView result_list = (ListView)findViewById(android.R.id.list);
         EditText search_term = (EditText)findViewById(R.id.search_term);
         ToggleButton english_to_latin = (ToggleButton)findViewById(R.id.english_to_latin);
         String term = search_term.getText().toString();
 
-        List<String> results = new ArrayList<String>();
+	results.clear();
 
         String result = executeWords(term, english_to_latin.isChecked());
         SpannableStringBuilder processed_result = new SpannableStringBuilder();
@@ -159,6 +159,7 @@ public class WhitakersWords extends ListActivity {
 
         ArrayAdapter<String> itemsAdapter =
             new ArrayAdapter<String>(getApplicationContext(), R.layout.result, results);
+        ListView result_list = (ListView)findViewById(android.R.id.list);
         result_list.setAdapter(itemsAdapter);
     }
 
@@ -188,6 +189,26 @@ public class WhitakersWords extends ListActivity {
                 return handled;
             }
         });
+
+        results = new ArrayList<String>();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable("results", (Serializable)results);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            results = (List<String>)savedInstanceState.getSerializable("results");
+            ArrayAdapter<String> itemsAdapter =
+                new ArrayAdapter<String>(getApplicationContext(), R.layout.result, results);
+            ListView result_list = (ListView)findViewById(android.R.id.list);
+            result_list.setAdapter(itemsAdapter);
+        }
+        super.onRestoreInstanceState(savedInstanceState);
     }
 
     @Override
