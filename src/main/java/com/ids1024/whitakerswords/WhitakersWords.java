@@ -104,7 +104,7 @@ public class WhitakersWords extends ListActivity {
             }
 
             if (words[0].equals("01") && prev_code != null && !prev_code.equals("01")) {
-                results.add(processed_result.toString());
+                results.add(processed_result.toString().trim());
                 processed_result = new SpannableStringBuilder();
 	    }
 
@@ -155,7 +155,7 @@ public class WhitakersWords extends ListActivity {
 	    prev_code = words[0];
 
         }
-        results.add(processed_result.toString());
+        results.add(processed_result.toString().trim());
 
         ArrayAdapter<String> itemsAdapter =
             new ArrayAdapter<String>(getApplicationContext(), R.layout.result, results);
