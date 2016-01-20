@@ -1,6 +1,7 @@
 package com.ids1024.whitakerswords;
 
 import java.util.Map;
+import java.util.Locale;
 import android.preference.PreferenceActivity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -32,7 +33,7 @@ public class WhitakersSettings extends PreferenceActivity
 		    "do_stems_for_unknown"}) {
 		if (sharedPreferences.contains(setting)) {
                     String value = sharedPreferences.getBoolean(setting, false) ? "Y" : "N";
-                    String line = setting.toUpperCase() + " " + value + "\n";
+                    String line = setting.toUpperCase(Locale.US) + " " + value + "\n";
                     fos.write(line.getBytes());
 		}
             }
