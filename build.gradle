@@ -12,10 +12,20 @@ android {
     compileSdkVersion 'Google Inc.:Google APIs:23'
     buildToolsVersion '23.0.2'
 
+    signingConfigs {
+        release {
+            storeFile file("release.keystore")
+            storePassword System.getenv("KEYPWD")
+            keyAlias "releaseKey"
+            keyPassword System.getenv("KEYPWD")
+        }
+    }
+
     buildTypes {
         release {
             runProguard false
             proguardFile getDefaultProguardFile('proguard-android.txt')
+            signingConfig signingConfigs.release
         }
     }
 }
