@@ -33,7 +33,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class WhitakersWords extends ListActivity {
-    List<String> results;
+    ArrayList<String> results;
 
     public void copyFiles() throws IOException {
         for (String filename: getAssets().list("words")) {
@@ -191,24 +191,20 @@ public class WhitakersWords extends ListActivity {
         });
 
         results = new ArrayList<String>();
-    }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        outState.putSerializable("results", (Serializable)results);
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
-            results = (List<String>)savedInstanceState.getSerializable("results");
+            results = savedInstanceState.getStringArrayList("results");
             ArrayAdapter<String> itemsAdapter =
                 new ArrayAdapter<String>(getApplicationContext(), R.layout.result, results);
             ListView result_list = (ListView)findViewById(android.R.id.list);
             result_list.setAdapter(itemsAdapter);
         }
-        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putStringArrayList("results", results);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
