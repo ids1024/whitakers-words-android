@@ -27,6 +27,11 @@
         android:defaultValue="true" />
     <CheckBoxPreference
         android:key="do_fixes"
+        android:title="@string/do_fixes"
+        android:summary="@string/do_fixes_summ"
+        android:defaultValue="true" />
+    <CheckBoxPreference
+        android:key="do_tricks"
         android:title="@string/do_tricks"
         android:summary="@string/do_tricks_summ"
         android:defaultValue="true" />
