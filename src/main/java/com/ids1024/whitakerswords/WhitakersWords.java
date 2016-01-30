@@ -95,7 +95,8 @@ public class WhitakersWords extends ListActivity {
             String[] words = line.split(" +");
             String handled_line = TextUtils.join(" ", words);
             if (words[0].equals("01") || words[0].equals("02")
-                            || words[0].equals("03") || words[0].equals("04")) {
+                            || words[0].equals("03") || words[0].equals("04")
+			    || words[0].equals("05") || words[0].equals("06")) {
                 handled_line = handled_line.substring(3);
                 // Indent meanings
                 if (words[0].equals("03")) {
@@ -103,7 +104,8 @@ public class WhitakersWords extends ListActivity {
                 }
             }
 
-            if (words[0].equals("01") && prev_code != null && !prev_code.equals("01")) {
+            if (words[0].equals("01") && prev_code != null && !prev_code.equals("01") &&
+			    !prev_code.equals("05") && !prev_code.equals("06")) {
                 results.add(processed_result.toString().trim());
                 processed_result = new SpannableStringBuilder();
 	    }
