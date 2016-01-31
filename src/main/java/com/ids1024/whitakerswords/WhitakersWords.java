@@ -115,14 +115,13 @@ public class WhitakersWords extends ListActivity {
             int startindex = processed_result.length();
             processed_result.append(handled_line + "\n");
 
+            Object span = null;
+            int endindex = processed_result.length();
             switch (pearse_code) {
                 // Forms
                 case 1:
-                    processed_result.setSpan(
-                                    new StyleSpan(Typeface.BOLD),
-                                    startindex,
-                                    startindex + words[1].length(),
-                                    0);
+                    span = new StyleSpan(Typeface.BOLD);
+                    endindex = startindex + words[1].length();
                     break;
                 // Dictionary forms
                 case 2:
@@ -132,35 +131,24 @@ public class WhitakersWords extends ListActivity {
                         break;
                     }
                     int index = 1;
-                    int endindex = startindex;
+                    endindex = startindex;
                     do {
                         endindex += words[index].length() + 1;
                         index += 1;
                     } while (words[index-1].endsWith(","));
 
-                    processed_result.setSpan(
-                                    new StyleSpan(Typeface.BOLD),
-                                    startindex,
-                                    endindex,
-                                    0);
+                    span = new StyleSpan(Typeface.BOLD);
                     break;
                 // Meaning
                 case 3:
-                    processed_result.setSpan(
-                                    new StyleSpan(Typeface.ITALIC),
-                                    startindex,
-                                    processed_result.length(),
-                                    0);
+                    span = new StyleSpan(Typeface.ITALIC);
                     break;
                 // Not found
                 case 4:
-                    processed_result.setSpan(
-                                    new ForegroundColorSpan(Color.RED),
-                                    startindex,
-                                    processed_result.length(),
-                                    0);
+                    span = new ForegroundColorSpan(Color.RED);
                     break;
             }
+            processed_result.setSpan(span, startindex, endindex, 0);
 
 	    prev_code = pearse_code;
 
