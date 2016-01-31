@@ -90,30 +90,32 @@ public class WhitakersWords extends ListActivity {
 
         String result = executeWords(term, english_to_latin.isChecked());
         SpannableStringBuilder processed_result = new SpannableStringBuilder();
-	String prev_code = null;
+	int prev_code = 0;
         for (String line: result.split("\n")) {
             String[] words = line.split(" +");
             String handled_line = TextUtils.join(" ", words);
-            if (words[0].equals("01") || words[0].equals("02")
-                            || words[0].equals("03") || words[0].equals("04")
-			    || words[0].equals("05") || words[0].equals("06")) {
+	    int pearse_code = 0;
+	    if (words[0].length() == 2) {
+            try {
+                pearse_code = Integer.parseInt(words[0]);
                 handled_line = handled_line.substring(3);
-                // Indent meanings
-                if (words[0].equals("03")) {
-                    handled_line = "  " + handled_line;
-                }
+            } catch (NumberFormatException e) {}
+	    }
+            // Indent meanings
+            if (pearse_code == 3) {
+                handled_line = "  " + handled_line;
             }
 
-            if (words[0].equals("01") && prev_code != null && !prev_code.equals("01") &&
-			    !prev_code.equals("05") && !prev_code.equals("06")) {
+            if (pearse_code == 1 && prev_code != 1 &&
+                            prev_code != 5 && prev_code != 6) {
                 results.add(processed_result.toString().trim());
                 processed_result = new SpannableStringBuilder();
-	    }
+	        }
 
             int startindex = processed_result.length();
             processed_result.append(handled_line + "\n");
             // Forms
-            if (words[0].equals("01")) {
+            if (pearse_code == 1) {
                 processed_result.setSpan(
                                 new StyleSpan(Typeface.BOLD),
                                 startindex,
@@ -123,7 +125,7 @@ public class WhitakersWords extends ListActivity {
             // Dictionary forms
             // The [ thing is a HACK(?) for parsing output of searches like
             // "quod", which show shorter output for dictionary forms
-            else if (words[0].equals("02") && !words[1].startsWith("[")) {
+            else if (pearse_code == 2 && !words[1].startsWith("[")) {
                 int index = 1;
                 int endindex = startindex;
                 do {
@@ -138,7 +140,7 @@ public class WhitakersWords extends ListActivity {
                                 0);
             }
             // Meaning
-            else if (words[0].equals("03")) {
+            else if (pearse_code == 3) {
                 processed_result.setSpan(
                                 new StyleSpan(Typeface.ITALIC),
                                 startindex,
@@ -146,7 +148,7 @@ public class WhitakersWords extends ListActivity {
                                 0);
             }
             // Not found
-            else if (words[0].equals("04")) {
+            else if (pearse_code == 4) {
                 processed_result.setSpan(
                                 new ForegroundColorSpan(Color.RED),
                                 startindex,
@@ -154,7 +156,7 @@ public class WhitakersWords extends ListActivity {
                                 0);
             }
 
-	    prev_code = words[0];
+	    prev_code = pearse_code;
 
         }
         results.add(processed_result.toString().trim());
