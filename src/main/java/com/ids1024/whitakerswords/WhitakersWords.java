@@ -114,46 +114,52 @@ public class WhitakersWords extends ListActivity {
 
             int startindex = processed_result.length();
             processed_result.append(handled_line + "\n");
-            // Forms
-            if (pearse_code == 1) {
-                processed_result.setSpan(
-                                new StyleSpan(Typeface.BOLD),
-                                startindex,
-                                startindex + words[1].length(),
-                                0);
-            }
-            // Dictionary forms
-            // The [ thing is a HACK(?) for parsing output of searches like
-            // "quod", which show shorter output for dictionary forms
-            else if (pearse_code == 2 && !words[1].startsWith("[")) {
-                int index = 1;
-                int endindex = startindex;
-                do {
-                    endindex += words[index].length() + 1;
-                    index += 1;
-                } while (words[index-1].endsWith(","));
 
-                processed_result.setSpan(
-                                new StyleSpan(Typeface.BOLD),
-                                startindex,
-                                endindex,
-                                0);
-            }
-            // Meaning
-            else if (pearse_code == 3) {
-                processed_result.setSpan(
-                                new StyleSpan(Typeface.ITALIC),
-                                startindex,
-                                processed_result.length(),
-                                0);
-            }
-            // Not found
-            else if (pearse_code == 4) {
-                processed_result.setSpan(
-                                new ForegroundColorSpan(Color.RED),
-                                startindex,
-                                processed_result.length(),
-                                0);
+            switch (pearse_code) {
+                // Forms
+                case 1:
+                    processed_result.setSpan(
+                                    new StyleSpan(Typeface.BOLD),
+                                    startindex,
+                                    startindex + words[1].length(),
+                                    0);
+                    break;
+                // Dictionary forms
+                case 2:
+                    // A HACK(?) for parsing output of searches like
+                    // "quod", which show shorter output for dictionary forms
+                    if (words[1].startsWith("[")) {
+                        break;
+                    }
+                    int index = 1;
+                    int endindex = startindex;
+                    do {
+                        endindex += words[index].length() + 1;
+                        index += 1;
+                    } while (words[index-1].endsWith(","));
+
+                    processed_result.setSpan(
+                                    new StyleSpan(Typeface.BOLD),
+                                    startindex,
+                                    endindex,
+                                    0);
+                    break;
+                // Meaning
+                case 3:
+                    processed_result.setSpan(
+                                    new StyleSpan(Typeface.ITALIC),
+                                    startindex,
+                                    processed_result.length(),
+                                    0);
+                    break;
+                // Not found
+                case 4:
+                    processed_result.setSpan(
+                                    new ForegroundColorSpan(Color.RED),
+                                    startindex,
+                                    processed_result.length(),
+                                    0);
+                    break;
             }
 
 	    prev_code = pearse_code;
