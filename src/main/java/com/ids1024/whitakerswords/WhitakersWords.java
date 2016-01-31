@@ -106,8 +106,10 @@ public class WhitakersWords extends ListActivity {
                 handled_line = "  " + handled_line;
             }
 
-            if (pearse_code == 1 && prev_code != 1 &&
-                            prev_code != 5 && prev_code != 6) {
+            if ((pearse_code == 1 && prev_code != 1 &&
+                            prev_code != 5 && prev_code != 6) ||
+                            (english_to_latin.isChecked() && line.isEmpty())
+                    ) {
                 results.add(processed_result.toString().trim());
                 processed_result = new SpannableStringBuilder();
 	        }
