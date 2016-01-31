@@ -110,7 +110,10 @@ public class WhitakersWords extends ListActivity {
                             prev_code != 5 && prev_code != 6) ||
                             (english_to_latin.isChecked() && line.isEmpty())
                     ) {
-                results.add(processed_result.toString().trim());
+                String finalresult = processed_result.toString().trim();
+                if (!finalresult.isEmpty()) {
+                    results.add(finalresult);
+                }
                 processed_result = new SpannableStringBuilder();
 	        }
 
@@ -155,7 +158,10 @@ public class WhitakersWords extends ListActivity {
 	    prev_code = pearse_code;
 
         }
-        results.add(processed_result.toString().trim());
+        String finalresult = processed_result.toString().trim();
+        if (!finalresult.isEmpty()) {
+            results.add(finalresult);
+        }
 
         ArrayAdapter<String> itemsAdapter =
             new ArrayAdapter<String>(getApplicationContext(), R.layout.result, results);
