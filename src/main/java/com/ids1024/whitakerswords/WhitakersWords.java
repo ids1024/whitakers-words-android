@@ -74,9 +74,7 @@ public class WhitakersWords extends ListActivity {
 
             return output.toString();
 
-        } catch(IOException e) {
-            throw new RuntimeException(e.getMessage());
-        } catch(InterruptedException e) {
+        } catch(IOException | InterruptedException e) {
             throw new RuntimeException(e.getMessage());
         }
     }
