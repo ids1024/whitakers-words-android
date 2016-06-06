@@ -150,6 +150,12 @@ public class WhitakersWords extends ListActivity {
                 case 4:
                     span = new ForegroundColorSpan(Color.RED);
                     break;
+		// Addons
+		case 5:
+		    break;
+		// Tricks/syncope/addons?
+		case 6:
+		    break;
             }
             processed_result.setSpan(span, startindex, endindex, 0);
 
