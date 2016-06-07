@@ -34,7 +34,6 @@ import android.widget.ListView;
 
 public class WhitakersWords extends ListActivity {
     String search_term;
-    boolean english_to_latin;
     ArrayList<SpannableStringBuilder> results;
     ListView list_view;
     EditText search_term_view;
@@ -87,7 +86,7 @@ public class WhitakersWords extends ListActivity {
     public void searchWord() {
 	results.clear();
 
-        String result = executeWords(search_term, english_to_latin);
+        String result = executeWords(search_term, english_to_latin_view.isChecked());
         SpannableStringBuilder processed_result = new SpannableStringBuilder();
 	int prev_code = 0;
         for (String line: result.split("\n")) {
@@ -199,7 +198,6 @@ public class WhitakersWords extends ListActivity {
                                  event.getAction()==KeyEvent.ACTION_DOWN)) {
 
                     search_term = search_term_view.getText().toString();
-                    english_to_latin = english_to_latin_view.isChecked();
 
                     searchWord();
                     v.setText("");
@@ -213,8 +211,8 @@ public class WhitakersWords extends ListActivity {
 
         if (savedInstanceState != null) {
             search_term = savedInstanceState.getString("search_term");
-            english_to_latin = savedInstanceState.getBoolean("english_to_latin");
-            english_to_latin_view.setChecked(english_to_latin);
+            english_to_latin_view.setChecked(
+                savedInstanceState.getBoolean("english_to_latin"));
             searchWord();
             ArrayAdapter<SpannableStringBuilder> itemsAdapter =
                 new ArrayAdapter<SpannableStringBuilder>(getApplicationContext(), R.layout.result, results);
@@ -225,7 +223,7 @@ public class WhitakersWords extends ListActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putString("search_term", search_term);
-        outState.putBoolean("english_to_latin", english_to_latin);
+        outState.putBoolean("english_to_latin", english_to_latin_view.isChecked());
         super.onSaveInstanceState(outState);
     }
 
