@@ -33,7 +33,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class WhitakersWords extends ListActivity {
-    ArrayList<String> results;
+    String search_term;
+    boolean english_to_latin;
+    ArrayList<SpannableStringBuilder> results;
 
     public void copyFiles() throws IOException {
         for (String filename: getAssets().list("words")) {
@@ -79,14 +81,10 @@ public class WhitakersWords extends ListActivity {
         }
     }
 
-    public void searchWord(View view) {
-        EditText search_term = (EditText)findViewById(R.id.search_term);
-        ToggleButton english_to_latin = (ToggleButton)findViewById(R.id.english_to_latin);
-        String term = search_term.getText().toString();
-
+    public void searchWord() {
 	results.clear();
 
-        String result = executeWords(term, english_to_latin.isChecked());
+        String result = executeWords(search_term, english_to_latin);
         SpannableStringBuilder processed_result = new SpannableStringBuilder();
 	int prev_code = 0;
         for (String line: result.split("\n")) {
@@ -106,11 +104,11 @@ public class WhitakersWords extends ListActivity {
 
             if ((pearse_code == 1 && prev_code != 1 &&
                             prev_code != 5 && prev_code != 6) ||
-                            (english_to_latin.isChecked() && line.isEmpty())
+                            (english_to_latin && line.isEmpty())
                     ) {
                 String finalresult = processed_result.toString().trim();
                 if (!finalresult.isEmpty()) {
-                    results.add(finalresult);
+                    results.add(processed_result);
                 }
                 processed_result = new SpannableStringBuilder();
 	        }
@@ -164,11 +162,11 @@ public class WhitakersWords extends ListActivity {
         }
         String finalresult = processed_result.toString().trim();
         if (!finalresult.isEmpty()) {
-            results.add(finalresult);
+            results.add(processed_result);
         }
 
-        ArrayAdapter<String> itemsAdapter =
-            new ArrayAdapter<String>(getApplicationContext(), R.layout.result, results);
+        ArrayAdapter<SpannableStringBuilder> itemsAdapter =
+            new ArrayAdapter<SpannableStringBuilder>(getApplicationContext(), R.layout.result, results);
         ListView result_list = (ListView)findViewById(android.R.id.list);
         result_list.setAdapter(itemsAdapter);
     }
@@ -184,15 +182,19 @@ public class WhitakersWords extends ListActivity {
 
         setContentView(R.layout.main);
 
-        EditText search_term = (EditText)findViewById(R.id.search_term);
-        search_term.setOnEditorActionListener(new OnEditorActionListener() {
+        ((EditText)findViewById(R.id.search_term))
+		.setOnEditorActionListener(new OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 if ((actionId == EditorInfo.IME_ACTION_SEARCH) ||
                                 (actionId==EditorInfo.IME_NULL &&
                                  event.getAction()==KeyEvent.ACTION_DOWN)) {
-                    searchWord((View)v);
+
+                    search_term = ((EditText)findViewById(R.id.search_term)).getText().toString();
+                    english_to_latin = ((ToggleButton)findViewById(R.id.english_to_latin)).isChecked();
+
+                    searchWord();
                     v.setText("");
                     handled = true;
                 }
@@ -200,12 +202,15 @@ public class WhitakersWords extends ListActivity {
             }
         });
 
-        results = new ArrayList<String>();
+        results = new ArrayList<SpannableStringBuilder>();
 
         if (savedInstanceState != null) {
-            results = savedInstanceState.getStringArrayList("results");
-            ArrayAdapter<String> itemsAdapter =
-                new ArrayAdapter<String>(getApplicationContext(), R.layout.result, results);
+            search_term = savedInstanceState.getString("search_term");
+            english_to_latin = savedInstanceState.getBoolean("english_to_latin");
+            ((ToggleButton)findViewById(R.id.english_to_latin)).setChecked(english_to_latin);
+            searchWord();
+            ArrayAdapter<SpannableStringBuilder> itemsAdapter =
+                new ArrayAdapter<SpannableStringBuilder>(getApplicationContext(), R.layout.result, results);
             ListView result_list = (ListView)findViewById(android.R.id.list);
             result_list.setAdapter(itemsAdapter);
         }
@@ -213,7 +218,8 @@ public class WhitakersWords extends ListActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putStringArrayList("results", results);
+        outState.putString("search_term", search_term);
+        outState.putBoolean("english_to_latin", english_to_latin);
         super.onSaveInstanceState(outState);
     }
 
