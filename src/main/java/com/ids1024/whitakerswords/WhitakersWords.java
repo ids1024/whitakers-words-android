@@ -102,15 +102,16 @@ public class WhitakersWords extends ListActivity {
                 handled_line = "  " + handled_line;
             }
 
-            if ((pearse_code == 1 && prev_code != 1 &&
-                            prev_code != 5 && prev_code != 6) ||
-                            (english_to_latin && line.isEmpty())
-                    ) {
+            if (line.isEmpty() || line.equals("*")) {
+		if (line.equals("*")) {
+                    processed_result.append("*");
+		}
                 String finalresult = processed_result.toString().trim();
                 if (!finalresult.isEmpty()) {
                     results.add(processed_result);
                 }
                 processed_result = new SpannableStringBuilder();
+		continue;
 	        }
 
             int startindex = processed_result.length();
