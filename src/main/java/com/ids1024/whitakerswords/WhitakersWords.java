@@ -19,6 +19,7 @@ import android.view.KeyEvent;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.EditText;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 import android.os.Bundle;
 import android.content.Intent;
@@ -33,60 +34,102 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class WhitakersWords extends ListActivity {
-    String search_term;
-    ArrayList<SpannableStringBuilder> results;
-    ListView list_view;
-    EditText search_term_view;
-    ToggleButton english_to_latin_view;
+    private static final String WORDS_EXECUTABLE = "words";
 
-    public void copyFiles() throws IOException {
-        for (String filename: getAssets().list("words")) {
-            InputStream ins = getAssets().open("words/" + filename);
-            byte[] buffer = new byte[4096];
-            FileOutputStream fos = openFileOutput(filename, MODE_PRIVATE);
-            for (int read = 0; read >= 0; read = ins.read(buffer)) {
+    private String search_term;
+    private final ArrayList<SpannableStringBuilder> results = new ArrayList<>();
+    private ListView list_view;
+    private EditText search_term_view;
+    private ToggleButton english_to_latin_view;
+
+    private File getFile(String filename) {
+      return new File(getCacheDir(), filename);
+    }
+
+    private void copyFiles() throws IOException {
+        byte[] buffer = new byte[32*1024];
+        for (String filename : getAssets().list("words")) {
+            copyFile(filename, buffer);
+        }
+
+        getFile(WORDS_EXECUTABLE).setExecutable(true);
+    }
+
+    private void copyFile(String filename, byte[] buffer) throws IOException {
+        InputStream ins = null;
+        FileOutputStream fos = null;
+        File outputFile = getFile(filename);
+        // if the file already exists, don't copy it again 
+        if (outputFile.exists()) {
+          return;
+        }
+
+        try {
+            ins = getAssets().open("words/" + filename);
+            fos = new FileOutputStream(outputFile);
+            int read;
+            while ((read = ins.read(buffer)) > 0) {
                 fos.write(buffer, 0, read);
             }
-            ins.close();
-            fos.close();
+        } finally {
+            if (ins != null) {
+              ins.close();
+            }
+            if (fos != null) {
+              fos.close();
+            }
         }
-        getFileStreamPath("words").setExecutable(true);
     }
 
-    public String executeWords(String text, boolean fromenglish) {
-        String wordspath = getFilesDir().getPath() + "/words";
+    // TODO(tcj): Execute this is another thread to prevent UI deadlocking
+    private String executeWords(String text, boolean fromenglish) throws IOException {
+        String wordspath = getFile(WORDS_EXECUTABLE).getPath();
         Process process;
-        try {
-            String[] command;
-            if (fromenglish) {
-                command = new String[] {wordspath, "~E", text};
-            } else {
-                command = new String[] {wordspath, text};
-            }
-            process = Runtime.getRuntime().exec(command, null, getFilesDir());
+        String[] command;
+        if (fromenglish) {
+            command = new String[] {wordspath, "~E", text};
+        } else {
+            command = new String[] {wordspath, text};
+        }
+        process = Runtime.getRuntime().exec(command, null, getCacheDir());
 
-            BufferedReader reader = new BufferedReader(
+        BufferedReader reader = null;
+        StringBuffer output = new StringBuffer();
+        try {
+            reader = new BufferedReader(
                 new InputStreamReader(process.getInputStream()));
             char[] buffer = new char[4096];
-            StringBuffer output = new StringBuffer();
-            for (int read = 0; read >= 0; read = reader.read(buffer)) {
+            int read;
+            while ((read = reader.read(buffer)) > 0) {
                 output.append(buffer, 0, read);
             }
-            
-            reader.close();
-            process.waitFor();
-
-            return output.toString();
-
-        } catch(IOException | InterruptedException e) {
-            throw new RuntimeException(e.getMessage());
+        } finally {
+            if (reader != null) {
+                reader.close();
+            }
+        }    
+        
+        try {
+          process.waitFor();
+        } catch (InterruptedException ex) {
+          Thread.currentThread().interrupt();
+          throw new RuntimeException(ex);
         }
+
+        return output.toString();
     }
 
-    public void searchWord() {
-	results.clear();
+    private void searchWord() {
+	      results.clear();
 
-        String result = executeWords(search_term, english_to_latin_view.isChecked());
+        String result;
+        try {
+           result = executeWords(search_term, english_to_latin_view.isChecked());
+        } catch (IOException ex) {
+          Toast.makeText(this, "Failed to execute words!", Toast.LENGTH_SHORT);
+          return;
+        }
+
         SpannableStringBuilder processed_result = new SpannableStringBuilder();
 	int prev_code = 0;
         for (String line: result.split("\n")) {
@@ -206,8 +249,6 @@ public class WhitakersWords extends ListActivity {
                 return handled;
             }
         });
-
-        results = new ArrayList<SpannableStringBuilder>();
 
         if (savedInstanceState != null) {
             search_term = savedInstanceState.getString("search_term");
