@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 import android.app.ListActivity;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,8 +34,11 @@ import android.graphics.Typeface;
 import android.graphics.Color;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.util.Log;
 
 public class WhitakersWords extends ListActivity {
+    private static final String TAG = "words";
+
     private static final String WORDS_EXECUTABLE = "words";
 
     private String search_term;
@@ -41,12 +46,72 @@ public class WhitakersWords extends ListActivity {
     private ListView list_view;
     private EditText search_term_view;
     private ToggleButton english_to_latin_view;
+    private int apkVersion = -1;
+
+    /** Returns the version number of the APK as specified in the manifest. */
+    private int getVersion() {
+        if (apkVersion < 0) {
+            try {
+                PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+                apkVersion = pInfo.versionCode;
+            } catch (NameNotFoundException e) {
+                // should never happen, since this code can't run without the package
+                // being installed
+                throw new RuntimeException(e);
+            }
+        }
+        return apkVersion;
+    }
+
+    private static void deleteFile(File f, boolean actuallyDelete) {
+        if (f.isDirectory()) {
+            File[] directoryContents = f.listFiles();
+            if (directoryContents != null) {
+                for (File subFile : directoryContents) {
+                    deleteFile(subFile, true);
+                }
+            }
+        }
+
+        if (actuallyDelete) {
+            Log.d(TAG, String.format("Deleting %s", f.getPath()));
+            if (!f.delete()) {
+                Log.w(TAG, String.format("Unable to delete %s", f.getPath()));
+            }
+        }
+    }
+
+    /** Deletes all files under the files directory. */
+    private void deleteLegacyDataDirectoryContents() {
+        deleteFile(getFilesDir(), false);
+    }
+
+    /** Ensures the appropriate versioned cache directory is created. The
+     * version number is derived from the APK version code.
+     *
+     * <p>Older directories and their contents from a prior APK version will be
+     * removed automatically.
+     */
+    private void createAndCleanupCacheDirectories() {
+      File versionedCacheDir = getFile("");
+
+      if (versionedCacheDir.exists()) {
+        return;
+      }
+
+      // delete the entire contents of cache and then create the versioned directory
+      deleteFile(getCacheDir(), false);
+      versionedCacheDir.mkdirs();
+    }
 
     private File getFile(String filename) {
-      return new File(getCacheDir(), filename);
+        return new File(getCacheDir(), String.format("%d/%s", getVersion(), filename));
     }
 
     private void copyFiles() throws IOException {
+        deleteLegacyDataDirectoryContents();
+        createAndCleanupCacheDirectories();
+
         byte[] buffer = new byte[32*1024];
         for (String filename : getAssets().list("words")) {
             copyFile(filename, buffer);
@@ -91,7 +156,7 @@ public class WhitakersWords extends ListActivity {
         } else {
             command = new String[] {wordspath, text};
         }
-        process = Runtime.getRuntime().exec(command, null, getCacheDir());
+        process = Runtime.getRuntime().exec(command, null, getFile(""));
 
         BufferedReader reader = null;
         StringBuffer output = new StringBuffer();
@@ -111,6 +176,11 @@ public class WhitakersWords extends ListActivity {
         
         try {
           process.waitFor();
+
+          int exitValue = process.exitValue();
+          if (exitValue != 0) {
+              Log.e(TAG, String.format("words subprocess returned %d", exitValue));
+          }
         } catch (InterruptedException ex) {
           Thread.currentThread().interrupt();
           throw new RuntimeException(ex);
