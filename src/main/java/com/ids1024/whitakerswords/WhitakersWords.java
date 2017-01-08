@@ -332,9 +332,6 @@ public class WhitakersWords extends ListActivity
             english_to_latin_view.setChecked(
                 savedInstanceState.getBoolean("english_to_latin"));
             searchWord();
-            ArrayAdapter<SpannableStringBuilder> itemsAdapter =
-                new ArrayAdapter<SpannableStringBuilder>(getApplicationContext(), R.layout.result, results);
-            list_view.setAdapter(itemsAdapter);
         }
     }
 
