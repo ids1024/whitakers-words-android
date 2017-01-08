@@ -9,7 +9,10 @@ import java.io.Serializable;
 import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Locale;
 import android.app.ListActivity;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.view.View;
@@ -36,7 +39,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.util.Log;
 
-public class WhitakersWords extends ListActivity {
+public class WhitakersWords extends ListActivity
+                            implements OnSharedPreferenceChangeListener {
     private static final String TAG = "words";
 
     private static final String WORDS_EXECUTABLE = "words";
@@ -117,6 +121,7 @@ public class WhitakersWords extends ListActivity {
             copyFile(filename, buffer);
         }
 
+        updateConfigFile();
         getFile(WORDS_EXECUTABLE).setExecutable(true);
     }
 
@@ -298,6 +303,8 @@ public class WhitakersWords extends ListActivity {
 
         setContentView(R.layout.main);
 
+        getPreferences().registerOnSharedPreferenceChangeListener(this);
+
         list_view = (ListView)findViewById(android.R.id.list);
         search_term_view = (EditText)findViewById(R.id.search_term);
         english_to_latin_view = (ToggleButton)findViewById(R.id.english_to_latin);
@@ -356,6 +363,40 @@ public class WhitakersWords extends ListActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private SharedPreferences getPreferences() {
+        String name = getClass().getPackage().getName() + "_preferences";
+        return getSharedPreferences(name, MODE_PRIVATE);
+    }
+
+    private void updateConfigFile() throws IOException {
+        SharedPreferences sharedPreferences = getPreferences();
+
+        File file = getFile("WORD.MOD");
+        FileOutputStream fos = new FileOutputStream(file);
+        for (String setting: new String[] {"trim_output",
+                "do_unknowns_only", "ignore_unknown_names",
+                "ignore_unknown_caps", "do_compounds", "do_fixes",
+                "do_dictionary_forms", "show_age", "show_frequency",
+                "do_examples", "do_only_meanings",
+                "do_stems_for_unknown"}) {
+            if (sharedPreferences.contains(setting)) {
+                String value = sharedPreferences.getBoolean(setting, false) ? "Y" : "N";
+                String line = setting.toUpperCase(Locale.US) + " " + value + "\n";
+                fos.write(line.getBytes());
+            }
+        }
+        fos.close();
+    }
+
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
+    String changed_key) {
+        try {
+            updateConfigFile();
+        } catch(IOException e) {
+            throw new RuntimeException(e.getMessage());
         }
     }
 }
