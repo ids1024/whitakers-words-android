@@ -65,4 +65,9 @@
         android:title="@string/do_stems_for_unknown"
         android:summary="@string/do_stems_for_unknown_summ"
         android:defaultValue="false" />
+    <CheckBoxPreference
+        android:key="search_on_keypress"
+        android:title="@string/search_on_keypress"
+        android:summary="@string/search_on_keypress_summ"
+        android:defaultValue="false" />
 </PreferenceScreen>
