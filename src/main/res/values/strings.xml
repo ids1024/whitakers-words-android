@@ -6,6 +6,9 @@
     <string name="english_to_latin">English-Latin</string>
 
     <!-- Preferences -->
+    <string name="words_preferences">Words Settings</string>
+    <string name="misc_preferences">Miscellaneous</string>
+
     <string name="trim_output">Trim output</string>
     <string name="trim_output_summ">Removes least likely results. If results have been trimmed, output will be followed by an astrisk (*). Default: true</string>
     <string name="do_unknowns_only">Do unknowns only</string>
@@ -32,6 +35,7 @@
     <string name="do_only_meanings_summ">Output meaning without inflection details. Default: false</string>
     <string name="do_stems_for_unknown">Do stems for unknown</string>
     <string name="do_stems_for_unknown_summ">When unable to find a proper match in the dictionary, list the dictionary entries around the unknown. This will likely catch a substantive for which only the ADJ stem appears in dictionary, an ADJ for which there is only a N stem, etc. Default: false</string>
+
     <string name="search_on_keypress">Search on keypress</string>
     <string name="search_on_keypress_summ">Displays result while you type, without needing to press search. Default: false</string>
 
