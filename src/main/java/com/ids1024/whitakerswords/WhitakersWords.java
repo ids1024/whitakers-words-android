@@ -339,7 +339,7 @@ public class WhitakersWords extends ListActivity
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (getPreferences().getBoolean("search_on_keypress", false)) {
+                if (getPreferences().getBoolean("search_on_keypress", true)) {
                     search_term = search_term_view.getText().toString();
                     searchWord();
                 }

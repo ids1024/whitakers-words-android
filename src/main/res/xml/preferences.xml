@@ -74,6 +74,6 @@
             android:key="search_on_keypress"
             android:title="@string/search_on_keypress"
             android:summary="@string/search_on_keypress_summ"
-            android:defaultValue="false" />
+            android:defaultValue="true" />
     </PreferenceCategory>
 </PreferenceScreen>

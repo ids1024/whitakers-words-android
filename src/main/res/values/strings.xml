@@ -37,6 +37,6 @@
     <string name="do_stems_for_unknown_summ">When unable to find a proper match in the dictionary, list the dictionary entries around the unknown. This will likely catch a substantive for which only the ADJ stem appears in dictionary, an ADJ for which there is only a N stem, etc. Default: false</string>
 
     <string name="search_on_keypress">Search on keypress</string>
-    <string name="search_on_keypress_summ">Displays result while you type, without needing to press search. Default: false</string>
+    <string name="search_on_keypress_summ">Displays result while you type, without needing to press search. Default: true</string>
 
 </resources>
