@@ -3,7 +3,7 @@ A compiled version of words 1.97FC is included in assets/words. This is because 
 Compilation procedure:
 
 - Download and extract the [source code](http://archives.nd.edu/whitaker/wordsall.zip)
-- Set up an environment that allows compilation of ada code for arm processors. Setting up a cross-compiler is the best method, but is problematic since most prebuilt toolchains do not include ada support, so you have to compile it yourself. I managed to do this, but it is also possible (and perhaps easier) to set up an arm chroot using qemu.
+- Set up an environment that allows compilation of Ada code for ARM processors. Setting up a cross-compiler is the best method, but is problematic since most prebuilt toolchains do not include Ada support, so you have to compile it yourself. I managed to do this, but it is also possible (and perhaps easier) to set up an ARM chroot using qemu.
 - Run the following command:
 
 ```bash
