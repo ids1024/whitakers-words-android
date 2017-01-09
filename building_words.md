@@ -1,4 +1,4 @@
-A compiled version of words 1.97FC is included in assets/words. This is because android ndk does not support ada, Aor do most cross compiler toolchains.
+A compiled version of words 1.97FC is included in assets/words. This is because android ndk does not support Ada, nor do most cross compiler toolchains.
 
 Compilation procedure:
 
