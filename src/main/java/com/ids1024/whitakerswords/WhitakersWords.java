@@ -25,6 +25,7 @@ import android.widget.TextView.OnEditorActionListener;
 import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+import android.widget.CompoundButton;
 import android.os.Bundle;
 import android.content.Intent;
 import android.content.res.AssetManager;
@@ -339,6 +340,15 @@ public class WhitakersWords extends ListActivity
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (getPreferences().getBoolean("search_on_keypress", true)) {
+                    search_term = search_term_view.getText().toString();
+                    searchWord();
+                }
+            }
+        });
+
+        english_to_latin_view.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (getPreferences().getBoolean("search_on_keypress", true)) {
                     search_term = search_term_view.getText().toString();
                     searchWord();
