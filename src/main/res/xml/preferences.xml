@@ -41,7 +41,7 @@
             android:key="do_dictionary_forms"
             android:title="@string/do_dictionary_forms"
             android:summary="@string/do_dictionary_forms_summ"
-            android:defaultValue="false" />
+            android:defaultValue="true" />
         <CheckBoxPreference
             android:key="show_age"
             android:title="@string/show_age"

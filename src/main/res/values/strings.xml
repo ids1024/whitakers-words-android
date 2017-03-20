@@ -24,7 +24,7 @@
     <string name="do_tricks">Do tricks</string>
     <string name="do_tricks_summ">When a result is not found, try replacements like cl -> cul, vul -> vol, ads -> ass, inp -> imp, etc., to provide for recognized variants of classical spelling, though false positives can result. Default: true</string>
     <string name="do_dictionary_forms">Do dictionary forms</string>
-    <string name="do_dictionary_forms_summ">Output line with forms associated with dictionary entry (nom/gen for noun, etc.). Default: false</string>
+    <string name="do_dictionary_forms_summ">Output line with forms associated with dictionary entry (nom/gen for noun, etc.). Default: true</string>
     <string name="show_age">Show age</string>
     <string name="show_age_summ">Show what during periods a word/inflection was in use. Default: true</string>
     <string name="show_frequency">Show frequency</string>
