@@ -316,6 +316,7 @@ public class WhitakersWords extends ListActivity
             public boolean onQueryTextSubmit(String query) {
                 search_term = query;
                 searchWord();
+		search_term_view.clearFocus();
 	        return true;
             }
 
