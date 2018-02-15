@@ -11,12 +11,11 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     />
-<EditText
+<SearchView
     android:id="@+id/search_term"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:inputType="text"
-    android:imeOptions="actionSearch"
+    android:iconifiedByDefault="false"
     />
 <ListView
     android:id="@android:id/list"

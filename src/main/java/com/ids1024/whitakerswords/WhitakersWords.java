@@ -21,8 +21,8 @@ import android.view.MenuInflater;
 import android.view.inputmethod.EditorInfo;
 import android.view.KeyEvent;
 import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
-import android.widget.EditText;
+import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 import android.widget.CompoundButton;
@@ -50,7 +50,7 @@ public class WhitakersWords extends ListActivity
     private String search_term;
     private final ArrayList<SpannableStringBuilder> results = new ArrayList<>();
     private ListView list_view;
-    private EditText search_term_view;
+    private SearchView search_term_view;
     private ToggleButton english_to_latin_view;
     private int apkVersion = -1;
 
@@ -308,49 +308,31 @@ public class WhitakersWords extends ListActivity
         getPreferences().registerOnSharedPreferenceChangeListener(this);
 
         list_view = (ListView)findViewById(android.R.id.list);
-        search_term_view = (EditText)findViewById(R.id.search_term);
+        search_term_view = (SearchView)findViewById(R.id.search_term);
         english_to_latin_view = (ToggleButton)findViewById(R.id.english_to_latin);
 
-        search_term_view.setOnEditorActionListener(new OnEditorActionListener() {
+        search_term_view.setOnQueryTextListener(new OnQueryTextListener() {
             @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                boolean handled = false;
-                if ((actionId == EditorInfo.IME_ACTION_SEARCH) ||
-                                (actionId==EditorInfo.IME_NULL &&
-                                 event.getAction()==KeyEvent.ACTION_DOWN)) {
-
-                    search_term = search_term_view.getText().toString();
-
-                    searchWord();
-                    v.setText("");
-                    handled = true;
-                }
-                return handled;
-            }
-        });
-
-        search_term_view.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void afterTextChanged(Editable s) {
+            public boolean onQueryTextSubmit(String query) {
+                search_term = query;
+                searchWord();
+	        return true;
             }
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            public boolean onQueryTextChange(String query) {
                 if (getPreferences().getBoolean("search_on_keypress", true)) {
-                    search_term = search_term_view.getText().toString();
+                    search_term = query;
                     searchWord();
                 }
+		return true;
             }
         });
 
         english_to_latin_view.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (getPreferences().getBoolean("search_on_keypress", true)) {
-                    search_term = search_term_view.getText().toString();
+                    search_term = search_term_view.getQuery().toString();
                     searchWord();
                 }
             }
