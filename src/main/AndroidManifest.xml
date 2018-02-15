@@ -15,6 +15,10 @@
                   android:label="@string/settings"
                   android:parentActivityName="WhitakersWords">
         </activity>
+	<activity android:name="WhitakersAbout"
+                  android:label="@string/about_title"
+                  android:parentActivityName="WhitakersWords">
+	</activity>
 
     </application>
     <uses-sdk android:minSdkVersion="11" android:targetSdkVersion="23" />

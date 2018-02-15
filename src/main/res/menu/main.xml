@@ -2,4 +2,8 @@
     <item android:id="@+id/action_settings"
           android:title="@string/settings"
           android:showAsAction="never" />
+    <item android:id="@+id/about"
+          android:title="@string/about_title"
+          android:showAsAction="never"
+          />
 </menu>

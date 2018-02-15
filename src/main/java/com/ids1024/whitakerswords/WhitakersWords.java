@@ -365,9 +365,14 @@ public class WhitakersWords extends ListActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
+        Intent intent;
         switch (item.getItemId()) {
             case R.id.action_settings:
-                Intent intent = new Intent(this, WhitakersSettings.class);
+                intent = new Intent(this, WhitakersSettings.class);
+                startActivity(intent);
+                return true;
+            case R.id.about:
+                intent = new Intent(this, WhitakersAbout.class);
                 startActivity(intent);
                 return true;
             default:
