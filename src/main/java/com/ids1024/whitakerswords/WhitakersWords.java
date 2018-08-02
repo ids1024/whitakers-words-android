@@ -5,54 +5,50 @@ import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.File;
-import java.io.Serializable;
 import java.io.IOException;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Locale;
-import android.app.ListActivity;
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuInflater;
-import android.view.inputmethod.EditorInfo;
-import android.view.KeyEvent;
-import android.widget.TextView;
-import android.widget.SearchView;
-import android.widget.SearchView.OnQueryTextListener;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.SearchView.OnQueryTextListener;
 import android.widget.Toast;
-import android.widget.ToggleButton;
-import android.widget.CompoundButton;
 import android.os.Bundle;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.text.SpannableStringBuilder;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.text.TextUtils;
 import android.text.style.StyleSpan;
 import android.text.style.ForegroundColorSpan;
 import android.graphics.Typeface;
 import android.graphics.Color;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
+import android.support.design.widget.NavigationView;
+import android.support.design.widget.NavigationView.OnNavigationItemSelectedListener;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 
-public class WhitakersWords extends ListActivity
+public class WhitakersWords extends AppCompatActivity
                             implements OnSharedPreferenceChangeListener {
     private static final String TAG = "words";
-
     private static final String WORDS_EXECUTABLE = "words";
 
     private String search_term;
-    private final ArrayList<SpannableStringBuilder> results = new ArrayList<>();
-    private ListView list_view;
-    private SearchView search_term_view;
-    private ToggleButton english_to_latin_view;
+    private RecyclerView recycler_view;
+    private SearchView search_view;
+    private DrawerLayout drawer_layout;
     private int apkVersion = -1;
+    private boolean english_to_latin;
 
     /** Returns the version number of the APK as specified in the manifest. */
     private int getVersion() {
@@ -154,11 +150,11 @@ public class WhitakersWords extends ListActivity
     }
 
     // TODO(tcj): Execute this is another thread to prevent UI deadlocking
-    private String executeWords(String text, boolean fromenglish) throws IOException {
+    private String executeWords(String text) throws IOException {
         String wordspath = getFile(WORDS_EXECUTABLE).getPath();
         Process process;
         String[] command;
-        if (fromenglish) {
+        if (english_to_latin) {
             command = new String[] {wordspath, "~E", text};
         } else {
             command = new String[] {wordspath, text};
@@ -197,11 +193,11 @@ public class WhitakersWords extends ListActivity
     }
 
     private void searchWord() {
-	      results.clear();
+        ArrayList<SpannableStringBuilder> results = new ArrayList<>();
 
         String result;
         try {
-           result = executeWords(search_term, english_to_latin_view.isChecked());
+           result = executeWords(search_term);
         } catch (IOException ex) {
           Toast.makeText(this, "Failed to execute words!", Toast.LENGTH_SHORT);
           return;
@@ -288,9 +284,7 @@ public class WhitakersWords extends ListActivity
             results.add(processed_result);
         }
 
-        ArrayAdapter<SpannableStringBuilder> itemsAdapter =
-            new ArrayAdapter<SpannableStringBuilder>(getApplicationContext(), R.layout.result, results);
-        list_view.setAdapter(itemsAdapter);
+        recycler_view.setAdapter(new SearchAdapter(results));
     }
 
     @Override
@@ -307,16 +301,94 @@ public class WhitakersWords extends ListActivity
 
         getPreferences().registerOnSharedPreferenceChangeListener(this);
 
-        list_view = (ListView)findViewById(android.R.id.list);
-        search_term_view = (SearchView)findViewById(R.id.search_term);
-        english_to_latin_view = (ToggleButton)findViewById(R.id.english_to_latin);
+        recycler_view = (RecyclerView)findViewById(R.id.list);
+        recycler_view.setLayoutManager(new LinearLayoutManager(this));
+        recycler_view.addItemDecoration(new DividerItemDecoration(recycler_view.getContext(), DividerItemDecoration.VERTICAL));
 
-        search_term_view.setOnQueryTextListener(new OnQueryTextListener() {
+        drawer_layout = (DrawerLayout)findViewById(R.id.drawer_layout);
+
+	NavigationView navigation_view = (NavigationView)findViewById(R.id.nav_view);
+	navigation_view.inflateMenu(R.menu.navigation);
+	navigation_view.setCheckedItem(R.id.action_latin_to_english);
+	final Activity activity = this;
+        final ActionBar action_bar = getSupportActionBar();
+        navigation_view.setNavigationItemSelectedListener(
+             new OnNavigationItemSelectedListener() {
+		 @Override
+                 public boolean onNavigationItemSelected(MenuItem item)  {
+                     Intent intent;
+                     drawer_layout.closeDrawers();
+                     switch (item.getItemId()) {
+                         case R.id.action_latin_to_english:
+                             english_to_latin = false;
+                             setSearchQueryHint();
+                             // https://stackoverflow.com/questions/10089993/android-how-to-focus-actionbar-searchview
+                             action_bar.setCustomView(search_view);
+                             action_bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+                             search_view.setFocusable(true);
+                             search_view.setIconified(false);
+                             search_view.requestFocusFromTouch();
+                             return true;
+                         case R.id.action_english_to_latin:
+                             english_to_latin = true;
+                             setSearchQueryHint();
+                             action_bar.setCustomView(search_view);
+                             action_bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+                             search_view.setFocusable(true);
+                             search_view.setIconified(false);
+                             search_view.requestFocusFromTouch();
+                             return true;
+                         case R.id.action_settings:
+                             intent = new Intent(activity, WhitakersSettings.class);
+			     startActivity(intent);
+                             return true;
+                         case R.id.action_about:
+                             intent = new Intent(activity, WhitakersAbout.class);
+			     startActivity(intent);
+                             return true;
+                         default:
+                             return false;
+		     }
+		 }
+	});
+
+        if (savedInstanceState != null) {
+            search_term = savedInstanceState.getString("search_term");
+            english_to_latin = savedInstanceState.getBoolean("english_to_latin");
+            searchWord();
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString("search_term", search_term);
+        outState.putBoolean("english_to_latin", english_to_latin);
+        super.onSaveInstanceState(outState);
+    }
+
+    // TODO: Replace method with more elegant solution
+    private void setSearchQueryHint() {
+        if (english_to_latin) {
+	    search_view.setQueryHint(getResources().getString(R.string.english_to_latin));
+        } else {
+	    search_view.setQueryHint(getResources().getString(R.string.latin_to_english));
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+
+        search_view = (SearchView)menu.findItem(R.id.action_search).getActionView();
+        setSearchQueryHint();
+        search_view.setOnQueryTextListener(new OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 search_term = query;
                 searchWord();
-		search_term_view.clearFocus();
+		search_view.clearFocus();
 	        return true;
             }
 
@@ -330,54 +402,8 @@ public class WhitakersWords extends ListActivity
             }
         });
 
-        english_to_latin_view.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (getPreferences().getBoolean("search_on_keypress", true)) {
-                    search_term = search_term_view.getQuery().toString();
-                    searchWord();
-                }
-            }
-        });
 
-        if (savedInstanceState != null) {
-            search_term = savedInstanceState.getString("search_term");
-            english_to_latin_view.setChecked(
-                savedInstanceState.getBoolean("english_to_latin"));
-            searchWord();
-        }
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        outState.putString("search_term", search_term);
-        outState.putBoolean("english_to_latin", english_to_latin_view.isChecked());
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu items for use in the action bar
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle presses on the action bar items
-        Intent intent;
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                intent = new Intent(this, WhitakersSettings.class);
-                startActivity(intent);
-                return true;
-            case R.id.about:
-                intent = new Intent(this, WhitakersAbout.class);
-                startActivity(intent);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 
     private SharedPreferences getPreferences() {

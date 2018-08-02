@@ -4,13 +4,13 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.2'
+        classpath 'com.android.tools.build:gradle:3.2.0-alpha18'
     }
 }
 apply plugin: 'android'
 
 android {
-    compileSdkVersion 'Google Inc.:Google APIs:23'
+    compileSdkVersion 27
 
     signingConfigs {
         release {
@@ -28,4 +28,14 @@ android {
             signingConfig signingConfigs.release
         }
     }
+}
+
+repositories {
+    google()
+}
+
+dependencies {
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:preference-v14:27.1.1'
 }

@@ -1,9 +1,8 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/action_settings"
-          android:title="@string/settings"
-          android:showAsAction="never" />
-    <item android:id="@+id/about"
-          android:title="@string/about_title"
-          android:showAsAction="never"
-          />
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/action_search"
+          android:icon="@android:drawable/ic_menu_search"
+          android:title="@string/search"
+          app:actionViewClass="android.support.v7.widget.SearchView"
+          app:showAsAction="always|collapseActionView" />
 </menu>

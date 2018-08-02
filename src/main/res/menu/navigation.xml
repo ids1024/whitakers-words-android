@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/action_latin_to_english"
+              android:title="@string/latin_to_english"
+              android:showAsAction="never" />
+        <item android:id="@+id/action_english_to_latin"
+              android:title="@string/english_to_latin"
+              android:showAsAction="never" />
+        <item android:id="@+id/action_settings"
+              android:title="@string/settings"
+              android:showAsAction="never" />
+        <item android:id="@+id/action_about"
+              android:title="@string/about_title"
+              android:showAsAction="never"
+              />
+    </group>
+</menu>

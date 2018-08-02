@@ -1,0 +1,5 @@
+<resources>
+ <style name="AppTheme" parent="Theme.AppCompat">
+  <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+ </style>
+</resources>

@@ -1,16 +1,14 @@
 package com.ids1024.whitakerswords;
 
-import android.preference.PreferenceActivity;
 import android.os.Bundle;
-import android.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 
-public class WhitakersSettings extends PreferenceActivity {
+public class WhitakersSettings extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.preferences);
-
-        ActionBar actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        getSupportFragmentManager().beginTransaction()
+                                   .replace(android.R.id.content, new WhitakersSettingsFragment())
+                                   .commit();
     }
 }

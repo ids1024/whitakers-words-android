@@ -7,4 +7,5 @@
     android:linksClickable="true"
     android:textIsSelectable="true"
     android:autoLink="all"
+    android:padding="5dp"
     />
