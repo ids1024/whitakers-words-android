@@ -16,7 +16,7 @@ class SearchAdapter(results: ArrayList<SpannableStringBuilder>) : RecyclerView.A
     }
     
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.text_view.setText(results.get(position))
+        holder.text_view.text = results.get(position)
     }
     
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
