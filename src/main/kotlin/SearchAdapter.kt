@@ -14,11 +14,11 @@ class SearchAdapter(results: ArrayList<SpannableStringBuilder>) : RecyclerView.A
     override fun getItemCount(): Int {
         return results.size
     }
-    
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.text_view.text = results.get(position)
     }
-    
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.getContext()).inflate(R.layout.result, null)
         return ViewHolder(view)

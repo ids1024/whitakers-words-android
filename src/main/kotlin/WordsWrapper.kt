@@ -8,7 +8,7 @@ import java.io.FileOutputStream
 import java.io.File
 import java.io.IOException
 import android.util.Log
-import android.content.Context 
+import android.content.Context
 import android.content.SharedPreferences
 
 private val TAG = "words"
@@ -34,8 +34,8 @@ private fun deleteFile(f: File, actuallyDelete: Boolean) {
 
 public class WordsWrapper(context: Context, preferences: SharedPreferences) {
     // The version number of the APK as specified in the manifest.
-    private val apkVersion: Int;
-    private val preferences = preferences;
+    private val apkVersion: Int
+    private val preferences = preferences
     private val context = context
     init {
         apkVersion = context.packageManager

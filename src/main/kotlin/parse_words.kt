@@ -21,7 +21,6 @@ public fun parse_words(input: String): ArrayList<SpannableStringBuilder> {
                 handled_line = handled_line.substring(3)
             } catch (e: NumberFormatException) {
             }
-
         }
         // Indent meanings
         if (pearse_code == 3) {
