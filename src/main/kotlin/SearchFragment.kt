@@ -19,12 +19,6 @@ import android.support.v7.widget.SearchView.OnQueryTextListener
 import android.widget.Toast
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.text.SpannableStringBuilder
-import android.text.TextUtils
-import android.text.style.StyleSpan
-import android.text.style.ForegroundColorSpan
-import android.graphics.Typeface
-import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.DividerItemDecoration
@@ -115,8 +109,6 @@ public class SearchFragment(english_to_latin: Boolean, focus: Boolean) : Fragmen
     }
 
     private fun searchWord() {
-        val results = ArrayList<SpannableStringBuilder>()
-
         val result: String
         try {
             result = words.executeWords(search_term, english_to_latin)
@@ -125,80 +117,7 @@ public class SearchFragment(english_to_latin: Boolean, focus: Boolean) : Fragmen
             return
         }
 
-        var processed_result = SpannableStringBuilder()
-        for (line in result.split("\n".toRegex())) {
-            val words = line.split(" +".toRegex())
-            var handled_line = TextUtils.join(" ", words)
-            var pearse_code = 0
-            if (words.size >= 1 && words[0].length == 2) {
-                try {
-                    pearse_code = Integer.parseInt(words[0])
-                    handled_line = handled_line.substring(3)
-                } catch (e: NumberFormatException) {
-                }
-
-            }
-            // Indent meanings
-            if (pearse_code == 3) {
-                handled_line = "  $handled_line"
-            }
-
-            if (line.isEmpty() || line == "*") {
-                if (line == "*") {
-                    processed_result.append("*")
-                }
-                val finalresult = processed_result.toString().trim { it <= ' ' }
-                if (!finalresult.isEmpty()) {
-                    results.add(processed_result)
-                }
-                processed_result = SpannableStringBuilder()
-                continue
-            }
-
-            val startindex = processed_result.length
-            processed_result.append(handled_line + "\n")
-
-            var span: Any? = null
-            var endindex = processed_result.length
-            when (pearse_code) {
-            // Forms
-                1 -> {
-                    span = StyleSpan(Typeface.BOLD)
-                    endindex = startindex + words[1].length
-                }
-            // Dictionary forms
-                2 -> {
-                    // A HACK(?) for parsing output of searches like
-                    // "quod", which show shorter output for dictionary forms
-                    if (!words[1].startsWith("[")) {
-                        var index = 1
-                        endindex = startindex
-                        do {
-                            endindex += words[index].length + 1
-                            index += 1
-                        } while (words[index - 1].endsWith(","))
-
-                        span = StyleSpan(Typeface.BOLD)
-	    	    }
-                }
-            // Meaning
-                3 -> span = StyleSpan(Typeface.ITALIC)
-            // Not found
-                4 -> span = ForegroundColorSpan(Color.RED)
-            // Addons
-                5 -> {
-                }
-            // Tricks/syncope/addons?
-                6 -> {
-                }
-            }
-            processed_result.setSpan(span, startindex, endindex, 0)
-        }
-        val finalresult = processed_result.toString().trim { it <= ' ' }
-        if (!finalresult.isEmpty()) {
-            results.add(processed_result)
-        }
-
+        val results = parse_words(result)
         recycler_view.adapter = SearchAdapter(results)
     }
 }
