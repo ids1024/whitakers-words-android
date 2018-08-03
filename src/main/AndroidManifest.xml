@@ -14,10 +14,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="WhitakersSettings"
-                  android:label="@string/settings"
-                  android:parentActivityName="WhitakersWords">
-        </activity>
 	<activity android:name="WhitakersAbout"
                   android:label="@string/about_title"
                   android:parentActivityName="WhitakersWords">
