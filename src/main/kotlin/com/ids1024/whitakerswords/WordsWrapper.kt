@@ -14,21 +14,16 @@ import android.content.SharedPreferences
 private val TAG = "words"
 private val WORDS_EXECUTABLE = "words"
 
-private fun deleteFile(f: File, actuallyDelete: Boolean) {
-    if (f.isDirectory) {
-        val directoryContents = f.listFiles()
-        if (directoryContents != null) {
-            for (subFile in directoryContents) {
-                deleteFile(subFile, true)
+private fun emptyDirectory(f: File) {
+    val directoryContents = f.listFiles()
+    if (directoryContents != null) {
+        for (subFile in directoryContents) {
+            if (!subFile.deleteRecursively()) {
+                Log.w(TAG, String.format("Unable to delete %s", f.path))
             }
         }
-    }
-
-    if (actuallyDelete) {
-        Log.d(TAG, String.format("Deleting %s", f.path))
-        if (!f.delete()) {
-            Log.w(TAG, String.format("Unable to delete %s", f.path))
-        }
+    } else {
+        Log.w(TAG, String.format("Unable to clear %s", f.path))
     }
 }
 
@@ -46,7 +41,7 @@ public class WordsWrapper(context: Context, preferences: SharedPreferences) {
 
     /** Deletes all files under the files directory.  */
     private fun deleteLegacyDataDirectoryContents() {
-        deleteFile(context.filesDir, false)
+        emptyDirectory(context.filesDir)
     }
 
     /** Ensures the appropriate versioned cache directory is created. The
@@ -64,12 +59,12 @@ public class WordsWrapper(context: Context, preferences: SharedPreferences) {
         }
 
         // delete the entire contents of cache and then create the versioned directory
-        deleteFile(context.cacheDir, false)
+        emptyDirectory(context.cacheDir)
         versionedCacheDir.mkdirs()
     }
 
     private fun getFile(filename: String): File {
-        return File(context.cacheDir, String.format("%d/%s", apkVersion, filename))
+        return File(context.cacheDir, "$apkVersion/$filename")
     }
 
     @Throws(IOException::class)
@@ -77,9 +72,8 @@ public class WordsWrapper(context: Context, preferences: SharedPreferences) {
         deleteLegacyDataDirectoryContents()
         createAndCleanupCacheDirectories()
 
-        val buffer = ByteArray(32 * 1024)
         for (filename in context.assets.list("words")) {
-            copyFile(filename, buffer)
+            copyFile(filename)
         }
 
         updateConfigFile()
@@ -87,7 +81,7 @@ public class WordsWrapper(context: Context, preferences: SharedPreferences) {
     }
 
     @Throws(IOException::class)
-    private fun copyFile(filename: String, buffer: ByteArray) {
+    private fun copyFile(filename: String) {
         var ins: InputStream? = null
         var fos: FileOutputStream? = null
         val outputFile = getFile(filename)
@@ -99,11 +93,7 @@ public class WordsWrapper(context: Context, preferences: SharedPreferences) {
         try {
             ins = context.assets.open("words/$filename")
             fos = FileOutputStream(outputFile)
-            var read = ins!!.read(buffer)
-            while (read > 0) {
-                fos.write(buffer, 0, read)
-                read = ins.read(buffer)
-            }
+            ins.copyTo(fos)
         } finally {
             if (ins != null) {
                 ins.close()
