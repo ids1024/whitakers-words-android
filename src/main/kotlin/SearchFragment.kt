@@ -38,9 +38,9 @@ public class SearchFragment(english_to_latin: Boolean, focus: Boolean) : Fragmen
     private lateinit var recycler_view: RecyclerView
     private lateinit var search_view: SearchView
     private var english_to_latin = english_to_latin
-    private lateinit var preferences: SharedPreferences;
-    private lateinit var words: WordsWrapper;
-    private var focus = focus;
+    private lateinit var preferences: SharedPreferences
+    private lateinit var words: WordsWrapper
+    private var focus = focus
 
     public override fun onCreateView(inflater: LayoutInflater,
                                      container: ViewGroup?,
