@@ -27,7 +27,7 @@ class WhitakersWords : AppCompatActivity() {
                     SearchFragment(true, true)
                 }
                 R.id.action_settings -> {
-                    WhitakersSettingsFragment()
+                    SettingsFragment()
                 }
                 R.id.action_about -> {
                     AboutFragment()
