@@ -25,6 +25,6 @@ class SearchAdapter(results: ArrayList<SpannableStringBuilder>) : RecyclerView.A
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var text_view: TextView = view.findViewById(R.id.result_text)
+        val text_view: TextView = view.findViewById(R.id.result_text)
     }
 }

@@ -27,7 +27,7 @@ public class SearchFragment(english_to_latin: Boolean, focus: Boolean) : Fragmen
     private var english_to_latin = english_to_latin
     private lateinit var preferences: SharedPreferences
     private lateinit var words: WordsWrapper
-    private var focus = focus
+    private val focus = focus
 
     public override fun onCreateView(inflater: LayoutInflater,
                                      container: ViewGroup?,
@@ -37,7 +37,7 @@ public class SearchFragment(english_to_latin: Boolean, focus: Boolean) : Fragmen
 
         words = WordsWrapper(context!!, preferences)
 
-        var view = inflater.inflate(R.layout.search, container, false)
+        val view = inflater.inflate(R.layout.search, container, false)
 
         preferences.registerOnSharedPreferenceChangeListener(this)
         
