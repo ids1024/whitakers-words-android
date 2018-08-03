@@ -140,13 +140,13 @@ class WhitakersWords : AppCompatActivity(), OnSharedPreferenceChangeListener {
 
         preferences.registerOnSharedPreferenceChangeListener(this)
 
-        recycler_view = findViewById<View>(R.id.list)!! as RecyclerView
+        recycler_view = findViewById(R.id.list)!!
         recycler_view.layoutManager = LinearLayoutManager(this)
         recycler_view.addItemDecoration(DividerItemDecoration(recycler_view.context, DividerItemDecoration.VERTICAL))
 
-        drawer_layout = findViewById<View>(R.id.drawer_layout)!! as DrawerLayout
+        drawer_layout = findViewById(R.id.drawer_layout)!!
 
-        val navigation_view = findViewById<View>(R.id.nav_view) as NavigationView
+        val navigation_view = findViewById<NavigationView>(R.id.nav_view)
         navigation_view.inflateMenu(R.menu.navigation)
         navigation_view.setCheckedItem(R.id.action_latin_to_english)
         val activity = this
