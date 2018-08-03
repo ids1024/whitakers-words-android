@@ -12,8 +12,8 @@ class WhitakersWords : AppCompatActivity() {
 
         setContentView(R.layout.main)
         supportFragmentManager.beginTransaction()
-                              .replace(R.id.content, SearchFragment(false, false))
-                              .commit()
+            .replace(R.id.content, SearchFragment(false, false))
+            .commit()
 
         nav_view.inflateMenu(R.menu.navigation)
         nav_view.setCheckedItem(R.id.action_latin_to_english)
@@ -37,9 +37,9 @@ class WhitakersWords : AppCompatActivity() {
                 }
             }
             supportFragmentManager.beginTransaction()
-                                  .addToBackStack(null)
-                                  .replace(R.id.content, fragment)
-                                  .commit()
+                .addToBackStack(null)
+                .replace(R.id.content, fragment)
+                .commit()
 
             true
         }
