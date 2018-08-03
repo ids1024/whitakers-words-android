@@ -1,16 +1,12 @@
 package com.ids1024.whitakerswords
 
-import java.util.ArrayList
 import java.io.IOException
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
-import android.content.pm.PackageInfo
-import android.content.pm.PackageManager.NameNotFoundException
 import android.view.View 
 import android.view.Menu
 import android.view.MenuItem
-import android.view.MenuItem.OnActionExpandListener
 import android.view.MenuInflater
 import android.view.ViewGroup
 import android.view.LayoutInflater
@@ -22,10 +18,6 @@ import android.support.v4.app.Fragment
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.app.ActionBar
-import android.support.v7.app.AppCompatActivity
-import android.support.v4.view.MenuItemCompat
-import android.view.inputmethod.InputMethodManager
 
 public class SearchFragment(english_to_latin: Boolean, focus: Boolean) : Fragment(), OnSharedPreferenceChangeListener {
     private var search_term: String = ""
