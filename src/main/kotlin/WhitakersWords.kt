@@ -322,16 +322,16 @@ class WhitakersWords : AppCompatActivity(), OnSharedPreferenceChangeListener {
         navigation_view.inflateMenu(R.menu.navigation)
         navigation_view.setCheckedItem(R.id.action_latin_to_english)
         val activity = this
-        val action_bar = supportActionBar
+        val action_bar = supportActionBar!!
         navigation_view.setNavigationItemSelectedListener { item ->
             val intent: Intent
-            drawer_layout!!.closeDrawers()
+            drawer_layout.closeDrawers()
             when (item.itemId) {
                 R.id.action_latin_to_english -> {
                     english_to_latin = false
                     setSearchQueryHint()
                     // https://stackoverflow.com/questions/10089993/android-how-to-focus-actionbar-searchview
-                    action_bar!!.customView = search_view
+                    action_bar.customView = search_view
                     action_bar.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
                     search_view!!.isFocusable = true
                     search_view!!.isIconified = false
@@ -341,7 +341,7 @@ class WhitakersWords : AppCompatActivity(), OnSharedPreferenceChangeListener {
                 R.id.action_english_to_latin -> {
                     english_to_latin = true
                     setSearchQueryHint()
-                    action_bar!!.customView = search_view
+                    action_bar.customView = search_view
                     action_bar.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
                     search_view!!.isFocusable = true
                     search_view!!.isIconified = false
