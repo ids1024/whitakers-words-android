@@ -25,7 +25,6 @@ import android.graphics.Typeface
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.support.design.widget.NavigationView
-import android.support.design.widget.NavigationView.OnNavigationItemSelectedListener
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.DividerItemDecoration
@@ -53,11 +52,11 @@ class WhitakersWords : AppCompatActivity(), OnSharedPreferenceChangeListener {
         }
 
         var processed_result = SpannableStringBuilder()
-        for (line in result.split("\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
-            val words = line.split(" +".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        for (line in result.split("\n".toRegex())) {
+            val words = line.split(" +".toRegex())
             var handled_line = TextUtils.join(" ", words)
             var pearse_code = 0
-            if (words[0].length == 2) {
+            if (words.size >= 1 && words[0].length == 2) {
                 try {
                     pearse_code = Integer.parseInt(words[0])
                     handled_line = handled_line.substring(3)
