@@ -2,4 +2,8 @@
 bin/
 gen/
 local.properties
-.gradle
+.gradle/
+build/
+*.iml
+.idea/
+release.keystore
