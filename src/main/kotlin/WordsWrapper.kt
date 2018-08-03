@@ -102,7 +102,7 @@ public class WordsWrapper(context: Context, preferences: SharedPreferences) {
             var read = ins!!.read(buffer)
             while (read > 0) {
                 fos.write(buffer, 0, read)
-                read = ins!!.read(buffer)
+                read = ins.read(buffer)
             }
         } finally {
             if (ins != null) {

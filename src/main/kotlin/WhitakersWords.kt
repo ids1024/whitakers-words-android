@@ -35,7 +35,7 @@ import android.support.v7.app.ActionBar
 class WhitakersWords : AppCompatActivity(), OnSharedPreferenceChangeListener {
     private var search_term: String = ""
     private lateinit var recycler_view: RecyclerView
-    private var search_view: SearchView? = null
+    private lateinit var search_view: SearchView
     private lateinit var drawer_layout: DrawerLayout
     private var english_to_latin: Boolean = false
     private lateinit var preferences: SharedPreferences;
@@ -53,7 +53,6 @@ class WhitakersWords : AppCompatActivity(), OnSharedPreferenceChangeListener {
         }
 
         var processed_result = SpannableStringBuilder()
-        var prev_code = 0
         for (line in result.split("\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
             val words = line.split(" +".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             var handled_line = TextUtils.join(" ", words)
@@ -121,16 +120,13 @@ class WhitakersWords : AppCompatActivity(), OnSharedPreferenceChangeListener {
                 }
             }
             processed_result.setSpan(span, startindex, endindex, 0)
-
-            prev_code = pearse_code
-
         }
         val finalresult = processed_result.toString().trim { it <= ' ' }
         if (!finalresult.isEmpty()) {
             results.add(processed_result)
         }
 
-        recycler_view!!.adapter = SearchAdapter(results)
+        recycler_view.adapter = SearchAdapter(results)
     }
 
     public override fun onCreate(savedInstanceState: Bundle?) {
@@ -166,9 +162,9 @@ class WhitakersWords : AppCompatActivity(), OnSharedPreferenceChangeListener {
                     // https://stackoverflow.com/questions/10089993/android-how-to-focus-actionbar-searchview
                     action_bar.customView = search_view
                     action_bar.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
-                    search_view!!.isFocusable = true
-                    search_view!!.isIconified = false
-                    search_view!!.requestFocusFromTouch()
+                    search_view.isFocusable = true
+                    search_view.isIconified = false
+                    search_view.requestFocusFromTouch()
                     true
                 }
                 R.id.action_english_to_latin -> {
@@ -176,9 +172,9 @@ class WhitakersWords : AppCompatActivity(), OnSharedPreferenceChangeListener {
                     setSearchQueryHint()
                     action_bar.customView = search_view
                     action_bar.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
-                    search_view!!.isFocusable = true
-                    search_view!!.isIconified = false
-                    search_view!!.requestFocusFromTouch()
+                    search_view.isFocusable = true
+                    search_view.isIconified = false
+                    search_view.requestFocusFromTouch()
                     true
                 }
                 R.id.action_settings -> {
@@ -211,9 +207,9 @@ class WhitakersWords : AppCompatActivity(), OnSharedPreferenceChangeListener {
     // TODO: Replace method with more elegant solution
     private fun setSearchQueryHint() {
         if (english_to_latin) {
-            search_view!!.queryHint = resources.getString(R.string.english_to_latin)
+            search_view.queryHint = resources.getString(R.string.english_to_latin)
         } else {
-            search_view!!.queryHint = resources.getString(R.string.latin_to_english)
+            search_view.queryHint = resources.getString(R.string.latin_to_english)
         }
     }
 
@@ -222,13 +218,13 @@ class WhitakersWords : AppCompatActivity(), OnSharedPreferenceChangeListener {
         val inflater = menuInflater
         inflater.inflate(R.menu.main, menu)
 
-        search_view = menu.findItem(R.id.action_search).actionView as SearchView
+        search_view = menu.findItem(R.id.action_search).actionView!! as SearchView
         setSearchQueryHint()
-        search_view!!.setOnQueryTextListener(object : OnQueryTextListener {
+        search_view.setOnQueryTextListener(object : OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 search_term = query
                 searchWord()
-                search_view!!.clearFocus()
+                search_view.clearFocus()
                 return true
             }
 
