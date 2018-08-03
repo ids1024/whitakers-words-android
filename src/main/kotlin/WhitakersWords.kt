@@ -153,7 +153,6 @@ class WhitakersWords : AppCompatActivity(), OnSharedPreferenceChangeListener {
         val activity = this
         val action_bar = supportActionBar!!
         navigation_view.setNavigationItemSelectedListener { item ->
-            val intent: Intent
             drawer_layout.closeDrawers()
             when (item.itemId) {
                 R.id.action_latin_to_english -> {
@@ -178,12 +177,12 @@ class WhitakersWords : AppCompatActivity(), OnSharedPreferenceChangeListener {
                     true
                 }
                 R.id.action_settings -> {
-                    intent = Intent(activity, WhitakersSettings::class.java)
+                    val intent = Intent(activity, WhitakersSettings::class.java)
                     startActivity(intent)
                     true
                 }
                 R.id.action_about -> {
-                    intent = Intent(activity, WhitakersAbout::class.java)
+                    val intent = Intent(activity, WhitakersAbout::class.java)
                     startActivity(intent)
                     true
                 }
