@@ -5,9 +5,10 @@ import android.support.v7.app.AppCompatActivity
 import android.support.design.widget.NavigationView
 import android.support.v4.widget.DrawerLayout
 
-class WhitakersWords : AppCompatActivity() {
-    private lateinit var drawer_layout: DrawerLayout
+import kotlinx.android.synthetic.main.main.drawer_layout
+import kotlinx.android.synthetic.main.main.nav_view
 
+class WhitakersWords : AppCompatActivity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -16,12 +17,9 @@ class WhitakersWords : AppCompatActivity() {
                               .replace(R.id.content, SearchFragment(false, false))
                               .commit()
 
-        drawer_layout = findViewById(R.id.drawer_layout)!!
-
-        val navigation_view = findViewById<NavigationView>(R.id.nav_view)
-        navigation_view.inflateMenu(R.menu.navigation)
-        navigation_view.setCheckedItem(R.id.action_latin_to_english)
-        navigation_view.setNavigationItemSelectedListener { item ->
+        nav_view.inflateMenu(R.menu.navigation)
+        nav_view.setCheckedItem(R.id.action_latin_to_english)
+        nav_view.setNavigationItemSelectedListener { item ->
             drawer_layout.closeDrawers()
             val fragment = when (item.itemId) {
                 R.id.action_latin_to_english -> {

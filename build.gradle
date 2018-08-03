@@ -11,6 +11,7 @@ buildscript {
 }
 apply plugin: 'android'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 27

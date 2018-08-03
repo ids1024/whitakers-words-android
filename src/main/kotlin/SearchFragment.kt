@@ -19,9 +19,10 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.DividerItemDecoration
 
+import kotlinx.android.synthetic.main.search.recycler_view
+
 public class SearchFragment(english_to_latin: Boolean, focus: Boolean) : Fragment(), OnSharedPreferenceChangeListener {
     private var search_term: String = ""
-    private lateinit var recycler_view: RecyclerView
     private lateinit var search_view: SearchView
     private var english_to_latin = english_to_latin
     private lateinit var preferences: SharedPreferences
@@ -39,8 +40,14 @@ public class SearchFragment(english_to_latin: Boolean, focus: Boolean) : Fragmen
         var view = inflater.inflate(R.layout.search, container, false)
 
         preferences.registerOnSharedPreferenceChangeListener(this)
+        
+        setHasOptionsMenu(true)
+        return view
+    }
 
-        recycler_view = view.findViewById(R.id.list)!!
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
         recycler_view.layoutManager = LinearLayoutManager(context)
         recycler_view.addItemDecoration(DividerItemDecoration(recycler_view.context, DividerItemDecoration.VERTICAL))
 
@@ -49,9 +56,6 @@ public class SearchFragment(english_to_latin: Boolean, focus: Boolean) : Fragmen
             english_to_latin = savedInstanceState.getBoolean("english_to_latin")
             searchWord()
         }
-
-        setHasOptionsMenu(true)
-        return view
     }
     
     override fun onSaveInstanceState(outState: Bundle) {

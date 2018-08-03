@@ -5,7 +5,7 @@
     android:layout_height="fill_parent"
     >
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/list"
+        android:id="@+id/recycler_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         />
