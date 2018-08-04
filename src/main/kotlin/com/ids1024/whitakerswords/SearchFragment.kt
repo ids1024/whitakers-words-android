@@ -27,6 +27,8 @@ public class SearchFragment(english_to_latin: Boolean, focus: Boolean) : Fragmen
     private lateinit var words: WordsWrapper
     private val focus = focus
 
+    constructor() : this(false, false)
+
     public override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
