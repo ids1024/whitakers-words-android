@@ -19,11 +19,11 @@ private fun emptyDirectory(f: File) {
     if (directoryContents != null) {
         for (subFile in directoryContents) {
             if (!subFile.deleteRecursively()) {
-                Log.w(TAG, String.format("Unable to delete %s", f.path))
+                Log.w(TAG, "Unable to delete ${f.path}")
             }
         }
     } else {
-        Log.w(TAG, String.format("Unable to clear %s", f.path))
+        Log.w(TAG, "Unable to clear ${f.path}")
     }
 }
 
@@ -139,7 +139,7 @@ public class WordsWrapper(context: Context, preferences: SharedPreferences) {
 
             val exitValue = process.exitValue()
             if (exitValue != 0) {
-                Log.e(TAG, String.format("words subprocess returned %d", exitValue))
+                Log.e(TAG, "words subprocess returned $exitValue")
             }
         } catch (ex: InterruptedException) {
             Thread.currentThread().interrupt()
