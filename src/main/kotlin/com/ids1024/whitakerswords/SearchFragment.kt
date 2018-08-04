@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.search.recycler_view
 public class SearchFragment(english_to_latin: Boolean, focus: Boolean) : Fragment(), OnSharedPreferenceChangeListener {
     private var search_term: String = ""
     private lateinit var search_view: SearchView
-    private var english_to_latin = english_to_latin
+    public var english_to_latin = english_to_latin
     private lateinit var preferences: SharedPreferences
     private lateinit var words: WordsWrapper
     private val focus = focus
