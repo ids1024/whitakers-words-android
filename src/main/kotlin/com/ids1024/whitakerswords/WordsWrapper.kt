@@ -27,12 +27,14 @@ private fun emptyDirectory(f: File) {
     }
 }
 
-class WordsWrapper(context: Context, preferences: SharedPreferences) {
+class WordsWrapper(context: Context) {
     // The version number of the APK as specified in the manifest.
     private val apkVersion: Int
-    private val preferences = preferences
+    private val preferences: SharedPreferences
     private val context = context
     init {
+        preferences = context!!.getSharedPreferences(PREFERENCES_NAME,
+                                                     Context.MODE_PRIVATE)
         apkVersion = context.packageManager
                             .getPackageInfo(context.packageName, 0)
                             .versionCode

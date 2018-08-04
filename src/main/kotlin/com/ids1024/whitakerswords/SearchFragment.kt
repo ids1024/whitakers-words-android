@@ -33,9 +33,9 @@ class SearchFragment(english_to_latin: Boolean, focus: Boolean) : Fragment() {
 
         setHasOptionsMenu(true)
 
-        val name = javaClass.`package`.name + "_preferences"
-        preferences = context!!.getSharedPreferences(name, Context.MODE_PRIVATE)
-        words = WordsWrapper(context!!, preferences)
+        preferences = context!!.getSharedPreferences(PREFERENCES_NAME,
+                                                     Context.MODE_PRIVATE)
+        words = WordsWrapper(context!!)
         preferences.registerOnSharedPreferenceChangeListener { _, _ ->
             words.updateConfigFile()
         }
