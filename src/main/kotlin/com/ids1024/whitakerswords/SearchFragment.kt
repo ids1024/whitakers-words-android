@@ -34,17 +34,15 @@ public class SearchFragment(english_to_latin: Boolean, focus: Boolean) : Fragmen
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        setHasOptionsMenu(true)
+
         val name = javaClass.`package`.name + "_preferences"
         preferences = context!!.getSharedPreferences(name, Context.MODE_PRIVATE)
+        preferences.registerOnSharedPreferenceChangeListener(this)
 
         words = WordsWrapper(context!!, preferences)
 
-        val view = inflater.inflate(R.layout.search, container, false)
-
-        preferences.registerOnSharedPreferenceChangeListener(this)
-
-        setHasOptionsMenu(true)
-        return view
+        return inflater.inflate(R.layout.search, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
