@@ -54,9 +54,8 @@ public class SearchFragment(english_to_latin: Boolean, focus: Boolean) : Fragmen
         recycler_view.addItemDecoration(DividerItemDecoration(recycler_view.context, DividerItemDecoration.VERTICAL))
 
         if (savedInstanceState != null) {
-            search_term = savedInstanceState.getString("search_term")
             english_to_latin = savedInstanceState.getBoolean("english_to_latin")
-            searchWord()
+            searchWord(savedInstanceState.getString("search_term"))
         }
     }
 
@@ -80,16 +79,14 @@ public class SearchFragment(english_to_latin: Boolean, focus: Boolean) : Fragmen
 
         search_view.setOnQueryTextListener(object : OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                search_term = query
-                searchWord()
+                searchWord(query)
                 search_view.clearFocus()
                 return true
             }
 
             override fun onQueryTextChange(query: String): Boolean {
                 if (preferences.getBoolean("search_on_keypress", true)) {
-                    search_term = query
-                    searchWord()
+                    searchWord(query)
                 }
                 return true
             }
@@ -107,7 +104,9 @@ public class SearchFragment(english_to_latin: Boolean, focus: Boolean) : Fragmen
         words.updateConfigFile()
     }
 
-    private fun searchWord() {
+    private fun searchWord(search_term: String) {
+        this.search_term = search_term
+
         val result: String
         try {
             result = words.executeWords(search_term, english_to_latin)
