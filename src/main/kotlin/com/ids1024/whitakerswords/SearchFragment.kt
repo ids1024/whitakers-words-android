@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.search.recycler_view
 
 public class SearchFragment(english_to_latin: Boolean, focus: Boolean) : Fragment() {
     private var search_term: String = ""
-    private lateinit var search_view: SearchView
+    private var search_view: SearchView? = null
     public var english_to_latin = english_to_latin
     private lateinit var preferences: SharedPreferences
     private lateinit var words: WordsWrapper
@@ -50,7 +50,7 @@ public class SearchFragment(english_to_latin: Boolean, focus: Boolean) : Fragmen
     }
 
     override fun onDestroyView() {
-        search_view.setOnQueryTextListener(null)
+        search_view?.setOnQueryTextListener(null)
         super.onDestroyView()
     }
 
@@ -79,15 +79,15 @@ public class SearchFragment(english_to_latin: Boolean, focus: Boolean) : Fragmen
         val menu_item = menu.findItem(R.id.action_search)
         search_view = menu_item.actionView!! as SearchView
         if (english_to_latin) {
-            search_view.queryHint = resources.getString(R.string.english_to_latin)
+            search_view!!.queryHint = resources.getString(R.string.english_to_latin)
         } else {
-            search_view.queryHint = resources.getString(R.string.latin_to_english)
+            search_view!!.queryHint = resources.getString(R.string.latin_to_english)
         }
 
-        search_view.setOnQueryTextListener(object : OnQueryTextListener {
+        search_view!!.setOnQueryTextListener(object : OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 searchWord(query)
-                search_view.clearFocus()
+                search_view!!.clearFocus()
                 return true
             }
 
