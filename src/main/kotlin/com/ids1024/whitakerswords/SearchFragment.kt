@@ -18,17 +18,17 @@ import android.support.v7.widget.DividerItemDecoration
 
 import kotlinx.android.synthetic.main.search.recycler_view
 
-public class SearchFragment(english_to_latin: Boolean, focus: Boolean) : Fragment() {
+class SearchFragment(english_to_latin: Boolean, focus: Boolean) : Fragment() {
     private var search_term: String = ""
     private var search_view: SearchView? = null
-    public var english_to_latin = english_to_latin
+    var english_to_latin = english_to_latin
     private lateinit var preferences: SharedPreferences
     private lateinit var words: WordsWrapper
     private val focus = focus
 
     constructor() : this(false, false)
 
-    public override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setHasOptionsMenu(true)
@@ -41,7 +41,7 @@ public class SearchFragment(english_to_latin: Boolean, focus: Boolean) : Fragmen
         }
     }
 
-    public override fun onCreateView(
+    override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?

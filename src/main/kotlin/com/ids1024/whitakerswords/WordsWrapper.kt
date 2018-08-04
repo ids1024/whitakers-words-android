@@ -27,7 +27,7 @@ private fun emptyDirectory(f: File) {
     }
 }
 
-public class WordsWrapper(context: Context, preferences: SharedPreferences) {
+class WordsWrapper(context: Context, preferences: SharedPreferences) {
     // The version number of the APK as specified in the manifest.
     private val apkVersion: Int
     private val preferences = preferences
@@ -106,7 +106,7 @@ public class WordsWrapper(context: Context, preferences: SharedPreferences) {
 
     // TODO(tcj): Execute this is another thread to prevent UI deadlocking
     @Throws(IOException::class)
-    public fun executeWords(text: String, english_to_latin: Boolean): String {
+    fun executeWords(text: String, english_to_latin: Boolean): String {
         val wordspath = getFile(WORDS_EXECUTABLE).path
         val process: Process
         val command: Array<String>
@@ -150,7 +150,7 @@ public class WordsWrapper(context: Context, preferences: SharedPreferences) {
     }
 
     @Throws(IOException::class)
-    public fun updateConfigFile() {
+    fun updateConfigFile() {
         val file = getFile("WORD.MOD")
         val fos = FileOutputStream(file)
         for (setting in arrayOf("trim_output", "do_unknowns_only", "ignore_unknown_names", "ignore_unknown_caps", "do_compounds", "do_fixes", "do_dictionary_forms", "show_age", "show_frequency", "do_examples", "do_only_meanings", "do_stems_for_unknown")) {

@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.LayoutInflater
 
-public class AboutFragment : Fragment() {
-    public override fun onCreateView(
+class AboutFragment : Fragment() {
+    override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?

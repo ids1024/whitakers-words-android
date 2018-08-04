@@ -7,7 +7,7 @@ import kotlinx.android.synthetic.main.main.drawer_layout
 import kotlinx.android.synthetic.main.main.nav_view
 
 class WhitakersWords : AppCompatActivity() {
-    public override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.main)

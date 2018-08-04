@@ -7,7 +7,7 @@ import android.graphics.Typeface
 import android.graphics.Color
 import android.text.SpannableStringBuilder
 
-public fun parse_words(input: String): ArrayList<SpannableStringBuilder> {
+fun parse_words(input: String): ArrayList<SpannableStringBuilder> {
     val results = ArrayList<SpannableStringBuilder>()
 
     var processed_result = SpannableStringBuilder()
