@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.search.recycler_view
 
 public class SearchFragment(english_to_latin: Boolean, focus: Boolean) : Fragment() {
     private var search_term: String = ""
+    private lateinit var search_view: SearchView
     public var english_to_latin = english_to_latin
     private lateinit var preferences: SharedPreferences
     private lateinit var words: WordsWrapper
@@ -48,6 +49,11 @@ public class SearchFragment(english_to_latin: Boolean, focus: Boolean) : Fragmen
         return inflater.inflate(R.layout.search, container, false)
     }
 
+    override fun onDestroyView() {
+        search_view.setOnQueryTextListener(null)
+        super.onDestroyView()
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -71,7 +77,7 @@ public class SearchFragment(english_to_latin: Boolean, focus: Boolean) : Fragmen
         inflater.inflate(R.menu.main, menu)
 
         val menu_item = menu.findItem(R.id.action_search)
-        val search_view = menu_item.actionView!! as SearchView
+        search_view = menu_item.actionView!! as SearchView
         if (english_to_latin) {
             search_view.queryHint = resources.getString(R.string.english_to_latin)
         } else {
