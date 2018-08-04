@@ -35,7 +35,14 @@ class WhitakersWords : AppCompatActivity() {
             }
         }
 
-        if (savedInstanceState == null) {
+        if (savedInstanceState != null) {
+            for (k in savedInstanceState.keySet()) {
+                if (k.startsWith("fragment_")) {
+                    val fragment = supportFragmentManager.getFragment(savedInstanceState, k)
+                    fragments.put(k.substring(9).toInt(), fragment)
+                }
+            }
+        } else {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.content, getFragment(R.id.action_latin_to_english))
                 .addToBackStack(null)
@@ -53,6 +60,13 @@ class WhitakersWords : AppCompatActivity() {
 
             true
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        for ((k, v) in fragments) {
+            supportFragmentManager.putFragment(outState, "fragment_$k", v)
+        }
+        super.onSaveInstanceState(outState)
     }
 
     private fun getFragment(id: Int): Fragment {
