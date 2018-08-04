@@ -32,10 +32,12 @@ class WhitakersWords : AppCompatActivity() {
             }
         }
 
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.content, SearchFragment(false, false))
-            .addToBackStack(null)
-            .commit()
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.content, SearchFragment(false, false))
+                .addToBackStack(null)
+                .commit()
+        }
 
         nav_view.inflateMenu(R.menu.navigation)
         nav_view.setNavigationItemSelectedListener { item ->
