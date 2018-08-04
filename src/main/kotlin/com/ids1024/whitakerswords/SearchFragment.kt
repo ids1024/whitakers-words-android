@@ -70,7 +70,6 @@ public class SearchFragment(english_to_latin: Boolean, focus: Boolean) : Fragmen
 
         val menu_item = menu.findItem(R.id.action_search)
         search_view = menu_item.actionView!! as SearchView
-        search_view.setIconifiedByDefault(false)
         if (english_to_latin) {
             search_view.queryHint = resources.getString(R.string.english_to_latin)
         } else {
