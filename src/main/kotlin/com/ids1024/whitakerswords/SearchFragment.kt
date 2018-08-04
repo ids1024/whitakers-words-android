@@ -24,7 +24,7 @@ class SearchFragment(english_to_latin: Boolean, focus: Boolean) : Fragment() {
     var english_to_latin = english_to_latin
     private lateinit var preferences: SharedPreferences
     private lateinit var words: WordsWrapper
-    private val focus = focus
+    private var focus = focus
 
     constructor() : this(false, false)
 
@@ -101,6 +101,7 @@ class SearchFragment(english_to_latin: Boolean, focus: Boolean) : Fragment() {
 
         if (focus) {
             menu_item.expandActionView()
+            focus = false // Do not focus when using back button
         }
     }
 
