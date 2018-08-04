@@ -20,21 +20,16 @@ class WhitakersWords : AppCompatActivity() {
         nav_view.setNavigationItemSelectedListener { item ->
             drawer_layout.closeDrawers()
             val fragment = when (item.itemId) {
-                R.id.action_latin_to_english -> {
+                R.id.action_latin_to_english ->
                     SearchFragment(false, true)
-                }
-                R.id.action_english_to_latin -> {
+                R.id.action_english_to_latin ->
                     SearchFragment(true, true)
-                }
-                R.id.action_settings -> {
+                R.id.action_settings ->
                     SettingsFragment()
-                }
-                R.id.action_about -> {
+                R.id.action_about ->
                     AboutFragment()
-                }
-                else -> {
+                else ->
                     throw RuntimeException() // Unreachable
-                }
             }
             supportFragmentManager.beginTransaction()
                 .addToBackStack(null)
