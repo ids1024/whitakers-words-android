@@ -18,15 +18,14 @@ import android.support.v7.widget.DividerItemDecoration
 
 import kotlinx.android.synthetic.main.search.recycler_view
 
-class SearchFragment(english_to_latin: Boolean, focus: Boolean) : Fragment() {
+class SearchFragment(english_to_latin: Boolean) : Fragment() {
     private var search_term: String = ""
     private var search_view: SearchView? = null
     var english_to_latin = english_to_latin
     private lateinit var preferences: SharedPreferences
     private lateinit var words: WordsWrapper
-    private var focus = focus
 
-    constructor() : this(false, false)
+    constructor() : this(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +62,8 @@ class SearchFragment(english_to_latin: Boolean, focus: Boolean) : Fragment() {
         if (savedInstanceState != null) {
             english_to_latin = savedInstanceState.getBoolean("english_to_latin")
             searchWord(savedInstanceState.getString("search_term"))
+        } else if (search_term != "") {
+            searchWord(search_term)
         }
     }
 
@@ -98,11 +99,6 @@ class SearchFragment(english_to_latin: Boolean, focus: Boolean) : Fragment() {
                 return true
             }
         })
-
-        if (focus) {
-            menu_item.expandActionView()
-            focus = false // Do not focus when using back button
-        }
     }
 
     private fun searchWord(search_term: String) {

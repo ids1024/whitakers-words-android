@@ -1,12 +1,15 @@
 package com.ids1024.whitakerswords
 
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 
 import kotlinx.android.synthetic.main.main.drawer_layout
 import kotlinx.android.synthetic.main.main.nav_view
 
 class WhitakersWords : AppCompatActivity() {
+    var fragments = HashMap<Int, Fragment>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -34,7 +37,7 @@ class WhitakersWords : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.content, SearchFragment(false, false))
+                .replace(R.id.content, getFragment(R.id.action_latin_to_english))
                 .addToBackStack(null)
                 .commit()
         }
@@ -42,18 +45,7 @@ class WhitakersWords : AppCompatActivity() {
         nav_view.inflateMenu(R.menu.navigation)
         nav_view.setNavigationItemSelectedListener { item ->
             drawer_layout.closeDrawers()
-            val fragment = when (item.itemId) {
-                R.id.action_latin_to_english ->
-                    SearchFragment(false, true)
-                R.id.action_english_to_latin ->
-                    SearchFragment(true, true)
-                R.id.action_settings ->
-                    SettingsFragment()
-                R.id.action_about ->
-                    AboutFragment()
-                else ->
-                    throw RuntimeException() // Unreachable
-            }
+            val fragment = getFragment(item.itemId)
             supportFragmentManager.beginTransaction()
                 .addToBackStack(null)
                 .replace(R.id.content, fragment)
@@ -61,5 +53,26 @@ class WhitakersWords : AppCompatActivity() {
 
             true
         }
+    }
+
+    private fun getFragment(id: Int): Fragment {
+        var fragment = fragments.get(id)
+        if (fragment == null) {
+            fragment = when (id) {
+                R.id.action_latin_to_english ->
+                    SearchFragment(false)
+                R.id.action_english_to_latin ->
+                    SearchFragment(true)
+                R.id.action_settings ->
+                    SettingsFragment()
+                R.id.action_about ->
+                    AboutFragment()
+                else ->
+                    throw RuntimeException() // Unreachable
+            }
+
+            fragments.put(id, fragment)
+        }
+        return fragment
     }
 }
