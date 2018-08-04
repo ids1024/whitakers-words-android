@@ -3,7 +3,6 @@ package com.ids1024.whitakerswords
 import java.io.IOException
 import android.content.Context
 import android.content.SharedPreferences
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.view.View
 import android.view.Menu
 import android.view.MenuInflater
@@ -19,7 +18,7 @@ import android.support.v7.widget.DividerItemDecoration
 
 import kotlinx.android.synthetic.main.search.recycler_view
 
-public class SearchFragment(english_to_latin: Boolean, focus: Boolean) : Fragment(), OnSharedPreferenceChangeListener {
+public class SearchFragment(english_to_latin: Boolean, focus: Boolean) : Fragment() {
     private var search_term: String = ""
     private lateinit var search_view: SearchView
     public var english_to_latin = english_to_latin
@@ -29,19 +28,24 @@ public class SearchFragment(english_to_latin: Boolean, focus: Boolean) : Fragmen
 
     constructor() : this(false, false)
 
+    public override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setHasOptionsMenu(true)
+
+        val name = javaClass.`package`.name + "_preferences"
+        preferences = context!!.getSharedPreferences(name, Context.MODE_PRIVATE)
+        words = WordsWrapper(context!!, preferences)
+        preferences.registerOnSharedPreferenceChangeListener { _, _ ->
+            words.updateConfigFile()
+        }
+    }
+
     public override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        setHasOptionsMenu(true)
-
-        val name = javaClass.`package`.name + "_preferences"
-        preferences = context!!.getSharedPreferences(name, Context.MODE_PRIVATE)
-        preferences.registerOnSharedPreferenceChangeListener(this)
-
-        words = WordsWrapper(context!!, preferences)
-
         return inflater.inflate(R.layout.search, container, false)
     }
 
@@ -93,13 +97,6 @@ public class SearchFragment(english_to_latin: Boolean, focus: Boolean) : Fragmen
         if (focus) {
             menu_item.expandActionView()
         }
-    }
-
-    override fun onSharedPreferenceChanged(
-        sharedPreferences: SharedPreferences,
-        changed_key: String
-    ) {
-        words.updateConfigFile()
     }
 
     private fun searchWord(search_term: String) {
