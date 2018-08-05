@@ -26,22 +26,24 @@ class WhitakersWords : AppCompatActivity() {
 
         supportFragmentManager.addOnBackStackChangedListener {
             val fragment = supportFragmentManager.findFragmentById(R.id.content)
-            val item = when (fragment) {
+
+            val (title, item) = when (fragment) {
                 is SearchFragment -> {
                     if (fragment.english_to_latin) {
-                        R.id.action_english_to_latin
+                        Pair(R.string.english_to_latin, R.id.action_english_to_latin)
                     } else {
-                        R.id.action_latin_to_english
+                        Pair(R.string.latin_to_english, R.id.action_latin_to_english)
                     }
                 }
-                is SettingsFragment -> R.id.action_settings
-                is AboutFragment -> R.id.action_about
-                else -> null
+                is SettingsFragment ->
+                    Pair(R.string.settings, R.id.action_settings)
+                is AboutFragment ->
+                    Pair(R.string.about_long_title, R.id.action_about)
+                else -> throw RuntimeException() // Unreachable
             }
 
-            if (item != null) {
-                nav_view.setCheckedItem(item)
-            }
+            supportActionBar!!.title = resources.getString(title)
+            nav_view.setCheckedItem(item)
         }
 
         if (savedInstanceState != null) {
