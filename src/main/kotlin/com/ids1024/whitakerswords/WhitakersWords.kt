@@ -1,19 +1,28 @@
 package com.ids1024.whitakerswords
 
 import android.os.Bundle
+import android.view.MenuItem
+import android.content.res.Configuration
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.app.ActionBarDrawerToggle
 
 import kotlinx.android.synthetic.main.main.drawer_layout
 import kotlinx.android.synthetic.main.main.nav_view
 
 class WhitakersWords : AppCompatActivity() {
     var fragments = HashMap<Int, Fragment>()
+    private lateinit var action_bar_drawer_toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.main)
+
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setHomeAsUpIndicator(R.drawable.ic_menu)
+        }
 
         supportFragmentManager.addOnBackStackChangedListener {
             val fragment = supportFragmentManager.findFragmentById(R.id.content)
@@ -60,6 +69,10 @@ class WhitakersWords : AppCompatActivity() {
 
             true
         }
+
+        action_bar_drawer_toggle = ActionBarDrawerToggle(
+            this, drawer_layout, R.string.open_drawer,
+            R.string.close_drawer)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -67,6 +80,14 @@ class WhitakersWords : AppCompatActivity() {
             supportFragmentManager.putFragment(outState, "fragment_$k", v)
         }
         super.onSaveInstanceState(outState)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return action_bar_drawer_toggle.onOptionsItemSelected(item)
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        action_bar_drawer_toggle.onConfigurationChanged(newConfig)
     }
 
     private fun getFragment(id: Int): Fragment {

@@ -5,6 +5,9 @@
     <string name="latin_to_english">Latin-English</string>
     <string name="english_to_latin">English-Latin</string>
 
+    <string name="open_drawer">Open drawer</string>
+    <string name="close_drawer">Close drawer</string>
+
     <!-- Preferences -->
     <string name="words_preferences">Words Settings</string>
     <string name="misc_preferences">Miscellaneous</string>
