@@ -48,16 +48,16 @@
     <string name="about_long_title">About Whitaker\'s Words</string>
     <string name="about_text">
 	The \'words\' program was created by Wiliam Whitaker. It is open
-	source, under the following terms:\n
+	source, under the following terms:\n\n
 
 	\"All parts of the WORDS system, source code and data files, are made freely available to anyone who wishes to use them, for whatever purpose.\"\n\n
 	    
-	An archieved version of Whitaker\'s  website is available at
+	An archieved version of Whitaker\'s website is available at
 	http://archives.nd.edu/whitaker/words.htm.\n\n
 
 	This app is Open Source. Other than Whitaker\'s code, it under the MIT
 	License. The source code is available at
-	https://github.com/ids1024/whitakers-words-android.
+	https://github.com/ids1024/whitakers-words-android.\n\n
     </string>
 
 </resources>
