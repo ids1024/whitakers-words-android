@@ -15,6 +15,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.DividerItemDecoration
+import android.support.v7.preference.PreferenceManager
 
 import kotlinx.android.synthetic.main.search.recycler_view
 
@@ -32,8 +33,7 @@ class SearchFragment(english_to_latin: Boolean) : Fragment() {
 
         setHasOptionsMenu(true)
 
-        preferences = context!!.getSharedPreferences(PREFERENCES_NAME,
-                                                     Context.MODE_PRIVATE)
+	preferences = PreferenceManager.getDefaultSharedPreferences(context)
         words = WordsWrapper(context!!)
         preferences.registerOnSharedPreferenceChangeListener { _, _ ->
             words.updateConfigFile()

@@ -10,6 +10,7 @@ import java.io.IOException
 import android.util.Log
 import android.content.Context
 import android.content.SharedPreferences
+import android.support.v7.preference.PreferenceManager
 
 private val TAG = "words"
 private val WORDS_EXECUTABLE = "words"
@@ -33,8 +34,7 @@ class WordsWrapper(context: Context) {
     private val preferences: SharedPreferences
     private val context = context
     init {
-        preferences = context!!.getSharedPreferences(PREFERENCES_NAME,
-                                                     Context.MODE_PRIVATE)
+	preferences = PreferenceManager.getDefaultSharedPreferences(context)
         apkVersion = context.packageManager
                             .getPackageInfo(context.packageName, 0)
                             .versionCode
