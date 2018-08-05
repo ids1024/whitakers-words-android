@@ -74,7 +74,6 @@ class SearchFragment(english_to_latin: Boolean) : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        // Inflate the menu items for use in the action bar
         inflater.inflate(R.menu.main, menu)
 
         val menu_item = menu.findItem(R.id.action_search)
