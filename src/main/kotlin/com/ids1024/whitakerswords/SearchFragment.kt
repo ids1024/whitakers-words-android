@@ -83,7 +83,9 @@ class SearchFragment(english_to_latin: Boolean) : Fragment() {
         } else {
             search_view!!.queryHint = resources.getString(R.string.latin_to_english)
         }
+    }
 
+    override fun onPrepareOptionsMenu(menu: Menu) {
         search_view!!.setOnQueryTextListener(object : OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 searchWord(query)
