@@ -23,14 +23,11 @@ pushd words-build
 	dos2unix ADDONS.LAT
 
 	echo "Building words..."
-	$TARGET-gnatmake -O3 words $BUILD_ARGS
+	$TARGET-gnatmake -O3 words $STATIC_ARGS
 	$TARGET-gnatmake makedict $STATIC_ARGS
 	$TARGET-gnatmake makestem $STATIC_ARGS
 	$TARGET-gnatmake makeefil $STATIC_ARGS
 	$TARGET-gnatmake makeinfl $STATIC_ARGS
-
-	echo "Stripping words..."
-	$TARGET-strip words
 
 	echo "Building data files in qemu..."
 	echo G | qemu-arm ./makedict
@@ -42,3 +39,6 @@ popd
 echo "Copying output to 'words'..."
 mkdir words
 cp words-build/{ADDONS.LAT,DICTFILE.GEN,EWDSFILE.GEN,INDXFILE.GEN,INFLECTS.SEC,STEMFILE.GEN,UNIQUES.LAT,words} words
+
+echo "Stripping words..."
+$TARGET-strip words/words

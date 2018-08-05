@@ -43,7 +43,7 @@ echo "Downloading prerequisites..."
 mkdir build
 cd build
 
-../configure --prefix=$DEST --target=$TARGET --with-gnu-as --with-gnu-ld --enable-languages=c,c++,ada --disable-libssp --enable-threads --disable-libmudflap --disable-libstdc__-v3 --disable-sjlj-exceptions --enable-shared --disable-tls --disable-libitm --with-float=soft --with-fpu=neon --with-arch=armv7-a --enable-target-optspace --enable-initfini-array --disable-nls --with-sysroot=$ANDROID_SYSROOT --disable-bootstrap --enable-plugins --enable-libgomp --enable-gnu-indirect-function --disable-libsanitizer --enable-eh-frame-hdr-for-static --enable-graphite=yes --enable-vtable-verify --disable-werror --with-isl --with-system-zlib CFLAGS_FOR_TARGET="$CFLAGS"
+../configure --prefix=$DEST --target=$TARGET --with-gnu-as --with-gnu-ld --enable-languages=c,c++,ada --disable-libssp --enable-threads --disable-libmudflap --disable-libstdc__-v3 --disable-sjlj-exceptions --enable-shared --disable-tls --disable-libitm --with-float=soft --with-fpu=vfpv3-d16 --with-arch=armv7-a --enable-target-optspace --enable-initfini-array --disable-nls --with-sysroot=$ANDROID_SYSROOT --disable-bootstrap --enable-plugins --enable-libgomp --enable-gnu-indirect-function --disable-libsanitizer --enable-eh-frame-hdr-for-static --enable-graphite=yes --enable-vtable-verify --disable-werror --with-isl --with-system-zlib CFLAGS_FOR_TARGET="$CFLAGS"
 
 make -j$(nproc)
 make install
