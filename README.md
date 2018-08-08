@@ -1,6 +1,8 @@
 Whitaker's Words for Android
 ============================
 
+[![Build Status](https://travis-ci.org/ids1024/whitakers-words-android.svg?branch=master)](https://travis-ci.org/ids1024/whitakers-words-android)
+
 [`words`](http://archives.nd.edu/whitaker/words.htm) is a dictionary and morphological analysis tool by Colonel William Whitaker for Latin that accepts words of any form and gives the case/tense/etc. along with a short definition. This app provides a native Android interface that wraps the original command line program.
 
 License
