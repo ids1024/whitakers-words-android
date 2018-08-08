@@ -30,7 +30,7 @@ fun parse_words(input: String): ArrayList<SpannableStringBuilder> {
             handled_line = "  $handled_line"
         }
 
-        if (line.empty || line == "*") {
+        if (line.isEmpty() || line == "*") {
             if (line == "*") {
                 processed_result.append("*")
             }
