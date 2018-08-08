@@ -89,7 +89,7 @@ class WhitakersWords : AppCompatActivity() {
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
-	super.onConfigurationChanged(newConfig)
+        super.onConfigurationChanged(newConfig)
         action_bar_drawer_toggle.onConfigurationChanged(newConfig)
     }
 

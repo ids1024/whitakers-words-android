@@ -37,7 +37,7 @@ class WordsWrapper(context: Context) {
     private val preferences: SharedPreferences
     private val context = context
     init {
-	preferences = PreferenceManager.getDefaultSharedPreferences(context)
+        preferences = PreferenceManager.getDefaultSharedPreferences(context)
         apkVersion = context.packageManager
                             .getPackageInfo(context.packageName, 0)
                             .versionCode

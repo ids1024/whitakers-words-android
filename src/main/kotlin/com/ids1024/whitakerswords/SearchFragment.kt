@@ -1,7 +1,6 @@
 package com.ids1024.whitakerswords
 
 import java.io.IOException
-import android.content.Context
 import android.content.SharedPreferences
 import android.view.View
 import android.view.Menu
@@ -36,7 +35,7 @@ class SearchFragment(english_to_latin: Boolean) : Fragment() {
 
         setHasOptionsMenu(true)
 
-	preferences = PreferenceManager.getDefaultSharedPreferences(context)
+        preferences = PreferenceManager.getDefaultSharedPreferences(context)
         words = WordsWrapper(context!!)
         preferences.registerOnSharedPreferenceChangeListener { _, _ ->
             words.updateConfigFile()
