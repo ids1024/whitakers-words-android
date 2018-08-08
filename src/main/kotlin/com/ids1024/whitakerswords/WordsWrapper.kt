@@ -28,6 +28,9 @@ private fun emptyDirectory(f: File) {
     }
 }
 
+/**
+ * Wraps the `words` binary. This handles extraction from the apk and execution.
+ */
 class WordsWrapper(context: Context) {
     // The version number of the APK as specified in the manifest.
     private val apkVersion: Int
@@ -107,6 +110,9 @@ class WordsWrapper(context: Context) {
     }
 
     // TODO(tcj): Execute this is another thread to prevent UI deadlocking
+    /**
+    * Executes `words`.
+    */
     @Throws(IOException::class)
     fun executeWords(text: String, english_to_latin: Boolean): String {
         val wordspath = getFile(WORDS_EXECUTABLE).path
@@ -151,6 +157,9 @@ class WordsWrapper(context: Context) {
         return output.toString()
     }
 
+    /**
+    * Generates `WORDS.MOD` file from the app's preferences.
+    */
     @Throws(IOException::class)
     fun updateConfigFile() {
         val file = getFile("WORD.MOD")

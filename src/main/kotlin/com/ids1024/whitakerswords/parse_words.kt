@@ -7,6 +7,9 @@ import android.graphics.Typeface
 import android.graphics.Color
 import android.text.SpannableStringBuilder
 
+/**
+* Parses plain text from `words` to add basic formatting (such as italics).
+*/
 fun parse_words(input: String): ArrayList<SpannableStringBuilder> {
     val results = ArrayList<SpannableStringBuilder>()
 
@@ -27,11 +30,11 @@ fun parse_words(input: String): ArrayList<SpannableStringBuilder> {
             handled_line = "  $handled_line"
         }
 
-        if (line.isEmpty() || line == "*") {
+        if (line.empty || line == "*") {
             if (line == "*") {
                 processed_result.append("*")
             }
-            val finalresult = processed_result.toString().trim { it <= ' ' }
+            val finalresult = processed_result.toString().trim()
             if (!finalresult.isEmpty()) {
                 results.add(processed_result)
             }
@@ -78,7 +81,7 @@ fun parse_words(input: String): ArrayList<SpannableStringBuilder> {
         }
         processed_result.setSpan(span, startindex, endindex, 0)
     }
-    val finalresult = processed_result.toString().trim { it <= ' ' }
+    val finalresult = processed_result.toString().trim()
     if (!finalresult.isEmpty()) {
         results.add(processed_result)
     }

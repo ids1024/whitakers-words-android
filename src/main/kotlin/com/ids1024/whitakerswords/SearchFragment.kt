@@ -19,6 +19,9 @@ import android.support.v7.preference.PreferenceManager
 
 import kotlinx.android.synthetic.main.search.recycler_view
 
+/**
+* Fragment providing the search UI.
+*/
 class SearchFragment(english_to_latin: Boolean) : Fragment() {
     private var search_term: String = ""
     private var search_view: SearchView? = null
