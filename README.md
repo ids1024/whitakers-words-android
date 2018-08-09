@@ -20,8 +20,6 @@ Building the Ada code is problematic, since Android's NDK only supports C and C+
 This takes a long time to build (and some disk space). So a compiled version of words 1.97FC is included in assets/words. But if you really want to compile it, this procedure should work:
 
 ```bash
-wget https://dl.google.com/android/repository/android-ndk-r17b-linux-x86_64.zip
-unzip android-ndk-r17b-linux-x86_64.zip
 cd words
 ./ada-android.sh
 ./build-words.sh

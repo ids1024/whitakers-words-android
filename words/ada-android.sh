@@ -4,7 +4,8 @@ set -e
 
 BINUTILS_VERSION=2.30
 GCC_VERSION=8.1.0
-NDK="$PWD/../android-ndk-r17b"
+NDK_VERSION=r17b
+NDK="$PWD/android-ndk-$NDK_VERSION"
 ANDROID_SYSROOT="$PWD/ndk-chain/sysroot"
 DEST=$PWD/toolchain
 TARGET=arm-linux-androideabi
@@ -15,6 +16,14 @@ combined_dir=gcc-$GCC_VERSION-binutils-$BINUTILS_VERSION
 
 echo "Removing directories..."
 rm -rf binutils-$BINUTILS_VERSION gcc-$GCC_VERSION $combined_dir ndk-chain $DEST
+
+echo "Downloading Android NDK..."
+wget -nc https://dl.google.com/android/repository/android-ndk-$NDK_VERSION-linux-x86_64.zip
+
+echo "Extracting Android NDK..."
+if [ ! -d "$NDK" ]; then
+	unzip android-ndk-$NDK_VERSION-linux-x86_64.zip
+fi
 
 echo "Creating standalone ndk toolchain..."
 $NDK/build/tools/make-standalone-toolchain.sh --arch=arm --platform=android-$PLATFORM --stl=libc++ --install-dir=$PWD/ndk-chain
