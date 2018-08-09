@@ -20,7 +20,8 @@ class SearchAdapter(results: ArrayList<SpannableStringBuilder>) : RecyclerView.A
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.getContext()).inflate(R.layout.result, null)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.result, parent, false)
         return ViewHolder(view)
     }
 
