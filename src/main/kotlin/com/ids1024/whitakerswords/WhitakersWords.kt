@@ -6,6 +6,7 @@ import android.content.res.Configuration
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.preference.PreferenceManager
 
 import kotlinx.android.synthetic.main.main.drawer_layout
 import kotlinx.android.synthetic.main.main.nav_view
@@ -17,12 +18,14 @@ class WhitakersWords : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+	val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        if (preferences.getBoolean("light_theme", false)) {
+            setTheme(R.style.AppThemeLight)
+        }
+
         setContentView(R.layout.main)
 
-        supportActionBar?.apply {
-            setDisplayHomeAsUpEnabled(true)
-            setHomeAsUpIndicator(R.drawable.ic_menu)
-        }
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         supportFragmentManager.addOnBackStackChangedListener {
             val fragment = supportFragmentManager.findFragmentById(R.id.content)

@@ -75,5 +75,10 @@
             android:title="@string/search_on_keypress"
             android:summary="@string/search_on_keypress_summ"
             android:defaultValue="true" />
+        <SwitchPreference 
+            android:key="light_theme"
+            android:title="Theme"
+            android:summaryOff="Dark"
+            android:summaryOn="Light" />
     </PreferenceCategory>
 </PreferenceScreen>
