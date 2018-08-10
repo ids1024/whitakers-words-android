@@ -18,7 +18,7 @@ class WhitakersWords : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-	val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         if (preferences.getBoolean("light_theme", false)) {
             setTheme(R.style.AppThemeLight)
         }
