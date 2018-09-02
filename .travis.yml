@@ -10,7 +10,7 @@ android:
     - android-27
 
 script:
-  - ./gradlew buildDebug
+  - ./gradlew assembleDebug
   - ./gradlew dokka
   - ./gradlew ktlint
   - ./build-words-docker.sh
