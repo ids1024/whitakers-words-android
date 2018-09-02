@@ -14,3 +14,17 @@ script:
   - ./gradlew dokka
   - ./gradlew ktlint
   - ./build-words-docker.sh
+
+before_deploy:
+  - cd words && tar cJf words.tar.xz words
+  - sed s/%VERSION%/$(printf "r%s.%s" \
+                             "$(git rev-list --count HEAD)" \
+                             "$(git rev-parse --short HEAD)")\
+                      .travis/bintray.yml.in > .travis/bintray.yml
+
+deploy:
+  - provider: bintray
+    file: .travis/bintray.json
+    user: ids1024
+    key:
+      secure: "G0XaLMNJE2DmTbHCQ348vu+R3BREsQl2+smmRuB7T4GME5BSiN/7+acwYa24EiFMZ/1bKeKfKlqPktgiz72ySSQL2Pd624MIh7OPhtWS6RdXKdI8z3OZe7A+cxAV151qWDBpU8KjflcrRXlnsTKS9dW/IIYUTXEWo1qG5zUFSlkDVlP5SLB/7/PHY5A8U7n+Kp1wp/dIMQQyCzjGIr3BqaPYZByQXV2kTxVWMNfVjN9bliptfbZwnqfPrMruSJPiXYLsdP7VSEqazri3zPn9W3tdoku1MIuIEl9HXPVx1OflI/n5nTzOvun054J6kxxcoqFZZNXa879dyh7bJ9vN7KzP1Ksi2CZXh9G1vSaKRBELsoNJhNP9u6n9koZjqkgzzQwTbAvNqzazSXnR0w5PSjRpvSZrHbrjUpv7xAF2W5DljNYI7039Wne/N5V1Gfin+cW+NHD6BXoXKGfR4mWHRMUp3JQjZjbf+a5Js/cYfMivJTfXGj7f4FBbo3BPN9sR77RNeFihbbTLOEFNQFZhgT7Gz8Cj6633dOA/K1/5Ag6NS38QQX1/3kyOOPKDyU7Nd1sg2ntPQFa1mAQb4mnh8qu+J13stDstaGxg3bi/nsBdwZpOo8WYrFux9j7syfymmIkjzaQWBcURlqMe8AG/QAd+ATtV9vJj4v/l5L6MMg4="

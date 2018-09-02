@@ -1,0 +1,21 @@
+{
+  "package": {
+    "subject": "ids1024",
+    "repo": "whitakers-words-android",
+    "name": "master"
+  },
+  "version": {
+    "name": "%VERSION%",
+  },
+  "files": [
+    {
+      "includePattern": "words/(words.tar.xz)",
+      "uploadPattern": "$1"
+    },
+    {
+      "includePattern": "build/outputs/apk/debug/(whitakers-words-android-debug.apk)",
+      "uploadPattern": "$1"
+    }
+  ],
+  "publish": true
+}
