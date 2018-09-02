@@ -17,7 +17,8 @@ script:
 
 before_deploy:
   - cd words && tar cJf words.tar.xz words
-  - sed s/%VERSION%/$(printf "r%s.%s" \
+  - |
+    sed s/%VERSION%/$(printf "r%s.%s" \
                              "$(git rev-list --count HEAD)" \
                              "$(git rev-parse --short HEAD)")/ \
                       .travis/bintray.yml.in > .travis/bintray.yml
