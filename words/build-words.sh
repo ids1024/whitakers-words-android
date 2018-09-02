@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 set -e
 
@@ -12,10 +12,13 @@ echo "Removing directories..."
 rm -rf words words-build
 
 echo "Downloading words source..."
-wget -nc http://archives.nd.edu/whitaker/wordsall.zip
+if [ ! -f wordsall.zip ]
+then
+	wget http://archives.nd.edu/whitaker/wordsall.zip
+fi
 
 mkdir words-build
-pushd words-build
+cd words-build
 	echo "Extracting words..."
 	unzip ../wordsall.zip
 
@@ -34,11 +37,11 @@ pushd words-build
 	echo G | qemu-arm ./makestem
 	echo G | qemu-arm ./makeefil
 	echo G | qemu-arm ./makeinfl
-popd
 
-echo "Copying output to 'words'..."
-mkdir words
-cp words-build/{ADDONS.LAT,DICTFILE.GEN,EWDSFILE.GEN,INDXFILE.GEN,INFLECTS.SEC,STEMFILE.GEN,UNIQUES.LAT,words} words
+	echo "Copying output to 'words'..."
+	mkdir ../words
+	cp ADDONS.LAT DICTFILE.GEN EWDSFILE.GEN INDXFILE.GEN INFLECTS.SEC STEMFILE.GEN UNIQUES.LAT words ../words
+cd ..
 
 echo "Stripping words..."
 $TARGET-strip words/words

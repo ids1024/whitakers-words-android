@@ -7,3 +7,6 @@ build/
 *.iml
 .idea/
 release.keystore
+words/words-build
+words/words
+words/wordsall.zip

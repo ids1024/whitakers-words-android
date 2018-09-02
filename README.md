@@ -17,13 +17,9 @@ Compiling
 
 Building the Ada code is problematic, since Android's NDK only supports C and C++. The `words` directory has scripts for building a copy of GCC with Ada support, targeting Android. Moreover, it has data files that need to be build, and potentially differ by architecture. So the build script here uses `qemu` to generate those.
 
-This takes a long time to build (and some disk space). So a compiled version of words 1.97FC is included in assets/words. But if you really want to compile it, this procedure should work:
+To provide such I toolchain, I've built a [docker image](https://hub.docker.com/r/ids1024/ada-android/), which you can download and use, or [build yourself](https://github.com/ids1024/ada-android-docker) (given enough CPU time and disk space).
 
-```bash
-cd words
-./ada-android.sh
-./build-words.sh
-```
+A compiled version of words 1.97FC is included in assets/words. Or you can run `./build-words-docker.sh` to download the docker image and build words.
 
 ### Compiling the app
 
