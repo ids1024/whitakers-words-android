@@ -1,4 +1,8 @@
 language: android
+sudo: required
+
+services:
+  - docker
 
 android:
   components:
@@ -9,3 +13,4 @@ script:
   - ./gradlew buildDebug
   - ./gradlew dokka
   - ./gradlew ktlint
+  - ./build-words-docker.sh
