@@ -21,7 +21,7 @@ before_deploy:
     sed s/%VERSION%/$(printf "r%s.%s" \
                              "$(git rev-list --count HEAD)" \
                              "$(git rev-parse --short HEAD)")/ \
-                      .travis/bintray.yml.in > .travis/bintray.yml
+                      .travis/bintray.json.in > .travis/bintray.json
 
 deploy:
   - provider: bintray

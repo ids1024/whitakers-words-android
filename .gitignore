@@ -10,3 +10,5 @@ release.keystore
 words/words-build
 words/words
 words/wordsall.zip
+words/words.tar.xz
+.travis/bintray.json

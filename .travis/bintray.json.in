@@ -5,7 +5,7 @@
     "name": "master"
   },
   "version": {
-    "name": "%VERSION%",
+    "name": "%VERSION%"
   },
   "files": [
     {
