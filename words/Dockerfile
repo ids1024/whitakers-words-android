@@ -77,6 +77,7 @@ RUN cd gcc \
 RUN strip $(find toolchain/bin toolchain/libexec -type f) || true
 
 FROM alpine:3.8
+LABEL maintainer="Ian Douglas Scott <ian@iandouglasscott.com>"
 COPY --from=build /ada-android/toolchain/ /usr/
 COPY --from=build /ada-android/ndk-chain/sysroot/usr/lib/ \
                   /usr/arm-linux-androideabi/lib/armv7-a/
