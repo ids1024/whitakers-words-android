@@ -25,6 +25,7 @@ before_deploy:
 
 deploy:
   - provider: bintray
+    skip_cleanup: true
     file: .travis/bintray.json
     user: ids1024
     key:
