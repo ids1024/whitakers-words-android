@@ -20,14 +20,16 @@ RUN $ANDROID_NDK_HOME/build/tools/make-standalone-toolchain.sh \
     --stl=libc++ \
     --install-dir=./ndk-chain
 
-# Download binutils and gcc
-RUN wget https://ftp.gnu.org/gnu/gcc/gcc-6.4.0/gcc-6.4.0.tar.xz \
-    && wget https://ftp.gnu.org/gnu/binutils/binutils-2.28.tar.bz2 \
-    && tar xf gcc-6.4.0.tar.xz \
-    && tar xf binutils-2.28.tar.bz2 \
-    && mv binutils-2.28 binutils \
-    && mv gcc-6.4.0 gcc \
-    && rm *.xz *.bz2 \
+ARG GCC_URL=https://ftp.gnu.org/gnu/gcc/gcc-6.4.0/gcc-6.4.0.tar.xz
+ARG BINUTILS_URL=https://ftp.gnu.org/gnu/binutils/binutils-2.28.tar.bz2
+
+# Download and extract binutils and gcc
+RUN wget $GCC_URL $BINUTILS_URL \
+    && tar xf gcc-* \
+    && tar xf binutils-* \
+    && rm *.tar.* \
+    && mv binutils-* binutils \
+    && mv gcc-* gcc \
     && cd gcc \
     && ./contrib/download_prerequisites
 
@@ -71,6 +73,8 @@ RUN cd gcc \
     && ../configure $CONFIGURE_ARGS \
     && make -j$(nproc) \
     && make install
+
+RUN strip $(find toolchain/bin toolchain/libexec -type f) || true
 
 FROM alpine:3.8
 COPY --from=build /ada-android/toolchain/ /usr/
