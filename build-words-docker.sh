@@ -8,6 +8,7 @@ sudo docker pull $IMAGE
 
 # Disable seccomp for 'personality' syscall, which is used by bionic (in qemu)
 sudo docker run \
+	--rm \
 	-v "$PWD/words:/words" \
 	-w /words \
 	-u $(id -u):$(id -g) \

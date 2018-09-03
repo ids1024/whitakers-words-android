@@ -36,7 +36,7 @@ cd words-build
 	echo G | qemu-arm ./makedict
 	echo G | qemu-arm ./makestem
 	echo G | qemu-arm ./makeefil
-	echo G | qemu-arm ./makeinfl
+	echo G | qemu-arm ./makeinfl | sed '/\*\*\*\*/d'
 
 	echo "Copying output to 'words'..."
 	mkdir ../words
