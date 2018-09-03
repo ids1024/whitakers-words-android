@@ -10,6 +10,8 @@ android:
     - android-27
 
 script:
+  # https://github.com/travis-ci/travis-ci/issues/3412
+  - git fetch --unshallow
   - ./build-words-docker.sh
   - ./gradlew assembleDebug
   - ./gradlew dokka
