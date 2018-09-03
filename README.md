@@ -15,7 +15,7 @@ Whitaker's Ada code is under the license in the [`words.LICENSE`](words.LICENSE)
 Compiling
 ---------
 
-### Donloading or building the words executable and data files
+### Downloading or building the words executable and data files
 
 Building the Ada code is problematic, since Android's NDK only supports C and C++. The `words` directory has scripts for building a copy of GCC with Ada support, targeting Android. Moreover, it has data files that need to be build, and potentially differ by architecture. So the build script here uses `qemu` to generate those.
 
