@@ -9,12 +9,12 @@
   },
   "files": [
     {
-      "includePattern": "(words\\.tar\\.xz)",
-      "uploadPattern": "$1"
+      "includePattern": "words\\.tar\\.xz",
+      "uploadPattern": "words-%VERSION%.tar.xz"
     },
     {
-      "includePattern": "build/outputs/apk/debug/(whitakers-words-android-debug\\.apk)",
-      "uploadPattern": "$1"
+      "includePattern": "build/outputs/apk/debug/(whitakers-words-android-debug)\\.apk",
+      "uploadPattern": "$1-%VERSION%.apk"
     }
   ],
   "publish": true
