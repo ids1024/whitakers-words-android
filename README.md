@@ -26,7 +26,7 @@ To compile this app, you'll need to obtain a copy of words in one of two ways:
 Download prebuilt words from Bintray:
 
 ```bash
-./fetch-words-bintray
+./fetch-words-bintray.sh
 ```
 
 Or, download the docker image and build words:
