@@ -40,7 +40,7 @@ cd words-build
 
 	echo "Copying output to 'words'..."
 	mkdir ../words
-	cp ADDONS.LAT DICTFILE.GEN EWDSFILE.GEN INDXFILE.GEN INFLECTS.SEC STEMFILE.GEN UNIQUES.LAT words ../words
+	cp ADDONS.LAT DICTFILE.GEN EWDSFILE.GEN INDXFILE.GEN INFLECTS.SEC STEMFILE.GEN UNIQUES.LAT words ../WORD.MDV ../words
 cd ..
 
 echo "Stripping words..."

@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 IMAGE=ids1024/ada-android:6.4.0
 
 sudo docker pull $IMAGE
@@ -11,4 +13,6 @@ sudo docker run \
 	--security-opt seccomp=unconfined \
 	$IMAGE \
 	./build-words.sh
-echo "Words built in words/words."
+rm -rf src/main/assets/words
+mv words/words src/main/assets/words
+echo "Words built in src/main/assets/words."

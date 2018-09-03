@@ -9,7 +9,7 @@
   },
   "files": [
     {
-      "includePattern": "words/(words\\.tar\\.xz)",
+      "includePattern": "(words\\.tar\\.xz)",
       "uploadPattern": "$1"
     },
     {

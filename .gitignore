@@ -8,7 +8,7 @@ build/
 .idea/
 release.keystore
 words/words-build
-words/words
 words/wordsall.zip
-words/words.tar.xz
+words.tar.xz
 .travis/bintray.json
+src/main/assets/words

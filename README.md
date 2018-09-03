@@ -19,7 +19,7 @@ Building the Ada code is problematic, since Android's NDK only supports C and C+
 
 To provide such I toolchain, I've built a [docker image](https://hub.docker.com/r/ids1024/ada-android/), which you can download and use, or [build yourself](https://github.com/ids1024/ada-android-docker) (given enough CPU time and disk space).
 
-A compiled version of words 1.97FC is included in assets/words. Or you can run `./build-words-docker.sh` to download the docker image and build words.
+You can run `./build-words-docker.sh` to download the docker image and build words.
 
 ### Compiling the app
 

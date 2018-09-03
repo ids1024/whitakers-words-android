@@ -10,13 +10,13 @@ android:
     - android-27
 
 script:
+  - ./build-words-docker.sh
   - ./gradlew assembleDebug
   - ./gradlew dokka
   - ./gradlew ktlint
-  - ./build-words-docker.sh
 
 before_deploy:
-  - cd words && tar cJf words.tar.xz words && cd ..
+  - cd src/main/assets && tar cJf ../../../words.tar.xz words && cd ../../..
   - |
     sed s/%VERSION%/$(printf "r%s.%s" \
                              "$(git rev-list --count HEAD)" \
