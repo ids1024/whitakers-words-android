@@ -3,11 +3,8 @@ package com.ids1024.whitakerswords
 import java.io.IOException
 import android.content.SharedPreferences
 import android.view.View
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.ViewGroup
 import android.view.LayoutInflater
-import android.support.v7.widget.SearchView
 import android.support.v7.widget.SearchView.OnQueryTextListener
 import android.widget.Toast
 import android.os.Bundle
