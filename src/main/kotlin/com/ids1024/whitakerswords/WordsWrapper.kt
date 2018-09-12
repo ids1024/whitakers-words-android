@@ -5,6 +5,7 @@ import java.io.InputStreamReader
 import java.util.Locale
 import java.io.BufferedReader
 import java.io.FileOutputStream
+import java.io.StringWriter
 import java.io.File
 import java.io.IOException
 import android.util.Log
@@ -87,24 +88,15 @@ class WordsWrapper(context: Context) {
 
     @Throws(IOException::class)
     private fun copyFile(filename: String) {
-        var ins: InputStream? = null
-        var fos: FileOutputStream? = null
         val outputFile = getFile(filename)
         // if the file already exists, don't copy it again
         if (outputFile.exists()) {
             return
         }
 
-        try {
-            ins = context.assets.open("words/$filename")
-            fos = FileOutputStream(outputFile)
-            ins.copyTo(fos)
-        } finally {
-            if (ins != null) {
-                ins.close()
-            }
-            if (fos != null) {
-                fos.close()
+        context.assets.open("words/$filename").use { ins ->
+            FileOutputStream(outputFile).use { fos ->
+                ins.copyTo(fos)
             }
         }
     }
@@ -116,30 +108,16 @@ class WordsWrapper(context: Context) {
     @Throws(IOException::class)
     fun executeWords(text: String, english_to_latin: Boolean): String {
         val wordspath = getFile(WORDS_EXECUTABLE).path
-        val process: Process
-        val command: Array<String>
-        if (english_to_latin) {
-            command = arrayOf<String>(wordspath, "~E", text)
+        val command = if (english_to_latin) {
+            arrayOf<String>(wordspath, "~E", text)
         } else {
-            command = arrayOf<String>(wordspath, text)
+            arrayOf<String>(wordspath, text)
         }
-        process = Runtime.getRuntime().exec(command, null, getFile(""))
+        val process = Runtime.getRuntime().exec(command, null, getFile(""))
 
-        var reader: BufferedReader? = null
-        val output = StringBuffer()
-        try {
-            reader = BufferedReader(
-                    InputStreamReader(process.inputStream))
-            val buffer = CharArray(4096)
-            var read = reader.read(buffer)
-            while (read > 0) {
-                output.append(buffer, 0, read)
-                read = reader.read(buffer)
-            }
-        } finally {
-            if (reader != null) {
-                reader.close()
-            }
+        val output = StringWriter()
+        BufferedReader(InputStreamReader(process.inputStream)).use { ins ->
+            ins.copyTo(output)
         }
 
         try {
