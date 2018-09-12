@@ -33,9 +33,9 @@ class WhitakersWords : AppCompatActivity() {
             val (title, item) = when (fragment) {
                 is SearchFragment -> {
                     if (fragment.english_to_latin) {
-                        Pair(R.string.english_to_latin, R.id.action_english_to_latin)
+                        Pair(R.string.app_name, R.id.action_english_to_latin)
                     } else {
-                        Pair(R.string.latin_to_english, R.id.action_latin_to_english)
+                        Pair(R.string.app_name, R.id.action_latin_to_english)
                     }
                 }
                 is SettingsFragment ->

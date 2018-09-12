@@ -1,8 +1,0 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/action_search"
-          android:icon="?attr/search_icon"
-          android:title="@string/search"
-	  app:actionLayout="@layout/searchview"
-          app:showAsAction="always|collapseActionView" />
-</menu>

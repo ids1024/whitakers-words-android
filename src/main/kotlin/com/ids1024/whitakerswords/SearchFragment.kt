@@ -17,13 +17,13 @@ import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.preference.PreferenceManager
 
 import kotlinx.android.synthetic.main.search.recycler_view
+import kotlinx.android.synthetic.main.search.search_view
 
 /**
 * Fragment providing the search UI.
 */
 class SearchFragment(english_to_latin: Boolean) : Fragment() {
     private var search_term: String = ""
-    private var search_view: SearchView? = null
     var english_to_latin = english_to_latin
     private lateinit var preferences: SharedPreferences
     private lateinit var words: WordsWrapper
@@ -32,8 +32,6 @@ class SearchFragment(english_to_latin: Boolean) : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        setHasOptionsMenu(true)
 
         preferences = PreferenceManager.getDefaultSharedPreferences(context)
         words = WordsWrapper(context!!)
@@ -51,7 +49,7 @@ class SearchFragment(english_to_latin: Boolean) : Fragment() {
     }
 
     override fun onDestroyView() {
-        search_view?.setOnQueryTextListener(null)
+        search_view.setOnQueryTextListener(null)
         super.onDestroyView()
     }
 
@@ -60,6 +58,27 @@ class SearchFragment(english_to_latin: Boolean) : Fragment() {
 
         recycler_view.layoutManager = LinearLayoutManager(context)
         recycler_view.addItemDecoration(DividerItemDecoration(recycler_view.context, DividerItemDecoration.VERTICAL))
+
+        if (english_to_latin) {
+            search_view.queryHint = resources.getString(R.string.english_to_latin)
+        } else {
+            search_view.queryHint = resources.getString(R.string.latin_to_english)
+        }
+
+        search_view.setOnQueryTextListener(object : OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                searchWord(query)
+                search_view.clearFocus()
+                return true
+            }
+
+            override fun onQueryTextChange(query: String): Boolean {
+                if (preferences.getBoolean("search_on_keypress", true)) {
+                    searchWord(query)
+                }
+                return true
+            }
+        })
 
         if (savedInstanceState != null) {
             english_to_latin = savedInstanceState.getBoolean("english_to_latin")
@@ -73,35 +92,6 @@ class SearchFragment(english_to_latin: Boolean) : Fragment() {
         outState.putString("search_term", search_term)
         outState.putBoolean("english_to_latin", english_to_latin)
         super.onSaveInstanceState(outState)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.main, menu)
-
-        val menu_item = menu.findItem(R.id.action_search)
-        search_view = menu_item.actionView!! as SearchView
-        if (english_to_latin) {
-            search_view!!.queryHint = resources.getString(R.string.english_to_latin)
-        } else {
-            search_view!!.queryHint = resources.getString(R.string.latin_to_english)
-        }
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        search_view!!.setOnQueryTextListener(object : OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean {
-                searchWord(query)
-                search_view!!.clearFocus()
-                return true
-            }
-
-            override fun onQueryTextChange(query: String): Boolean {
-                if (preferences.getBoolean("search_on_keypress", true)) {
-                    searchWord(query)
-                }
-                return true
-            }
-        })
     }
 
     private fun searchWord(search_term: String) {
