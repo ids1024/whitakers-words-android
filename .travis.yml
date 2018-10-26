@@ -1,6 +1,10 @@
 language: android
 sudo: required
 
+git:
+  # Do not use shallow clone, so git "rev-list --count" works
+  depth: false
+
 services:
   - docker
 
@@ -10,8 +14,6 @@ android:
     - android-27
 
 script:
-  # https://github.com/travis-ci/travis-ci/issues/3412
-  - git fetch --unshallow
   - ./build-words-docker.sh
   - ./gradlew assembleDebug
   - ./gradlew dokka
