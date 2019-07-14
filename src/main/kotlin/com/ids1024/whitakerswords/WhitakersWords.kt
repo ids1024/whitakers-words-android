@@ -56,12 +56,11 @@ class WhitakersWords : AppCompatActivity() {
                     fragments.put(k.substring(9).toInt(), fragment)
                 }
             }
-        } else {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.content, getFragment(R.id.action_latin_to_english))
-                .addToBackStack(null)
-                .commit()
         }
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.content, getFragment(R.id.action_latin_to_english))
+            .addToBackStack(null)
+            .commit()
 
         nav_view.inflateMenu(R.menu.navigation)
         nav_view.setNavigationItemSelectedListener { item ->
