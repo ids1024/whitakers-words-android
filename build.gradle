@@ -18,6 +18,11 @@ apply plugin: 'org.jetbrains.dokka-android'
 android {
     compileSdkVersion 29
 
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 29
+    }
+
     signingConfigs {
         release {
             storeFile file("release.keystore")
