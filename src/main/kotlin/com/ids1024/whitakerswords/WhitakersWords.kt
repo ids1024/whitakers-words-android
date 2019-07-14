@@ -49,6 +49,7 @@ class WhitakersWords : AppCompatActivity() {
             nav_view.setCheckedItem(item)
         }
 
+        var cur_fragment = R.id.action_latin_to_english
         if (savedInstanceState != null) {
             for (k in savedInstanceState.keySet()) {
                 if (k.startsWith("fragment_")) {
@@ -56,9 +57,10 @@ class WhitakersWords : AppCompatActivity() {
                     fragments.put(k.substring(9).toInt(), fragment)
                 }
             }
+            cur_fragment = savedInstanceState.getInt("cur_fragment", cur_fragment)
         }
         supportFragmentManager.beginTransaction()
-            .replace(R.id.content, getFragment(R.id.action_latin_to_english))
+            .replace(R.id.content, getFragment(cur_fragment))
             .addToBackStack(null)
             .commit()
 
@@ -80,7 +82,11 @@ class WhitakersWords : AppCompatActivity() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
+        val cur_fragment = supportFragmentManager.findFragmentById(R.id.content)
         for ((k, v) in fragments) {
+            if (cur_fragment == v) {
+                outState.putInt("cur_fragment", k);
+            }
             supportFragmentManager.putFragment(outState, "fragment_$k", v)
         }
         super.onSaveInstanceState(outState)
