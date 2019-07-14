@@ -85,7 +85,7 @@ class WhitakersWords : AppCompatActivity() {
         val cur_fragment = supportFragmentManager.findFragmentById(R.id.content)
         for ((k, v) in fragments) {
             if (cur_fragment == v) {
-                outState.putInt("cur_fragment", k);
+                outState.putInt("cur_fragment", k)
             }
             supportFragmentManager.putFragment(outState, "fragment_$k", v)
         }
