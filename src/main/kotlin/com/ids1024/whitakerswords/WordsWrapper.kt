@@ -77,7 +77,7 @@ class WordsWrapper(context: Context) {
         deleteLegacyDataDirectoryContents()
         createAndCleanupCacheDirectories()
 
-        for (filename in context.assets.list("words")) {
+        for (filename in context.assets.list("words")!!) {
             copyFile(filename)
         }
 

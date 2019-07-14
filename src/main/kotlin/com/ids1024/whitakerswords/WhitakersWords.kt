@@ -52,7 +52,7 @@ class WhitakersWords : AppCompatActivity() {
         if (savedInstanceState != null) {
             for (k in savedInstanceState.keySet()) {
                 if (k.startsWith("fragment_")) {
-                    val fragment = supportFragmentManager.getFragment(savedInstanceState, k)
+                    val fragment = supportFragmentManager.getFragment(savedInstanceState, k)!!
                     fragments.put(k.substring(9).toInt(), fragment)
                 }
             }

@@ -79,7 +79,7 @@ class SearchFragment(english_to_latin: Boolean) : Fragment() {
 
         if (savedInstanceState != null) {
             english_to_latin = savedInstanceState.getBoolean("english_to_latin")
-            searchWord(savedInstanceState.getString("search_term"))
+            searchWord(savedInstanceState.getString("search_term")!!)
         } else if (search_term != "") {
             searchWord(search_term)
         }
