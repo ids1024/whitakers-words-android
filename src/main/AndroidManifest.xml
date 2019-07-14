@@ -5,8 +5,10 @@
       android:versionName="2.0.0">
 
       <application android:label="@string/app_name"
-	           android:icon="@drawable/ic_launcher"
-		   android:theme="@style/AppTheme">
+                   android:icon="@drawable/ic_launcher"
+                   android:theme="@style/AppTheme"
+                   android:allowBackup="true"
+                   android:fullBackupContent="@xml/backup_rules">
         <activity android:name="WhitakersWords"
                   android:label="@string/app_name">
             <intent-filter>
@@ -14,10 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-	<activity android:name="WhitakersAbout"
+        <activity android:name="WhitakersAbout"
                   android:label="@string/about_title"
                   android:parentActivityName="WhitakersWords">
-	</activity>
+        </activity>
 
     </application>
 </manifest>

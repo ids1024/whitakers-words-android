@@ -98,7 +98,8 @@ class SearchFragment(english_to_latin: Boolean) : Fragment() {
         try {
             result = words.executeWords(search_term, english_to_latin)
         } catch (ex: IOException) {
-            Toast.makeText(context, "Failed to execute words!", Toast.LENGTH_SHORT)
+            val toast = Toast.makeText(context, "Failed to execute words!", Toast.LENGTH_SHORT)
+            toast.show()
             return
         }
 
