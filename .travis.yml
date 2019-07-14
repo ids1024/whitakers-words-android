@@ -16,6 +16,7 @@ android:
 script:
   - ./build-words-docker.sh
   - ./gradlew assembleDebug
+  - ./gradlew lint
   - ./gradlew dokka
   - ./gradlew ktlint
 
