@@ -10,7 +10,7 @@ import java.io.IOException
 import android.util.Log
 import android.content.Context
 import android.content.SharedPreferences
-import android.support.v7.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 
 private val TAG = "words"
 private val WORDS_EXECUTABLE = "words"

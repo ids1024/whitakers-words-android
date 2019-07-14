@@ -3,10 +3,10 @@ package com.ids1024.whitakerswords
 import android.os.Bundle
 import android.view.MenuItem
 import android.content.res.Configuration
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.preference.PreferenceManager
+import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.preference.PreferenceManager
 
 import kotlinx.android.synthetic.main.main.drawer_layout
 import kotlinx.android.synthetic.main.main.nav_view

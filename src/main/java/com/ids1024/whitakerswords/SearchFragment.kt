@@ -5,13 +5,13 @@ import android.content.SharedPreferences
 import android.view.View
 import android.view.ViewGroup
 import android.view.LayoutInflater
-import android.support.v7.widget.SearchView.OnQueryTextListener
+import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import android.widget.Toast
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.preference.PreferenceManager
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.preference.PreferenceManager
 
 import kotlinx.android.synthetic.main.search.recycler_view
 import kotlinx.android.synthetic.main.search.search_view
