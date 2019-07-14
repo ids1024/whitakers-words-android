@@ -3,16 +3,16 @@
     <group android:checkableBehavior="single">
         <item android:id="@+id/action_latin_to_english"
               android:title="@string/latin_to_english"
-              android:showAsAction="never" />
+              app:showAsAction="never" />
         <item android:id="@+id/action_english_to_latin"
               android:title="@string/english_to_latin"
-              android:showAsAction="never" />
+              app:showAsAction="never" />
         <item android:id="@+id/action_settings"
               android:title="@string/settings"
-              android:showAsAction="never" />
+              app:showAsAction="never" />
         <item android:id="@+id/action_about"
               android:title="@string/about_title"
-              android:showAsAction="never"
+              app:showAsAction="never"
               />
     </group>
 </menu>
