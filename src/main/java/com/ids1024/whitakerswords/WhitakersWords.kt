@@ -6,6 +6,7 @@ import android.content.res.Configuration
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
 
 import kotlinx.android.synthetic.main.main.drawer_layout
@@ -19,9 +20,12 @@ class WhitakersWords : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
-        if (preferences.getBoolean("light_theme", false)) {
-            setTheme(R.style.AppThemeLight)
-        }
+        val nightMode = if (preferences.getBoolean("light_theme", false)) {
+            AppCompatDelegate.MODE_NIGHT_NO
+        } else {
+            AppCompatDelegate.MODE_NIGHT_YES
+        };
+        AppCompatDelegate.setDefaultNightMode(nightMode);
 
         setContentView(R.layout.main)
 
