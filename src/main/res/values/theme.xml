@@ -1,11 +1,9 @@
 <resources>
- <style name="AppTheme" parent="Theme.AppCompat">
-  <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+ <style name="AppTheme" parent="Theme.MaterialComponents">
   <item name="search_icon">@drawable/ic_search</item>
   <item name="homeAsUpIndicator">@drawable/ic_menu</item>
  </style>
- <style name="AppThemeLight" parent="Theme.AppCompat.Light">
-  <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+ <style name="AppThemeLight" parent="Theme.MaterialComponents.Light">
   <item name="search_icon">@drawable/ic_search_light</item>
   <item name="homeAsUpIndicator">@drawable/ic_menu_light</item>
  </style>
