@@ -1,81 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory
+            app:iconSpaceReserved="false"
             android:title="@string/words_preferences">
         <CheckBoxPreference
+            app:iconSpaceReserved="false"
             android:key="trim_output"
             android:title="@string/trim_output"
             android:summary="@string/trim_output_summ"
             android:defaultValue="true" />
         <CheckBoxPreference
+            app:iconSpaceReserved="false"
             android:key="do_unknowns_only"
             android:title="@string/do_unknowns_only"
             android:summary="@string/do_unknowns_only_summ"
             android:defaultValue="false" />
         <CheckBoxPreference
+            app:iconSpaceReserved="false"
             android:key="ignore_unknown_names"
             android:title="@string/ignore_unknown_names"
             android:summary="@string/ignore_unknown_names_summ"
             android:defaultValue="true" />
         <CheckBoxPreference
+            app:iconSpaceReserved="false"
             android:key="ignore_unknown_caps"
             android:title="@string/ignore_unknown_caps"
             android:summary="@string/ignore_unknown_caps_summ"
             android:defaultValue="true" />
         <CheckBoxPreference
+            app:iconSpaceReserved="false"
             android:key="do_compounds"
             android:title="@string/do_compounds"
             android:summary="@string/do_compounds_summ"
             android:defaultValue="true" />
         <CheckBoxPreference
+            app:iconSpaceReserved="false"
             android:key="do_fixes"
             android:title="@string/do_fixes"
             android:summary="@string/do_fixes_summ"
             android:defaultValue="true" />
         <CheckBoxPreference
+            app:iconSpaceReserved="false"
             android:key="do_tricks"
             android:title="@string/do_tricks"
             android:summary="@string/do_tricks_summ"
             android:defaultValue="true" />
         <CheckBoxPreference
+            app:iconSpaceReserved="false"
             android:key="do_dictionary_forms"
             android:title="@string/do_dictionary_forms"
             android:summary="@string/do_dictionary_forms_summ"
             android:defaultValue="true" />
         <CheckBoxPreference
+            app:iconSpaceReserved="false"
             android:key="show_age"
             android:title="@string/show_age"
             android:summary="@string/show_age_summ"
             android:defaultValue="true" />
         <CheckBoxPreference
+            app:iconSpaceReserved="false"
             android:key="show_frequency"
             android:title="@string/show_frequency"
             android:summary="@string/show_frequency_summ"
             android:defaultValue="true" />
         <CheckBoxPreference
+            app:iconSpaceReserved="false"
             android:key="do_examples"
             android:title="@string/do_examples"
             android:summary="@string/do_examples_summ"
             android:defaultValue="false" />
         <CheckBoxPreference
+            app:iconSpaceReserved="false"
             android:key="do_only_meanings"
             android:title="@string/do_only_meanings"
             android:summary="@string/do_only_meanings_summ"
             android:defaultValue="false" />
         <CheckBoxPreference
+            app:iconSpaceReserved="false"
             android:key="do_stems_for_unknown"
             android:title="@string/do_stems_for_unknown"
             android:summary="@string/do_stems_for_unknown_summ"
             android:defaultValue="false" />
     </PreferenceCategory>
     <PreferenceCategory
+            app:iconSpaceReserved="false"
             android:title="@string/misc_preferences">
         <CheckBoxPreference
+            app:iconSpaceReserved="false"
             android:key="search_on_keypress"
             android:title="@string/search_on_keypress"
             android:summary="@string/search_on_keypress_summ"
             android:defaultValue="true" />
         <SwitchPreference 
+            app:iconSpaceReserved="false"
             android:key="light_theme"
             android:title="Theme"
             android:summaryOff="Dark"
