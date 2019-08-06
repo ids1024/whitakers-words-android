@@ -1,6 +1,5 @@
 <resources>
  <style name="AppTheme" parent="Theme.MaterialComponents.DayNight">
-  <item name="search_icon">@drawable/ic_search</item>
   <item name="homeAsUpIndicator">@drawable/ic_menu</item>
  </style>
 </resources>
