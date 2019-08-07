@@ -24,8 +24,8 @@ class WhitakersWords : AppCompatActivity() {
             AppCompatDelegate.MODE_NIGHT_NO
         } else {
             AppCompatDelegate.MODE_NIGHT_YES
-        };
-        AppCompatDelegate.setDefaultNightMode(nightMode);
+        }
+        AppCompatDelegate.setDefaultNightMode(nightMode)
 
         setContentView(R.layout.main)
 
