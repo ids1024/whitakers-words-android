@@ -18,7 +18,7 @@ script:
   - ./gradlew assembleDebug
   - ./gradlew lint
   - ./gradlew dokka
-  - ./gradlew ktlint
+  - ./gradlew ktlintCheck
 
 before_deploy:
   - cd src/main/assets && tar cJf ../../../words.tar.xz words && cd ../../..
