@@ -1,11 +1,11 @@
 package com.ids1024.whitakerswords
 
-import android.text.TextUtils
-import android.text.style.StyleSpan
-import android.text.style.ForegroundColorSpan
-import android.graphics.Typeface
 import android.graphics.Color
+import android.graphics.Typeface
 import android.text.SpannableStringBuilder
+import android.text.TextUtils
+import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
 
 /**
 * Parses plain text from `words` to add basic formatting (such as italics).

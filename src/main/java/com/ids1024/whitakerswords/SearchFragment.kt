@@ -1,18 +1,17 @@
 package com.ids1024.whitakerswords
 
-import java.io.IOException
 import android.content.SharedPreferences
+import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.LayoutInflater
-import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import android.widget.Toast
-import android.os.Bundle
+import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.preference.PreferenceManager
-
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import java.io.IOException
 import kotlinx.android.synthetic.main.search.recycler_view
 import kotlinx.android.synthetic.main.search.search_view
 

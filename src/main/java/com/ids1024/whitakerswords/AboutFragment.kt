@@ -1,10 +1,10 @@
 package com.ids1024.whitakerswords
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.LayoutInflater
+import androidx.fragment.app.Fragment
 
 /**
 * Fragment for the about page.

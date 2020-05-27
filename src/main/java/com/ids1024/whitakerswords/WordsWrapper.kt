@@ -1,16 +1,16 @@
 package com.ids1024.whitakerswords
 
-import java.io.InputStreamReader
-import java.util.Locale
-import java.io.BufferedReader
-import java.io.FileOutputStream
-import java.io.StringWriter
-import java.io.File
-import java.io.IOException
-import android.util.Log
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.preference.PreferenceManager
+import java.io.BufferedReader
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.InputStreamReader
+import java.io.StringWriter
+import java.util.Locale
 
 private val TAG = "words"
 private val WORDS_EXECUTABLE = "words"

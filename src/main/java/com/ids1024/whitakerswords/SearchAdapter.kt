@@ -1,12 +1,12 @@
 package com.ids1024.whitakerswords
 
-import java.util.ArrayList
-import android.widget.TextView
+import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import android.text.SpannableStringBuilder
+import java.util.ArrayList
 
 class SearchAdapter(results: ArrayList<SpannableStringBuilder>) : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
     var results = results

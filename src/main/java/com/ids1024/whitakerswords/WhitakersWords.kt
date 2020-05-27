@@ -1,14 +1,13 @@
 package com.ids1024.whitakerswords
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MenuItem
-import android.content.res.Configuration
-import androidx.fragment.app.Fragment
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
-
 import kotlinx.android.synthetic.main.main.drawer_layout
 import kotlinx.android.synthetic.main.main.nav_view
 
