@@ -12,3 +12,9 @@ rm -rf src/main/assets/words
 mkdir -p src/main/assets
 tar xf words.tar.xz -C src/main/assets
 echo "Words extracted to src/main/assets/words from $version on bintray."
+
+rm -rf libs
+mkdir -p libs/{armeabi-v7a,arm64-v8a}
+cp src/main/assets/words/words libs/armeabi-v7a/libwords.so
+cp src/main/assets/words/words libs/arm64-v8a/libwords.so
+echo "Copied to libs/"

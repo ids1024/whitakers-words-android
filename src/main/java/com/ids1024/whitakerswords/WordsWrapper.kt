@@ -1,3 +1,6 @@
+// libwords.so is really an executable, named that way because of how Android does things.
+// See https://stackoverflow.com/questions/63800440/android-cant-execute-process-for-android-api-29-android-10-from-lib-arch
+
 package com.ids1024.whitakerswords
 
 import android.content.Context
@@ -13,7 +16,6 @@ import java.io.StringWriter
 import java.util.Locale
 
 private val TAG = "words"
-private val WORDS_EXECUTABLE = "words"
 
 private fun emptyDirectory(f: File) {
     val directoryContents = f.listFiles()
@@ -31,11 +33,11 @@ private fun emptyDirectory(f: File) {
 /**
  * Wraps the `words` binary. This handles extraction from the apk and execution.
  */
-class WordsWrapper(context: Context) {
+class WordsWrapper(private val context: Context) {
     // The version number of the APK as specified in the manifest.
     private val apkVersion: Int
     private val preferences: SharedPreferences
-    private val context = context
+
     init {
         preferences = PreferenceManager.getDefaultSharedPreferences(context)
         apkVersion = context.packageManager
@@ -82,7 +84,6 @@ class WordsWrapper(context: Context) {
         }
 
         updateConfigFile()
-        getFile(WORDS_EXECUTABLE).setExecutable(true)
     }
 
     @Throws(IOException::class)
@@ -106,7 +107,7 @@ class WordsWrapper(context: Context) {
     */
     @Throws(IOException::class)
     fun executeWords(text: String, english_to_latin: Boolean): String {
-        val wordspath = getFile(WORDS_EXECUTABLE).path
+        val wordspath = context.applicationInfo.nativeLibraryDir + "/libwords.so"
         val command = if (english_to_latin) {
             arrayOf<String>(wordspath, "~E", text)
         } else {

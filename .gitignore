@@ -12,3 +12,4 @@ words/wordsall.zip
 words.tar.xz
 .travis/bintray.json
 src/main/assets/words
+libs/
