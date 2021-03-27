@@ -10,8 +10,8 @@ services:
 
 android:
   components:
-    - build-tools-29.0.1
-    - android-29
+    - build-tools-30.0.3
+    - android-30
 
 script:
   - ./build-words-docker.sh
