@@ -2,7 +2,7 @@
 
 set -e
 
-IMAGE=ids1024/ada-android:6.4.0
+IMAGE=ids1024/ada-android:10.2.0
 
 sudo docker pull $IMAGE
 
