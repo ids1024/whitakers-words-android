@@ -14,7 +14,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
         return if (preference.key == "light_theme") {
-            activity!!.recreate()
+            requireActivity().recreate()
             true
         } else {
             false

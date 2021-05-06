@@ -30,7 +30,7 @@ class SearchFragment(english_to_latin: Boolean) : Fragment() {
         super.onCreate(savedInstanceState)
 
         preferences = PreferenceManager.getDefaultSharedPreferences(context)
-        words = WordsWrapper(context!!)
+        words = WordsWrapper(requireContext())
         preferences.registerOnSharedPreferenceChangeListener { _, _ ->
             words.updateConfigFile()
         }
