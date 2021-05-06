@@ -1,0 +1,14 @@
+on: [push, pull_request]
+
+name: ci
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - run: ./build-words-docker.sh
+    - run: ./gradlew assembleDebug
+    - run: ./gradlew lint
+    # - run: ./gradlew dokka
+    - run: ./gradlew ktlintCheck
