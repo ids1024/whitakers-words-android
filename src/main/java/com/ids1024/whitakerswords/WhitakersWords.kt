@@ -8,8 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
-import kotlinx.android.synthetic.main.main.drawer_layout
-import kotlinx.android.synthetic.main.main.nav_view
+import com.ids1024.whitakerswords.databinding.MainBinding
 
 class WhitakersWords : AppCompatActivity() {
     var fragments = HashMap<Int, Fragment>()
@@ -17,6 +16,8 @@ class WhitakersWords : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val binding = MainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         val nightMode = if (preferences.getBoolean("light_theme", false)) {
@@ -25,8 +26,6 @@ class WhitakersWords : AppCompatActivity() {
             AppCompatDelegate.MODE_NIGHT_YES
         }
         AppCompatDelegate.setDefaultNightMode(nightMode)
-
-        setContentView(R.layout.main)
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
@@ -49,7 +48,7 @@ class WhitakersWords : AppCompatActivity() {
             }
 
             supportActionBar!!.title = resources.getString(title)
-            nav_view.setCheckedItem(item)
+            binding.navView.setCheckedItem(item)
         }
 
         var cur_fragment = R.id.action_latin_to_english
@@ -67,9 +66,9 @@ class WhitakersWords : AppCompatActivity() {
             .addToBackStack(null)
             .commit()
 
-        nav_view.inflateMenu(R.menu.navigation)
-        nav_view.setNavigationItemSelectedListener { item ->
-            drawer_layout.closeDrawers()
+        binding.navView.inflateMenu(R.menu.navigation)
+        binding.navView.setNavigationItemSelectedListener { item ->
+            binding.drawerLayout.closeDrawers()
             val fragment = getFragment(item.itemId)
             supportFragmentManager.beginTransaction()
                 .addToBackStack(null)
@@ -80,7 +79,7 @@ class WhitakersWords : AppCompatActivity() {
         }
 
         action_bar_drawer_toggle = ActionBarDrawerToggle(
-            this, drawer_layout, R.string.open_drawer,
+            this, binding.drawerLayout, R.string.open_drawer,
             R.string.close_drawer)
     }
 

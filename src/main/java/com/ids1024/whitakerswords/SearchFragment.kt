@@ -12,8 +12,7 @@ import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import java.io.IOException
-import kotlinx.android.synthetic.main.search.recycler_view
-import kotlinx.android.synthetic.main.search.search_view
+import com.ids1024.whitakerswords.databinding.SearchBinding
 
 /**
 * Fragment providing the search UI.
@@ -23,6 +22,7 @@ class SearchFragment(english_to_latin: Boolean) : Fragment() {
     var english_to_latin = english_to_latin
     private lateinit var preferences: SharedPreferences
     private lateinit var words: WordsWrapper
+    private lateinit var binding: SearchBinding
 
     constructor() : this(false)
 
@@ -41,30 +41,31 @@ class SearchFragment(english_to_latin: Boolean) : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.search, container, false)
+        binding = SearchBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onDestroyView() {
-        search_view.setOnQueryTextListener(null)
+        binding.searchView.setOnQueryTextListener(null)
         super.onDestroyView()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        recycler_view.layoutManager = LinearLayoutManager(context)
-        recycler_view.addItemDecoration(DividerItemDecoration(recycler_view.context, DividerItemDecoration.VERTICAL))
+        binding.recyclerView.layoutManager = LinearLayoutManager(context)
+        binding.recyclerView.addItemDecoration(DividerItemDecoration(binding.recyclerView.context, DividerItemDecoration.VERTICAL))
 
         if (english_to_latin) {
-            search_view.queryHint = resources.getString(R.string.english_to_latin)
+            binding.searchView.queryHint = resources.getString(R.string.english_to_latin)
         } else {
-            search_view.queryHint = resources.getString(R.string.latin_to_english)
+            binding.searchView.queryHint = resources.getString(R.string.latin_to_english)
         }
 
-        search_view.setOnQueryTextListener(object : OnQueryTextListener {
+        binding.searchView.setOnQueryTextListener(object : OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 searchWord(query)
-                search_view.clearFocus()
+                binding.searchView.clearFocus()
                 return true
             }
 
@@ -103,6 +104,6 @@ class SearchFragment(english_to_latin: Boolean) : Fragment() {
         }
 
         val results = parse_words(result)
-        recycler_view.adapter = SearchAdapter(results)
+        binding.recyclerView.adapter = SearchAdapter(results)
     }
 }
