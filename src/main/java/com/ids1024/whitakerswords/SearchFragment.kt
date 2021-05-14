@@ -17,9 +17,8 @@ import com.ids1024.whitakerswords.databinding.SearchBinding
 /**
 * Fragment providing the search UI.
 */
-class SearchFragment(english_to_latin: Boolean) : Fragment() {
+class SearchFragment(var english_to_latin: Boolean) : Fragment() {
     private var search_term: String = ""
-    var english_to_latin = english_to_latin
     private lateinit var preferences: SharedPreferences
     private lateinit var words: WordsWrapper
     private lateinit var binding: SearchBinding

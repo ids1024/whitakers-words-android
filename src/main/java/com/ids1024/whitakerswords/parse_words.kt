@@ -18,7 +18,7 @@ fun parse_words(input: String): ArrayList<SpannableStringBuilder> {
         val words = line.split(" +".toRegex())
         var handled_line = TextUtils.join(" ", words)
         var pearse_code = 0
-        if (words.size >= 1 && words[0].length == 2) {
+        if (words.isNotEmpty() && words[0].length == 2) {
             try {
                 pearse_code = Integer.parseInt(words[0])
                 handled_line = handled_line.substring(3)
@@ -35,7 +35,7 @@ fun parse_words(input: String): ArrayList<SpannableStringBuilder> {
                 processed_result.append("*")
             }
             val finalresult = processed_result.toString().trim()
-            if (!finalresult.isEmpty()) {
+            if (finalresult.isNotEmpty()) {
                 results.add(processed_result)
             }
             processed_result = SpannableStringBuilder()
@@ -82,7 +82,7 @@ fun parse_words(input: String): ArrayList<SpannableStringBuilder> {
         processed_result.setSpan(span, startindex, endindex, 0)
     }
     val finalresult = processed_result.toString().trim()
-    if (!finalresult.isEmpty()) {
+    if (finalresult.isNotEmpty()) {
         results.add(processed_result)
     }
 

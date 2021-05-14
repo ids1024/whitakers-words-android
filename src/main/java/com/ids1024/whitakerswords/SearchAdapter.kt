@@ -8,15 +8,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import java.util.ArrayList
 
-class SearchAdapter(results: ArrayList<SpannableStringBuilder>) : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
-    var results = results
+class SearchAdapter(private var results: ArrayList<SpannableStringBuilder>) : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int {
         return results.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.text_view.text = results.get(position)
+        holder.text_view.text = results[position]
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

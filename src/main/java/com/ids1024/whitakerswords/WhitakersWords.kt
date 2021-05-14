@@ -11,7 +11,7 @@ import androidx.preference.PreferenceManager
 import com.ids1024.whitakerswords.databinding.MainBinding
 
 class WhitakersWords : AppCompatActivity() {
-    var fragments = HashMap<Int, Fragment>()
+    private var fragments = HashMap<Int, Fragment>()
     private lateinit var action_bar_drawer_toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,7 +56,7 @@ class WhitakersWords : AppCompatActivity() {
             for (k in savedInstanceState.keySet()) {
                 if (k.startsWith("fragment_")) {
                     val fragment = supportFragmentManager.getFragment(savedInstanceState, k)!!
-                    fragments.put(k.substring(9).toInt(), fragment)
+                    fragments[k.substring(9).toInt()] = fragment
                 }
             }
             cur_fragment = savedInstanceState.getInt("cur_fragment", cur_fragment)
@@ -104,7 +104,7 @@ class WhitakersWords : AppCompatActivity() {
     }
 
     private fun getFragment(id: Int): Fragment {
-        var fragment = fragments.get(id)
+        var fragment = fragments[id]
         if (fragment == null) {
             fragment = when (id) {
                 R.id.action_latin_to_english ->
@@ -119,7 +119,7 @@ class WhitakersWords : AppCompatActivity() {
                     throw RuntimeException() // Unreachable
             }
 
-            fragments.put(id, fragment)
+            fragments[id] = fragment
         }
         return fragment
     }

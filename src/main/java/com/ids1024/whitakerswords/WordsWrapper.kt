@@ -4,7 +4,6 @@
 package com.ids1024.whitakerswords
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.util.Log
 import androidx.preference.PreferenceManager
 import java.io.BufferedReader
@@ -15,7 +14,7 @@ import java.io.InputStreamReader
 import java.io.StringWriter
 import java.util.Locale
 
-private val TAG = "words"
+private const val TAG = "words"
 
 private fun emptyDirectory(f: File) {
     val directoryContents = f.listFiles()
@@ -35,14 +34,12 @@ private fun emptyDirectory(f: File) {
  */
 class WordsWrapper(private val context: Context) {
     // The version number of the APK as specified in the manifest.
-    private val apkVersion: Int
-    private val preferences: SharedPreferences
+    private val apkVersion = context.packageManager
+                             .getPackageInfo(context.packageName, 0)
+                             .versionCode
+    private val preferences = PreferenceManager.getDefaultSharedPreferences(context)
 
     init {
-        preferences = PreferenceManager.getDefaultSharedPreferences(context)
-        apkVersion = context.packageManager
-                            .getPackageInfo(context.packageName, 0)
-                            .versionCode
         copyFiles()
     }
 
@@ -109,9 +106,9 @@ class WordsWrapper(private val context: Context) {
     fun executeWords(text: String, english_to_latin: Boolean): String {
         val wordspath = context.applicationInfo.nativeLibraryDir + "/libwords.so"
         val command = if (english_to_latin) {
-            arrayOf<String>(wordspath, "~E", text)
+            arrayOf(wordspath, "~E", text)
         } else {
-            arrayOf<String>(wordspath, text)
+            arrayOf(wordspath, text)
         }
         val process = Runtime.getRuntime().exec(command, null, getFile(""))
 
@@ -145,7 +142,7 @@ class WordsWrapper(private val context: Context) {
         for (setting in arrayOf("trim_output", "do_unknowns_only", "ignore_unknown_names", "ignore_unknown_caps", "do_compounds", "do_fixes", "do_dictionary_forms", "show_age", "show_frequency", "do_examples", "do_only_meanings", "do_stems_for_unknown")) {
             if (preferences.contains(setting)) {
                 val value = if (preferences.getBoolean(setting, false)) "Y" else "N"
-                val line = setting.toUpperCase(Locale.US) + " " + value + "\n"
+                val line = setting.uppercase(Locale.US) + " " + value + "\n"
                 fos.write(line.toByteArray())
             }
         }
