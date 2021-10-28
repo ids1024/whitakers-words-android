@@ -92,11 +92,12 @@
             android:title="@string/search_on_keypress"
             android:summary="@string/search_on_keypress_summ"
             android:defaultValue="true" />
-        <SwitchPreference 
+        <ListPreference
             app:iconSpaceReserved="false"
-            android:key="light_theme"
+            android:key="theme"
             android:title="Theme"
-            android:summaryOff="Dark"
-            android:summaryOn="Light" />
+            android:entries="@array/theme_entries"
+            android:entryValues="@array/theme_entry_values"
+            android:defaultValue="MODE_NIGHT_FOLLOW_SYSTEM" />
     </PreferenceCategory>
 </PreferenceScreen>

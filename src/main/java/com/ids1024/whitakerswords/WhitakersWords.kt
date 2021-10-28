@@ -20,12 +20,12 @@ class WhitakersWords : AppCompatActivity() {
         setContentView(binding.root)
 
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val nightMode = if (preferences.getBoolean("light_theme", false)) {
-            AppCompatDelegate.MODE_NIGHT_NO
-        } else {
-            AppCompatDelegate.MODE_NIGHT_YES
-        }
-        AppCompatDelegate.setDefaultNightMode(nightMode)
+        AppCompatDelegate.setDefaultNightMode(when (preferences.getString("theme", "MODE_NIGHT_FOLLOW_SYSTEM")) {
+            "MODE_NIGHT_FOLLOW_SYSTEM" -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+            "MODE_NIGHT_YES" -> AppCompatDelegate.MODE_NIGHT_YES
+            "MODE_NIGHT_NO" -> AppCompatDelegate.MODE_NIGHT_NO
+            else -> throw RuntimeException() // Unreachable
+        });
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
