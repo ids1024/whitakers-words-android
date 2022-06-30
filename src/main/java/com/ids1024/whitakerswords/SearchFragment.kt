@@ -28,7 +28,7 @@ class SearchFragment(var english_to_latin: Boolean) : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        preferences = PreferenceManager.getDefaultSharedPreferences(context)
+        preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
         words = WordsWrapper(requireContext())
         preferences.registerOnSharedPreferenceChangeListener { _, _ ->
             words.updateConfigFile()
