@@ -14,7 +14,7 @@ rm -rf words words-build
 echo "Downloading words source..."
 if [ ! -f wordsall.zip ]
 then
-	wget http://archives.nd.edu/whitaker/wordsall.zip
+	wget https://archives.nd.edu/whitaker/old/wordsall.zip
 fi
 
 mkdir words-build
