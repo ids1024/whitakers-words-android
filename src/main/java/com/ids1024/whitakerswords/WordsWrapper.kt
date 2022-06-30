@@ -35,8 +35,8 @@ private fun emptyDirectory(f: File) {
 class WordsWrapper(private val context: Context) {
     // The version number of the APK as specified in the manifest.
     private val apkVersion = context.packageManager
-                             .getPackageInfo(context.packageName, 0)
-                             .versionCode
+        .getPackageInfo(context.packageName, 0)
+        .versionCode
     private val preferences = PreferenceManager.getDefaultSharedPreferences(context)
 
     init {
@@ -100,8 +100,8 @@ class WordsWrapper(private val context: Context) {
 
     // TODO(tcj): Execute this is another thread to prevent UI deadlocking
     /**
-    * Executes `words`.
-    */
+     * Executes `words`.
+     */
     @Throws(IOException::class)
     fun executeWords(text: String, english_to_latin: Boolean): String {
         val wordspath = context.applicationInfo.nativeLibraryDir + "/libwords.so"
@@ -133,8 +133,8 @@ class WordsWrapper(private val context: Context) {
     }
 
     /**
-    * Generates `WORDS.MOD` file from the app's preferences.
-    */
+     * Generates `WORDS.MOD` file from the app's preferences.
+     */
     @Throws(IOException::class)
     fun updateConfigFile() {
         val file = getFile("WORD.MOD")

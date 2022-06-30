@@ -80,7 +80,8 @@ class WhitakersWords : AppCompatActivity() {
 
         action_bar_drawer_toggle = ActionBarDrawerToggle(
             this, binding.drawerLayout, R.string.open_drawer,
-            R.string.close_drawer)
+            R.string.close_drawer
+        )
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

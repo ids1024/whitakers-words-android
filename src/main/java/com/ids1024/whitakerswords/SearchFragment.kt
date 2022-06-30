@@ -11,8 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import java.io.IOException
 import com.ids1024.whitakerswords.databinding.SearchBinding
+import java.io.IOException
 
 /**
 * Fragment providing the search UI.

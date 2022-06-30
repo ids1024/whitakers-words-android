@@ -48,12 +48,12 @@ fun parse_words(input: String): ArrayList<SpannableStringBuilder> {
         var span: Any? = null
         var endindex = processed_result.length
         when (pearse_code) {
-        // Forms
+            // Forms
             1 -> {
                 span = StyleSpan(Typeface.BOLD)
                 endindex = startindex + words[1].length
             }
-        // Dictionary forms
+            // Dictionary forms
             2 -> {
                 // A HACK(?) for parsing output of searches like
                 // "quod", which show shorter output for dictionary forms
@@ -68,14 +68,14 @@ fun parse_words(input: String): ArrayList<SpannableStringBuilder> {
                     span = StyleSpan(Typeface.BOLD)
                 }
             }
-        // Meaning
+            // Meaning
             3 -> span = StyleSpan(Typeface.ITALIC)
-        // Not found
+            // Not found
             4 -> span = ForegroundColorSpan(Color.RED)
-        // Addons
+            // Addons
             5 -> {
             }
-        // Tricks/syncope/addons?
+            // Tricks/syncope/addons?
             6 -> {
             }
         }
