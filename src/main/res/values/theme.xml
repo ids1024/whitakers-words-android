@@ -1,5 +1,5 @@
 <resources>
- <style name="AppTheme" parent="Theme.MaterialComponents.DayNight">
+ <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
   <item name="homeAsUpIndicator">@drawable/ic_menu</item>
  </style>
 </resources>
