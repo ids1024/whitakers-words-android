@@ -2,12 +2,12 @@
 
 set -e
 
-IMAGE=ids1024/ada-android:6.4.0
+IMAGE=docker.io/ids1024/ada-android:6.4.0
 
-sudo docker pull $IMAGE
+podman pull $IMAGE
 
 # Disable seccomp for 'personality' syscall, which is used by bionic (in qemu)
-sudo docker run \
+podman run \
 	--rm \
 	-v "$PWD/words:/words" \
 	-w /words \
