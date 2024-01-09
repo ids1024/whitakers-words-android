@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.7.10'
+    ext.kotlin_version = '1.9.0'
     repositories {
         maven {
             url "https://plugins.gradle.org/m2/"
@@ -20,12 +20,11 @@ apply plugin: 'org.jetbrains.dokka-android'
 apply plugin: 'org.jlleitschuh.gradle.ktlint'
 
 android {
-    compileSdkVersion 33
-    buildToolsVersion "30.0.3"
-
     defaultConfig {
+        compileSdk 34
         minSdkVersion 18
-        targetSdkVersion 33
+        targetSdkVersion 34
+        buildToolsVersion = "34.0.0"
     }
 
     buildFeatures {
@@ -60,6 +59,14 @@ android {
             useLegacyPackaging true
         }
     }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "18"
+    }
 }
 
 repositories {
@@ -68,8 +75,8 @@ repositories {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.6.0'
-    implementation 'com.google.android.material:material:1.8.0'
-    implementation 'androidx.preference:preference-ktx:1.2.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'androidx.preference:preference-ktx:1.2.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
