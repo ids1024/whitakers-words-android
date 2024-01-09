@@ -3,7 +3,8 @@
 set -e
 
 export PATH=$PWD/toolchain/bin:$PATH
-TARGET=arm-linux-androideabi
+# TARGET=arm-linux-androideabi-
+# QEMU=qemu-arm
 ANDROID_SYSROOT="$PWD/ndk-chain/sysroot"
 BUILD_ARGS="-cargs -fPIE -largs -pie"
 STATIC_ARGS="-bargs -static -largs -static"
@@ -23,20 +24,21 @@ cd words-build
 	unzip ../wordsall.zip
 
 	echo "Fix line endings..."
-	dos2unix ADDONS.LAT
+	dos2unix -O ADDONS.LAT > ADDONS.LAT.new
+	mv ADDONS.LAT.new ADDONS.LAT
 
 	echo "Building words..."
-	$TARGET-gnatmake -O3 words $STATIC_ARGS
-	$TARGET-gnatmake makedict $STATIC_ARGS
-	$TARGET-gnatmake makestem $STATIC_ARGS
-	$TARGET-gnatmake makeefil $STATIC_ARGS
-	$TARGET-gnatmake makeinfl $STATIC_ARGS
+	${TARGET}gnatmake -O3 words $STATIC_ARGS
+	${TARGET}gnatmake makedict $STATIC_ARGS
+	${TARGET}gnatmake makestem $STATIC_ARGS
+	${TARGET}gnatmake makeefil $STATIC_ARGS
+	${TARGET}gnatmake makeinfl $STATIC_ARGS
 
 	echo "Building data files in qemu..."
-	echo G | qemu-arm ./makedict
-	echo G | qemu-arm ./makestem
-	echo G | qemu-arm ./makeefil
-	echo G | qemu-arm ./makeinfl | sed '/\*\*\*\*/d'
+	echo G | $QEMU ./makedict
+	echo G | $QEMU ./makestem
+	echo G | $QEMU ./makeefil
+	echo G | $QEMU ./makeinfl | sed '/\*\*\*\*/d'
 
 	echo "Copying output to 'words'..."
 	mkdir ../words
@@ -44,4 +46,4 @@ cd words-build
 cd ..
 
 echo "Stripping words..."
-$TARGET-strip words/words
+${TARGET}strip words/words
