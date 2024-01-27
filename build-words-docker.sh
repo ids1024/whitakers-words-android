@@ -26,5 +26,5 @@ echo "Words built in src/main/assets/words."
 
 rm -rf libs
 mkdir -p libs/arm64-v8a
-cp src/main/assets/words/words libs/arm64-v8a/libwords.so
+mv src/main/assets/words/words libs/arm64-v8a/libwords.so
 echo "Copied to libs/"

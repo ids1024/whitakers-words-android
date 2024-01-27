@@ -2,6 +2,6 @@
 # podman build --arch arm64 --tag words-build .
 
 # Issue with dos2unix version in jammy
-FROM ubuntu:mantic
-RUN apt-get update && apt-get install -y gnat-12 unzip wget dos2unix
+FROM alpine:edge
+RUN apk update && apk add gcc-gnat unzip wget dos2unix musl-dev
 
