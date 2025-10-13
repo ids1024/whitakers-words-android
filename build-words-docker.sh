@@ -13,7 +13,6 @@ podman run \
 	-it \
 	-v "$PWD/words:/words" \
 	-w /words \
-	-u $(id -u):$(id -g) \
 	--security-opt seccomp=unconfined \
 	--arch arm64 \
 	$IMAGE \
