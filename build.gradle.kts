@@ -1,10 +1,11 @@
 buildscript {
-    ext.kotlin_version = "2.0.10"
+    val kotlin_version by extra("2.0.10")
 }
 
 plugins {
+    val kotlin_version : String by rootProject.extra
     id("com.android.application") version "8.13.0"
-    id("org.jetbrains.kotlin.android") version "$kotlin_version"
+    id("org.jetbrains.kotlin.android") version kotlin_version
     id("org.jetbrains.dokka-android") version "0.9.18"
     id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
 }
@@ -18,8 +19,8 @@ kotlin {
 android {
     defaultConfig {
         compileSdk = 36
-        minSdkVersion = 18
-        targetSdkVersion = 34
+	minSdk { version = release(18) }
+        targetSdk = 34
         buildToolsVersion = "36.0.0"
     }
 
@@ -28,7 +29,7 @@ android {
     }
 
     signingConfigs {
-        release {
+        register("release") {
             storeFile = file("release.keystore")
             storePassword = System.getenv("KEYPWD")
             keyAlias = "releaseKey"
@@ -37,20 +38,20 @@ android {
     }
 
     buildTypes {
-        release {
-            minifyEnabled = false
+        getByName("release") {
+            isMinifyEnabled = false
             proguardFile(getDefaultProguardFile("proguard-android.txt"))
-            signingConfig = signingConfigs.release
+            //signingConfig = signingConfigs.release
         }
     }
 
     sourceSets {
-        main {
-            jniLibs.srcDirs = ["lib"]
+        getByName("main") {
+            jniLibs.srcDirs(listOf("lib"))
         }
     }
-    namespace "com.ids1024.whitakerswords"
-    packagingOptions {
+    namespace = "com.ids1024.whitakerswords"
+    packaging {
         jniLibs {
             useLegacyPackaging = true
         }
@@ -71,6 +72,7 @@ repositories {
 }
 
 dependencies {
+    val kotlin_version : String by rootProject.extra
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.preference:preference-ktx:1.2.1")
