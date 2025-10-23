@@ -1,5 +1,5 @@
 buildscript {
-    val kotlin_version by extra("2.0.10")
+    val kotlin_version by extra("2.2.0")
 }
 
 plugins {
@@ -7,7 +7,7 @@ plugins {
     id("com.android.application") version "8.13.0"
     id("org.jetbrains.kotlin.android") version kotlin_version
     id("org.jetbrains.dokka-android") version "0.9.18"
-    id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
+    id("org.jlleitschuh.gradle.ktlint") version "13.1.0"
 }
 
 kotlin {
@@ -19,8 +19,8 @@ kotlin {
 android {
     defaultConfig {
         compileSdk = 36
-	minSdk { version = release(18) }
-        targetSdk = 34
+	minSdk { version = release(21) }
+        targetSdk = 35
         buildToolsVersion = "36.0.0"
     }
 
@@ -73,8 +73,8 @@ repositories {
 
 dependencies {
     val kotlin_version : String by rootProject.extra
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.11.0")
+    implementation("androidx.appcompat:appcompat:1.7.1")
+    implementation("com.google.android.material:material:1.13.0")
     implementation("androidx.preference:preference-ktx:1.2.1")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
 }
