@@ -1,10 +1,10 @@
 buildscript {
-    val kotlin_version by extra("2.2.0")
+    val kotlin_version by extra("2.2.10")
 }
 
 plugins {
     val kotlin_version : String by rootProject.extra
-    id("com.android.application") version "8.13.0"
+    id("com.android.application") version "9.3.0"
     id("org.jetbrains.kotlin.android") version kotlin_version
     id("org.jetbrains.dokka-android") version "0.9.18"
     id("org.jlleitschuh.gradle.ktlint") version "13.1.0"
