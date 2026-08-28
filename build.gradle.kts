@@ -40,7 +40,7 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
-            proguardFile(getDefaultProguardFile("proguard-android.txt"))
+            proguardFile(getDefaultProguardFile("proguard-android-optimize.txt"))
             //signingConfig = signingConfigs.release
         }
     }
