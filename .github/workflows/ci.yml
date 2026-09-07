@@ -7,6 +7,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - run: sudo podman run --rm --privileged docker.io/multiarch/qemu-user-static --reset -p yes -c yes
+    - run: cd words && podman build --arch arm64 --tag words-build .
     - run: ./build-words-docker.sh
     - run: ./gradlew assembleDebug
     - run: ./gradlew lint
