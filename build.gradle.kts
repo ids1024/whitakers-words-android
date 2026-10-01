@@ -41,7 +41,7 @@ android {
 
     sourceSets {
         getByName("main") {
-            jniLibs.srcDirs(listOf("lib"))
+            jniLibs.srcDirs(listOf("libs"))
         }
     }
     namespace = "com.ids1024.whitakerswords"
